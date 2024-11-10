@@ -53,22 +53,26 @@
                       <Group type="102" attributes="0">
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="Equipo3" min="-2" pref="133" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="Combo3" min="-2" pref="173" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="Eliminar3" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="Equipo3" min="-2" pref="133" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="Combo3" min="-2" pref="173" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="Jnombre" alignment="0" min="-2" pref="284" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="Eliminar3" min="-2" pref="215" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="Jnombre" alignment="0" min="-2" pref="284" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="Equipo1" min="-2" pref="133" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="Combo1" min="-2" pref="173" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="Eliminar2" min="-2" pref="183" max="-2" attributes="0"/>
-                                      <Component id="Eliminar1" min="-2" pref="183" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="Eliminar2" max="32767" attributes="0"/>
+                                      <Component id="Eliminar1" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -194,7 +198,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="Eliminar3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar equipamiento3"/>
+            <Property name="text" type="java.lang.String" value="Colocar/Eliminar equipamiento3"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Eliminar3ActionPerformed"/>
@@ -280,7 +284,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="Eliminar1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar equipamiento1"/>
+            <Property name="text" type="java.lang.String" value="Colocar/Eliminar equipamiento1"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Eliminar1ActionPerformed"/>
@@ -303,7 +307,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="Eliminar2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar equipamiento2"/>
+            <Property name="text" type="java.lang.String" value="Colocar/Eliminar equipamiento2"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Eliminar2ActionPerformed"/>
