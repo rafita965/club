@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modulo_Ventas.Usuario;
 import Modulo_Ventas.Usuario.Gestion_Compra_Usuario;
 import javax.swing.JOptionPane;
@@ -11,283 +6,237 @@ import javax.swing.*;
 import javax.swing.text.*;
 import javax.swing.event.*;
 import javax.swing.text.BadLocationException;
+import com.toedter.calendar.JDateChooser;
+import java.time.LocalDate;
 
 /**
  *
  * @author gabiv
  */
+//Gestionar tarjeta de usuario
 public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
-    private String usuarioID; // Variable para almacenar el ID del usuario
+    //Declaracion de variables
+    private String usuarioID;
     private String productoID;
     private String fecha; 
     private int cantidadSeleccionada;
     private String opcFormaEntrega;
-    
     private String tipoTarjeta;
     private String nombreTitular;
     private String codigoSeguridad;
     private String numerinTarjeta;
-    //estas variables verifican que la tarjeta sea valida y no este vencida para pasar a la siguiente ventana
     private boolean condicion1 = false;
     private boolean condicion2 = false;
-    /**
-     * Creates new form Ventana_TarjetaDebito
-     */
+    //Constructor
     public Ventana_TarjetaUsuario(String usuarioID, String productoID, String fecha, int cantidadSeleccionada, String opcionFormaEntrega) {
         this.usuarioID = usuarioID;
         this.productoID = productoID;
         this.fecha = fecha;
         this.cantidadSeleccionada = cantidadSeleccionada;
-        this.opcFormaEntrega = opcionFormaEntrega;
-
-        
+        this.opcFormaEntrega = opcionFormaEntrega; 
         initComponents();
-        //Añáde los items al combobox del tipo de tarjeta
         Combo_TipoTarjeta.addItem("Debito");
         Combo_TipoTarjeta.addItem("Credito");
         Btn_Guardar.setEnabled(false);
-        // Para JTextField_NumTarjeta (en caso de que uses la validación de la tarjeta aquí)
-JTextField_NumTarjeta.getDocument().addDocumentListener(new DocumentListener() {
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+        JTextField_NumTarjeta.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
-});
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+        });
 
-// Para JTextField_NombreTitular
-JTextField_NombreTitular.getDocument().addDocumentListener(new DocumentListener() {
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+        // Para JTextField_NombreTitular
+        JTextField_NombreTitular.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
-});
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+        });
 
-// Para JTextField_Mes
-JTextField_Mes.getDocument().addDocumentListener(new DocumentListener() {
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+        // Para JTextField_Mes
+        JTextField_Mes.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
-});
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+        });
 
-// Para JTextField_Anio
-JTextField_Anio.getDocument().addDocumentListener(new DocumentListener() {
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+        // Para JTextField_Anio
+        JTextField_Anio.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCampos(); // Asegúrate de llamar siempre a verificarCampos
+            }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
-});
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+        });
 
-// Para JTextField_CodigoSeguridad
-JTextField_CodigoSeguridad.getDocument().addDocumentListener(new DocumentListener() {
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+        // Para JTextField_CodigoSeguridad
+        JTextField_CodigoSeguridad.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
 
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        verificarCampos();
-    }
-});
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCampos();
+            }
+        });
 
         JTextField_CodigoSeguridad.setDocument(new PlainDocument() {
-    @Override
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-        // Solo permitimos dígitos
-        if (str.matches("[0-9]*")) {
-            // Limitar a 3 caracteres
-            if (getLength() + str.length() <= 3) {
-                super.insertString(offs, str, a);
-            }
-        }
-    }
-});
-
-        JTextField_Mes.setDocument(new PlainDocument() {
-    private static final int MAX_LENGTH = 2;
-
-    @Override
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-        if (str == null) {
-            return;
-        }
-
-        // Validar que solo se acepten números y que no se supere la longitud máxima
-        if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[0-9]*")) {
-            super.insertString(offs, str, a);
-
-            // Validar que el número esté en el rango de 01 a 12
-            String inputText = JTextField_Mes.getText();
-            if (!inputText.isEmpty()) {
-                int month = Integer.parseInt(inputText);
-                if (month < 1 || month > 12) {
-                    // Si el número no está en el rango, revertir el cambio
-                    JTextField_Mes.setText(inputText.substring(0, inputText.length() - 1));
-                }
-            }
-        }
-    }
-});
-JTextField_Anio.addKeyListener(new java.awt.event.KeyAdapter() {
-    @Override
-    public void keyReleased(java.awt.event.KeyEvent e) {
-        String inputText = JTextField_Anio.getText();
-
-        // Limitar la longitud a 2 caracteres
-        if (inputText.length() > 2) {
-            JTextField_Anio.setText(inputText.substring(0, 2)); // Limitar a 2 caracteres
-            return;
-        }
-
-        // Verificar si el texto tiene exactamente 2 caracteres
-        if (inputText.length() == 2) {
-            try {
-                int year = Integer.parseInt(inputText); // Convertir a número
-
-                // Validar que el año sea mayor a 23
-                if (year <= 23) {
-                    JOptionPane.showMessageDialog(null, "El año debe ser mayor a 23.");
-                    JTextField_Anio.setText(""); // Limpiar el campo si es menor o igual a 23
-                }
-            } catch (NumberFormatException ex) {
-                // Si el texto no es un número válido, ignoramos la entrada
-                // No hacer nada
-            }
-        }
-    }
-});
-
-
-
-        JTextField_NombreTitular.setDocument(new PlainDocument() {
-    private static final int MAX_LENGTH = 40;
-
-    @Override
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-        if (str == null) {
-            return;
-        }
-
-        // Validar que solo se acepten letras y que no se supere la longitud máxima
-        if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*")) {
-            super.insertString(offs, str, a);
-        }
-    }
-});
-
-        JTextField_NumTarjeta.setDocument(new PlainDocument() {
             @Override
             public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
                 // Solo permitimos dígitos
                 if (str.matches("[0-9]*")) {
-                    super.insertString(offs, str, a);
-                }
-            }
-        });
-        JTextField_NumTarjeta.setDocument(new PlainDocument() {
-    private static final int MAX_LENGTH = 16;
-
-    @Override
-    public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-        if (str == null) {
-            return;
-        }
-
-        // Validar que solo se acepten dígitos y que no se supere la longitud máxima
-        if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[0-9]*")) {
-            super.insertString(offs, str, a);
-        }
-    }
-});
-
-
-
-
-
-
-        /*esto sirve para llamar a la funcion de validacion cuando el usuario termino de escribir el numero
-        de tarjeta*/
-        JTextField_NumTarjeta.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyReleased(java.awt.event.KeyEvent e) {
-                String inputText = JTextField_NumTarjeta.getText();
-                
-                if (inputText.length() == 16) {
-                    Tarjeta_Usuario tarjetitaUsuario = new Tarjeta_Usuario();
-                    if(tarjetitaUsuario.AnalizarEmpresa(JTextField_NumTarjeta)){
-                        condicion1 = true;
+                    // Limitar a 3 caracteres
+                    if (getLength() + str.length() <= 3) {
+                        super.insertString(offs, str, a);
                     }
                 }
             }
         });
-        //=============
-        //lo siguiente hace lo mismo que lo anterior pero con la fecha de vencimiento
-        JTextField_Anio.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyReleased(java.awt.event.KeyEvent e) {
-                            String mes = JTextField_Mes.getText();
-                            String anio = JTextField_Anio.getText();
-                            // Verificamos si ambos campos están completos: mes tiene 2 caracteres y año 4
-                            if (mes.length() == 2 && anio.length() == 2) {
-                                        Tarjeta_Usuario tarjetitaUsuario = new Tarjeta_Usuario();       
-                                        if(tarjetitaUsuario.VerificarVencimiento(JTextField_Mes, JTextField_Anio)){
-                                            condicion2 = true;
-                                        }
-                            }
+
+        JTextField_Mes.setDocument(new PlainDocument() {
+            private static final int MAX_LENGTH = 2;
+
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
                 }
+
+                if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[0-9]*")) {
+                    super.insertString(offs, str, a);
+                    String inputText = JTextField_Mes.getText();
+                    if (!inputText.isEmpty()) {
+                        int month = Integer.parseInt(inputText);
+                        if (month < 1 || month > 12) {
+                            JTextField_Mes.setText(inputText.substring(0, inputText.length() - 1));
+                        }
+                    }
+                }
+            }
         });
+        JTextField_Anio.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                String inputText = JTextField_Anio.getText();
+                if (inputText.length() >= 2) {
+                    e.consume(); 
+                }
+            }
+
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                String inputText = JTextField_Anio.getText();
+                if (inputText.length() == 2) {
+                    try {
+                        int year = Integer.parseInt(inputText);
+                        if (year <= 23) {
+                            JOptionPane.showMessageDialog(null, "El año debe ser mayor a 23.");
+                            JTextField_Anio.setText(""); 
+                        }
+                    } catch (NumberFormatException ex) {
+                    }
+                }
+                verificarCampos(); 
+            }
+        });
+        JTextField_NombreTitular.setDocument(new PlainDocument() {
+            private static final int MAX_LENGTH = 40;
+
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
+                }
+                if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]*")) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
+
+        JTextField_NumTarjeta.setDocument(new PlainDocument() {
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str.matches("[0-9]*")) {
+                    super.insertString(offs, str, a);
+                    }
+                }
+            });
+        JTextField_NumTarjeta.setDocument(new PlainDocument() {
+            private static final int MAX_LENGTH = 16;
+
+            @Override
+            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
+                if (str == null) {
+                    return;
+                }
+                if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[0-9]*")) {
+                    super.insertString(offs, str, a);
+                }
+            }
+        });
+        /*esto sirve para llamar a la funcion de validacion cuando el usuario termino de escribir el numero
+                de tarjeta*/
+        JTextField_NumTarjeta.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                String inputText = JTextField_NumTarjeta.getText();
+                if (inputText.length() == 16) {
+                    Tarjeta_Usuario tarjetitaUsuario = new Tarjeta_Usuario();
+                    if(tarjetitaUsuario.AnalizarEmpresa(JTextField_NumTarjeta)){
+                        condicion1 = true;
+                        }
+                    }
+                }
+        });        
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -552,47 +501,50 @@ JTextField_Anio.addKeyListener(new java.awt.event.KeyAdapter() {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    //=======================================================================================
-private void verificarCampos() {
-    // Verifica si todos los campos están correctamente validados
-    boolean isValid = true;
+    //Verificar campos
+    private void verificarCampos() {
+         boolean isValid = true;
 
-    // Verificar tarjeta
-    String tarjeta = JTextField_NumTarjeta.getText().replaceAll(" ", ""); // Eliminar los espacios
-    if (tarjeta.length() != 16 || !tarjeta.matches("[0-9]{16}")) {
-        isValid = false;
+        // Validar número de tarjeta
+        String tarjeta = JTextField_NumTarjeta.getText().replaceAll(" ", "");
+        if (tarjeta.length() != 16 || !tarjeta.matches("[0-9]{16}")) {
+            isValid = false;
+        }
+
+        // Validar nombre del titular
+        String nombreTitular = JTextField_NombreTitular.getText();
+        if (nombreTitular.isEmpty() || nombreTitular.length() > 40) {
+            isValid = false;
+        }
+
+        // Validar mes
+        String mes = JTextField_Mes.getText();
+        try {
+            int mesNum = Integer.parseInt(mes);
+            if (mes.length() != 2 || mesNum < 1 || mesNum > 12) {
+                isValid = false;
+            }
+        } catch (NumberFormatException e) {
+            isValid = false;
+        }
+
+        // Validación para el año (debe ser mayor que 23)
+        String anio = JTextField_Anio.getText();
+        if (anio.length() != 2 || !anio.matches("\\d{2}") || Integer.parseInt(anio) < 24) {
+            isValid = false;
+        }
+
+        // Validar código de seguridad
+        String codigoSeguridad = JTextField_CodigoSeguridad.getText();
+        if (codigoSeguridad.length() != 3 || !codigoSeguridad.matches("[0-9]{3}")) {
+            isValid = false;
+        }
+
+        // Verificación final del botón
+        Btn_Guardar.setEnabled(isValid && condicion1);
     }
-
-    // Verificar nombre titular
-    String nombreTitular = JTextField_NombreTitular.getText();
-    if (nombreTitular.isEmpty() || nombreTitular.length() > 40) {
-        isValid = false;
-    }
-
-    // Verificar mes
-    String mes = JTextField_Mes.getText();
-    if (mes.length() != 2 || Integer.parseInt(mes) < 1 || Integer.parseInt(mes) > 12) {
-        isValid = false;
-    }
-
-    // Verificar año (debe ser un número de dos dígitos mayor a 23)
-    String anio = JTextField_Anio.getText();
-    if (anio.length() != 2 || Integer.parseInt(anio) < 24) {
-        isValid = false;
-    }
-
-    // Verificar código de seguridad
-    String codigoSeguridad = JTextField_CodigoSeguridad.getText();
-    if (codigoSeguridad.length() != 3 || !codigoSeguridad.matches("[0-9]{3}")) {
-        isValid = false;
-    }
-
-    // Activar o desactivar el botón
-    Btn_Guardar.setEnabled(isValid);
-}
-
-
-
+    
+    //Boton a volver forma de entrega
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
         Ventana_FormaEntrega ventanaFormaEntrega = new Ventana_FormaEntrega(usuarioID, productoID, fecha, cantidadSeleccionada);
         this.setVisible(false);
@@ -600,7 +552,8 @@ private void verificarCampos() {
         ventanaFormaEntrega.setLocationRelativeTo(null);
         ventanaFormaEntrega.setVisible(true);
     }//GEN-LAST:event_VolverActionPerformed
-
+    
+    //Boton guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
         //System.out.println("condicion1 : "+condicion1 + "--" + "condicion2 :" + condicion2);
         //Esto sirve para que si la tarjeta es valida y no está vencida pueda continuar
@@ -623,7 +576,6 @@ private void verificarCampos() {
         }
         */
     }//GEN-LAST:event_Btn_GuardarActionPerformed
-    //========================================================================================
     /**
      * @param args the command line arguments
      */

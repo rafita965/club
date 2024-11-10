@@ -17,11 +17,11 @@ import javax.swing.JTextField;
  *
  * @author tm_galli
  */
+//Gestionar Productos
 public class Gestion_Productos extends javax.swing.JFrame {
+    //Declaracion de variables
     private CrudProducto crudProducto;
-    /**
-     * Creates new form Gestion_Productos
-     */
+    //Constructor
     public Gestion_Productos() {
         initComponents();
         crudProducto = new CrudProducto();
@@ -29,128 +29,111 @@ public class Gestion_Productos extends javax.swing.JFrame {
         crudProducto.MostrarProductos(TablaProductos); // Mostrar productos       
         JTextField_IDProducto.setEnabled(false);
         ((AbstractDocument) JTextField_nombreProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(30));
-    ((AbstractDocument) JTextField_precioProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(15));
-    ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(5));
-    ((AbstractDocument) JTextField_nombreProducto.getDocument()).setDocumentFilter(new LetrasSoloFilter());
-    ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new NumerosSoloFilter()); // Filtro para stock
-        // Aplicar filtro para solo números y punto decimal en precioProducto
+        ((AbstractDocument) JTextField_precioProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(15));
+        ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(5));
+        ((AbstractDocument) JTextField_nombreProducto.getDocument()).setDocumentFilter(new LetrasSoloFilter());
+        ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new NumerosSoloFilter()); 
         ((AbstractDocument) JTextField_precioProducto.getDocument()).setDocumentFilter(new NumerosYDecimalesFilter());
-    // Añadir DocumentListener para habilitar el botón Guardar
-    ((AbstractDocument) JTextField_nombreProducto.getDocument()).addDocumentListener(new DocumentListener() {
-        public void insertUpdate(DocumentEvent e) { validarCampos(); }
-        public void removeUpdate(DocumentEvent e) { validarCampos(); }
-        public void changedUpdate(DocumentEvent e) { validarCampos(); }
-    });
-
-    ((AbstractDocument) JTextField_precioProducto.getDocument()).addDocumentListener(new DocumentListener() {
-        public void insertUpdate(DocumentEvent e) { validarCampos(); }
-        public void removeUpdate(DocumentEvent e) { validarCampos(); }
-        public void changedUpdate(DocumentEvent e) { validarCampos(); }
-    });
-
-    ((AbstractDocument) JTextField_StockProducto.getDocument()).addDocumentListener(new DocumentListener() {
-        public void insertUpdate(DocumentEvent e) { validarCampos(); }
-        public void removeUpdate(DocumentEvent e) { validarCampos(); }
-        public void changedUpdate(DocumentEvent e) { validarCampos(); }
-    });
-
-        Btn_Guardar.setEnabled(false); // Deshabilitar inicialmente el botón Guardar
-        Btn_Mod.setEnabled(false);
-        Btn_Eliminar.setEnabled(false);
-        
+        ((AbstractDocument) JTextField_nombreProducto.getDocument()).addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validarCampos(); }
+            public void removeUpdate(DocumentEvent e) { validarCampos(); }
+            public void changedUpdate(DocumentEvent e) { validarCampos(); }
+        });
+        ((AbstractDocument) JTextField_precioProducto.getDocument()).addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validarCampos(); }
+            public void removeUpdate(DocumentEvent e) { validarCampos(); }
+            public void changedUpdate(DocumentEvent e) { validarCampos(); }
+        });
+        ((AbstractDocument) JTextField_StockProducto.getDocument()).addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validarCampos(); }
+            public void removeUpdate(DocumentEvent e) { validarCampos(); }
+            public void changedUpdate(DocumentEvent e) { validarCampos(); }
+        });
+            Btn_Guardar.setEnabled(false); // Deshabilitar inicialmente el botón Guardar
+            Btn_Mod.setEnabled(false);
+            Btn_Eliminar.setEnabled(false);
     }
-    
+    //Clases internas
     public class LimitDocumentFilter extends DocumentFilter {
-    private int limit;
-
-    public LimitDocumentFilter(int limit) {
-        this.limit = limit;
-    }
-    
-    
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if ((fb.getDocument().getLength() + string.length()) <= limit) {
-            super.insertString(fb, offset, string, attr);
+        private int limit;
+        public LimitDocumentFilter(int limit) {
+            this.limit = limit;
         }
-    }
-    
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if ((fb.getDocument().getLength() - length + text.length()) <= limit) {
-            super.replace(fb, offset, length, text, attrs);
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if ((fb.getDocument().getLength() + string.length()) <= limit) {
+                super.insertString(fb, offset, string, attr);
+            }
         }
-    }
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            if ((fb.getDocument().getLength() - length + text.length()) <= limit) {
+                super.replace(fb, offset, length, text, attrs);
+            }
+        }
     }
     public class LetrasSoloFilter extends DocumentFilter {
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (string.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
-            super.insertString(fb, offset, string, attr);
-        } else {
-            JOptionPane.showMessageDialog(null, "Solo se permiten letras.");
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (string.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
+                super.insertString(fb, offset, string, attr);
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo se permiten letras.");
+            }
+        }
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            if (text.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
+                super.replace(fb, offset, length, text, attrs);
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo se permiten letras.");
+            }
         }
     }
-
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (text.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
-            super.replace(fb, offset, length, text, attrs);
-        } else {
-            JOptionPane.showMessageDialog(null, "Solo se permiten letras.");
-        }
-    }
-}
     public class NumerosYDecimalesFilter extends DocumentFilter {
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
-        String newText = new StringBuilder(currentText).insert(offset, string).toString();
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = new StringBuilder(currentText).insert(offset, string).toString();
 
-        if (newText.matches("\\d*\\.?\\d{0,2}")) { // Permitir números con hasta 2 decimales y un solo punto
-            super.insertString(fb, offset, string, attr);
-        } else {
-            JOptionPane.showMessageDialog(null, "Formato incorrecto. Ejemplo válido: 123.45");
+            if (newText.matches("\\d*\\.?\\d{0,2}")) { // Permitir números con hasta 2 decimales y un solo punto
+                super.insertString(fb, offset, string, attr);
+            } else {
+                JOptionPane.showMessageDialog(null, "Formato incorrecto. Ejemplo válido: 123.45");
+            }
+        }
+
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = new StringBuilder(currentText).replace(offset, offset + length, text).toString();
+
+            if (newText.matches("\\d*\\.?\\d{0,2}")) { // Permitir números con hasta 2 decimales y un solo punto
+                super.replace(fb, offset, length, text, attrs);
+            } else {
+                JOptionPane.showMessageDialog(null, "Formato incorrecto. Ejemplo válido: 123.45");
+            }
         }
     }
-
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
-        String newText = new StringBuilder(currentText).replace(offset, offset + length, text).toString();
-
-        if (newText.matches("\\d*\\.?\\d{0,2}")) { // Permitir números con hasta 2 decimales y un solo punto
-            super.replace(fb, offset, length, text, attrs);
-        } else {
-            JOptionPane.showMessageDialog(null, "Formato incorrecto. Ejemplo válido: 123.45");
-        }
-    }
-}
-
     public class NumerosSoloFilter extends DocumentFilter {
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (string.matches("\\d+")) { // Permitir solo dígitos
-            super.insertString(fb, offset, string, attr);
-        } else {
-            JOptionPane.showMessageDialog(null, "Solo se permiten números.");
+        @Override
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (string.matches("\\d+")) { // Permitir solo dígitos
+                super.insertString(fb, offset, string, attr);
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo se permiten números.");
+            }
         }
-    }
 
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (text.matches("\\d+")) { // Permitir solo dígitos
-            super.replace(fb, offset, length, text, attrs);
-        } else {
-            JOptionPane.showMessageDialog(null, "Solo se permiten números.");
+        @Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            if (text.matches("\\d+")) { // Permitir solo dígitos
+                super.replace(fb, offset, length, text, attrs);
+            } else {
+                JOptionPane.showMessageDialog(null, "Solo se permiten números.");
+            }
         }
     }
-}
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -361,26 +344,29 @@ public class Gestion_Productos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void validarCampos() {
-    String nombre = JTextField_nombreProducto.getText().trim();
-    String precio = JTextField_precioProducto.getText().trim();
-    String stock = JTextField_StockProducto.getText().trim();
-    
-    boolean habilitar = !nombre.isEmpty() && esNumerico(precio) && esNumerico(stock);
-    Btn_Guardar.setEnabled(habilitar);
-}
+    //Validar campos de JTextField
+        private void validarCampos() {
+        String nombre = JTextField_nombreProducto.getText().trim();
+        String precio = JTextField_precioProducto.getText().trim();
+        String stock = JTextField_StockProducto.getText().trim();
 
-private boolean esNumerico(String cadena) {
-    if (cadena == null || cadena.isEmpty()) {
-        return false;
+        boolean habilitar = !nombre.isEmpty() && esNumerico(precio) && esNumerico(stock);
+        Btn_Guardar.setEnabled(habilitar);
     }
-    try {
-        Double.parseDouble(cadena);
-        return true;
-    } catch (NumberFormatException e) {
-        return false;
+    
+    //Verificar si es numerico
+    private boolean esNumerico(String cadena) {
+        if (cadena == null || cadena.isEmpty()) {
+            return false;
+        }
+        try {
+            Double.parseDouble(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
-}
+    //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
         CrudProducto objetoProducto = new CrudProducto();
         objetoProducto.EliminarCategoria(JTextField_IDProducto);
@@ -389,38 +375,38 @@ private boolean esNumerico(String cadena) {
         TablaProductos.clearSelection();
 
     }//GEN-LAST:event_Btn_EliminarActionPerformed
-
+    
+    //Boton Modificar
     private void Btn_ModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ModActionPerformed
         String nombreOriginal = crudProducto.obtenerNombreOriginal(JTextField_IDProducto.getText());
-    String precioOriginal = crudProducto.obtenerPrecioOriginal(JTextField_IDProducto.getText());
-    String stockOriginal = crudProducto.obtenerStockOriginal(JTextField_IDProducto.getText());
+        String precioOriginal = crudProducto.obtenerPrecioOriginal(JTextField_IDProducto.getText());
+        String stockOriginal = crudProducto.obtenerStockOriginal(JTextField_IDProducto.getText());
 
-    if (nombreOriginal.equals(JTextField_nombreProducto.getText()) &&
-        precioOriginal.equals(JTextField_precioProducto.getText()) &&
-        stockOriginal.equals(JTextField_StockProducto.getText())) {
-        JOptionPane.showMessageDialog(null, "No se detectaron cambios en el producto.");
-    } else {
-        crudProducto.ModificarProducto(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
-        actualizarVista();
-    }
-    TablaProductos.clearSelection();
-
-
+        if (nombreOriginal.equals(JTextField_nombreProducto.getText()) &&
+            precioOriginal.equals(JTextField_precioProducto.getText()) &&
+            stockOriginal.equals(JTextField_StockProducto.getText())) {
+            JOptionPane.showMessageDialog(null, "No se detectaron cambios en el producto.");
+        } else {
+            crudProducto.ModificarProducto(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
+            actualizarVista();
+        }
+        TablaProductos.clearSelection();
     }//GEN-LAST:event_Btn_ModActionPerformed
-
+    
+    //Boton Guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
         if (JTextField_nombreProducto.getText().isEmpty() || JTextField_precioProducto.getText().isEmpty() || JTextField_StockProducto.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null, "Completar los datos faltantes.");
-    } else if (crudProducto.existeProductoConNombre(JTextField_nombreProducto.getText())) {
-        JOptionPane.showMessageDialog(null, "El producto con este nombre ya existe.");
-    } else {
-        crudProducto.InsertarProducto(JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
-        actualizarVista();
-    }
-    TablaProductos.clearSelection();
-
+        } else if (crudProducto.existeProductoConNombre(JTextField_nombreProducto.getText())) {
+            JOptionPane.showMessageDialog(null, "El producto con este nombre ya existe.");
+        } else {
+            crudProducto.InsertarProducto(JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
+            actualizarVista();
+        }
+        TablaProductos.clearSelection();
     }//GEN-LAST:event_Btn_GuardarActionPerformed
-
+    
+    //Boton Volver
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
         this.setVisible(false);
@@ -428,7 +414,7 @@ private boolean esNumerico(String cadena) {
         vV.setLocationRelativeTo(null);
         vV.setVisible(true);
     }//GEN-LAST:event_VolverActionPerformed
-
+    
     private void JTextField_IDProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextField_IDProductoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JTextField_IDProductoActionPerformed
@@ -436,26 +422,27 @@ private boolean esNumerico(String cadena) {
     private void JTextField_IDProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTextField_IDProductoMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_JTextField_IDProductoMouseClicked
-
+    
+    //Seleccionar producto
     private void TablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaProductosMouseClicked
        crudProducto.SeleccionarProducto(TablaProductos, JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
         habilitarBotones();
     }//GEN-LAST:event_TablaProductosMouseClicked
     
     private void actualizarVista() {
-    crudProducto.MostrarProductos(TablaProductos);
-    crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
-    deshabilitarBotones();
+        crudProducto.MostrarProductos(TablaProductos);
+        crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
+        deshabilitarBotones();
     }
     
     private void deshabilitarBotones() {
-    Btn_Mod.setEnabled(false);
-    Btn_Eliminar.setEnabled(false);
+        Btn_Mod.setEnabled(false);
+        Btn_Eliminar.setEnabled(false);
     }
     
     private void habilitarBotones() {
-    Btn_Mod.setEnabled(true);
-    Btn_Eliminar.setEnabled(true);
+        Btn_Mod.setEnabled(true);
+        Btn_Eliminar.setEnabled(true);
     }
     /**
      * @param args the command line arguments

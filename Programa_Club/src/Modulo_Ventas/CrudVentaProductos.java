@@ -13,10 +13,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author gabrielv170
  */
+//CRUD Venta de Productos
 public class CrudVentaProductos {
         
-        //FUNCIONES TABLA PRODUCTOS EN VENTA=========================================================
-        public void MostrarProductos(JTable paramTablaProductos) {
+    //Metodos TABLA PRODUCTOS EN VENTA=========================================================
+    public void MostrarProductos(JTable paramTablaProductos) {
         ConexionBDD objetoConexion = new ConexionBDD();
         DefaultTableModel modelo = new DefaultTableModel();
    
@@ -54,79 +55,79 @@ public class CrudVentaProductos {
             objetoConexion.cerrarConexion();
         }
     }
-        
-        public void PonerProductosVenta(JTextField paramID){
-            ConexionBDD objetoConexion = new ConexionBDD();
-            String consulta="UPDATE Productos SET Estado= 1 WHERE ProductoID = ?;";
-            try{
-                CallableStatement cs = (CallableStatement) objetoConexion.Conectar().prepareCall(consulta);
-                cs.setString(1,paramID.getText());
-                
-                cs.execute();
+    
+    //Actualizar productos a venta
+    public void PonerProductosVenta(JTextField paramID){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta="UPDATE Productos SET Estado= 1 WHERE ProductoID = ?;";
+        try{
+            CallableStatement cs = (CallableStatement) objetoConexion.Conectar().prepareCall(consulta);
+            cs.setString(1,paramID.getText());
             
-                JOptionPane.showMessageDialog(null, "Se Puso el producto a la venta correctamente");
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Ocurrió un error, error: " + e.toString());
-            }finally{
-                objetoConexion.cerrarConexion();
-            }
+            cs.execute();
             
+            JOptionPane.showMessageDialog(null, "Se Puso el producto a la venta correctamente");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Ocurrió un error, error: " + e.toString());
+        }finally{
+            objetoConexion.cerrarConexion();
+            }        
+    }
+    
+    //Eliminar Descuento de producto
+    public void EliminarDescuentoProducto(JTextField id){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta="UPDATE Productos SET Estado = 0 WHERE ProductoID = ?;";
+        try{
+            com.mysql.cj.jdbc.CallableStatement cs = (com.mysql.cj.jdbc.CallableStatement) objetoConexion.Conectar().prepareCall(consulta);
+            cs.setInt(1,Integer.parseInt(id.getText()));
+            cs.execute();
+            JOptionPane.showMessageDialog(null, "Se Eliminó correctamente");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al eliminar, error: " + e.toString());
+        }finally{
+            objetoConexion.cerrarConexion();
         }
+    }
         
-        public void EliminarDescuentoProducto(JTextField id){
-            ConexionBDD objetoConexion = new ConexionBDD();
-            String consulta="UPDATE Productos SET Estado = 0 WHERE ProductoID = ?;";
-            try{
-                com.mysql.cj.jdbc.CallableStatement cs = (com.mysql.cj.jdbc.CallableStatement) objetoConexion.Conectar().prepareCall(consulta);
-                cs.setInt(1,Integer.parseInt(id.getText()));
-                cs.execute();
-                JOptionPane.showMessageDialog(null, "Se Eliminó correctamente");
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Ocurrio un error al eliminar, error: " + e.toString());
-            }finally{
-                objetoConexion.cerrarConexion();
+    //Metodos TABLA DE PRODUCTOS NO EN VENTA===================================================
+    public void MostrarProductosNoDisponibles(JTable tablaProductos){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        DefaultTableModel modelo = new DefaultTableModel();
+        String sql="";
+        modelo.addColumn("ID");
+        modelo.addColumn("Nombres");
+        modelo.addColumn("Precio");
+        tablaProductos.setModel(modelo);
+
+        sql="SELECT Productos.ProductoID,Productos.Nombre,Productos.Precio FROM Productos INNER JOIN Categorias ON Productos.CategoriaID = Categorias.CategoriaID WHERE Productos.Estado = 0;";
+
+        try {
+            Statement st;
+            st = objetoConexion.Conectar().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String id = rs.getString("ProductoID");
+                String nombres = rs.getString("Nombre");
+                String precios = rs.getString("Precio");
+                modelo.addRow(new Object[]{id,nombres,precios});
             }
+        tablaProductos.setModel(modelo);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error: " + e.getMessage());
+        }finally{
+            objetoConexion.cerrarConexion();
         }
-        
-        //FUNCIONES TABLA DE PRODUCTOS NO EN VENTA===================================================
-        public void MostrarProductosNoDisponibles(JTable tablaProductos){
-            ConexionBDD objetoConexion = new ConexionBDD();
-            DefaultTableModel modelo = new DefaultTableModel();
-
-            String sql="";
-            modelo.addColumn("ID");
-            modelo.addColumn("Nombres");
-            modelo.addColumn("Precio");
-            tablaProductos.setModel(modelo);
-
-            sql="SELECT Productos.ProductoID,Productos.Nombre,Productos.Precio FROM Productos INNER JOIN Categorias ON Productos.CategoriaID = Categorias.CategoriaID WHERE Productos.Estado = 0;";
-
-            try {
-                Statement st;
-                st = objetoConexion.Conectar().createStatement();
-                ResultSet rs = st.executeQuery(sql);
-                while (rs.next()) {
-                    String id = rs.getString("ProductoID");
-                    String nombres = rs.getString("Nombre");
-                    String precios = rs.getString("Precio");
-                    modelo.addRow(new Object[]{id,nombres,precios});
-                }
-                tablaProductos.setModel(modelo);
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error: " + e.getMessage());
-            }finally{
-                objetoConexion.cerrarConexion();
+    }
+    
+    //Seleccionar productos
+    public void SeleccionarProductos(JTable tablaProductos, JTextField paramID, JTextField paramNombreProducto){
+        int fila = tablaProductos.getSelectedRow();
+            if (fila >= 0) {
+                paramID.setText(tablaProductos.getValueAt(fila,0).toString());
+                paramNombreProducto.setText(tablaProductos.getValueAt(fila,1).toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "Fila no encontrada");
             }
-        }
-
-        public void SeleccionarProductos(JTable tablaProductos, JTextField paramID, JTextField paramNombreProducto){
-            int fila = tablaProductos.getSelectedRow();
-                   if (fila >= 0) {
-                        paramID.setText(tablaProductos.getValueAt(fila,0).toString());
-                        paramNombreProducto.setText(tablaProductos.getValueAt(fila,1).toString());
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Fila no encontrada");
-                    }
-        }
-
+    }
 }

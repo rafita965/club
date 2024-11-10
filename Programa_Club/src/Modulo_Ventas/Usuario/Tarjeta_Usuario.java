@@ -17,8 +17,10 @@ import java.time.LocalDate;
  *
  * @author gabrielv170
  */
+//Verificacion de tarjeta de usuario
 public class Tarjeta_Usuario {
-    
+    //Metodos
+    //Verificar de que empresa es la tarjeta
     public boolean AnalizarEmpresa(JTextField numeroTarjeta) {
         String tarjeta = numeroTarjeta.getText();
 
@@ -47,55 +49,25 @@ public class Tarjeta_Usuario {
         }
     }
 
+    //Verificar los digitos
     public boolean AnalizarValidez(String tarjeta) {
-    int suma = 0;
-    boolean esSegundoDigito = false;
+        int suma = 0;
+        boolean esSegundoDigito = false;
+        for (int i = tarjeta.length() - 1; i >= 0; i--) {
+            int digito = Character.getNumericValue(tarjeta.charAt(i));
 
-    // Recorre el número de la tarjeta de derecha a izquierda
-    for (int i = tarjeta.length() - 1; i >= 0; i--) {
-        int digito = Character.getNumericValue(tarjeta.charAt(i));
-
-        if (esSegundoDigito) {
-            digito *= 2;  // Multiplica por 2 en posiciones pares (contando desde 1 desde la derecha)
-            if (digito > 9) {
-                digito -= 9;  // Si el resultado es mayor que 9, resta 9
+            if (esSegundoDigito) {
+                digito *= 2;  
+                if (digito > 9) {
+                    digito -= 9;  
+                }
             }
+
+            suma += digito;
+            esSegundoDigito = !esSegundoDigito; 
         }
-
-        suma += digito;
-        esSegundoDigito = !esSegundoDigito;  // Cambia el estado para alternar entre los dígitos
+        return suma % 10 == 0;
     }
-
-    // El número es válido si la suma es un múltiplo de 10
-    return suma % 10 == 0;
-    }
-
-    public boolean VerificarVencimiento(JTextField mes, JTextField anio) {
-        LocalDate fechaActual = LocalDate.now();
-        int mesActual = fechaActual.getMonthValue();
-        int anioActual = fechaActual.getYear() % 100;
-
-        int mesUsuario = Integer.parseInt(mes.getText());
-        int anioUsuario = Integer.parseInt(anio.getText());
-        
-        System.out.println("Fecha actual: " + mesActual + "/" + anioActual);
-        System.out.println("Fecha Tarjeta: " + mesUsuario + "/" + anioUsuario);
-
-        if (anioUsuario < anioActual) {
-            JOptionPane.showMessageDialog(null, "La tarjeta ya venció.");
-            return false;
-        } else if (anioUsuario == anioActual) {
-            if (mesUsuario < mesActual) {
-                JOptionPane.showMessageDialog(null, "La tarjeta ya venció.");
-                return false;
-            } else {
-                return true;
-            }
-        } else {
-            return true;
-        }
-    }
-
 }
 
 
