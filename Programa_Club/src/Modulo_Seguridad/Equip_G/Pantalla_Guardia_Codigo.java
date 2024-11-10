@@ -30,11 +30,12 @@ public class Pantalla_Guardia_Codigo {
         return modelo;
         
     }
+    //Abre la pantalla Pantalla_G_Unique
     public void Pantalla_Guardi(int id,String nombre){
         Pantalla_G_Unique pGu=new Pantalla_G_Unique();
         pGu.setVisible(true);
         pGu.setLocationRelativeTo(null);
-        pGu.setSize(700,700);
+        pGu.setSize(785,630);
         pGu.Cargar_Datos(id,nombre);
         
     }

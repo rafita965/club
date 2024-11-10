@@ -35,6 +35,8 @@ public class Suspender_socio_codigo {
         Ps = new Pantalla_socio();
         Ps.agregar_socio(id);
         Ps.setVisible(true);
+        Ps.setLocationRelativeTo(null);
+        Ps.setSize(873, 611);
     }
     
 }

@@ -20,7 +20,7 @@ public class Ver_Guardias_Codigo {
 
     }
 
-    
+    //Agrega todos los guardias a un DefaultListModel
     public DefaultListModel mostrar(DefaultListModel modelo){
         //Le da datos al modelo
         modelo.removeAllElements();
@@ -31,9 +31,6 @@ public class Ver_Guardias_Codigo {
         return modelo;
         
     }
-    public void Pantalla_Zona(int id){
-        //Pantalla_Zona Pz = new Pantalla_Zona();
-        //Pz.setVisible(true);
-    }
+    
 
 }

@@ -210,8 +210,9 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         Suspender_socio_interface vS= new Suspender_socio_interface();
         this.setVisible(false);
         vS.setVisible(true);
-        vS.setSize(700,430);
         vS.setLocationRelativeTo(null);
+        vS.setSize(500, 430);
+        
         
     }//GEN-LAST:event_btn_suspenderSociosActionPerformed
 
@@ -219,7 +220,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         Ver_Guardias VerGuardias=new Ver_Guardias();
         this.setVisible(false);
         VerGuardias.setVisible(true);
-        VerGuardias.setSize(700,430);
+        VerGuardias.setSize(500,450);
         VerGuardias.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_verGuardiasActionPerformed
 
@@ -260,7 +261,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         Pantalla_Guardias pG=new Pantalla_Guardias();
         this.setVisible(false);
         pG.setVisible(true);
-        pG.setSize(700,430);
+        pG.setSize(820, 428);
         pG.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_equiparGuardiasActionPerformed
 
