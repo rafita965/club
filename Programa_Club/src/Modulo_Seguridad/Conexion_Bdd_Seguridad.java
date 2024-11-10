@@ -480,7 +480,7 @@ public class Conexion_Bdd_Seguridad {
 
                 PreparedStatement sele2= miConexion.prepareStatement("CREATE EVENT borrar_registro ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL ? DAY DO DELETE FROM Socios_Suspendidos WHERE ID_Usuario = ?");
                 sele2.setInt(1,Tiempo);
-                sele2.setInt(1,Id);
+                sele2.setInt(2,Id);
                 sele2.execute();
                 miConexion.close();
                 return(true);

@@ -15,7 +15,8 @@ public class Abrir_Seguridad {//Abre la pantalla principal de seguridad
     public void Open_Security(){
         Pantalla_Seguridad vS= new Pantalla_Seguridad();
         vS.setVisible(true);
-        vS.setSize(700,430);
         vS.setLocationRelativeTo(null);
+        vS.setSize(700,430);
+        
     }
 }
