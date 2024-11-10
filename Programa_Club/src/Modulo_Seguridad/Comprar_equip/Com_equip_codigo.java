@@ -29,6 +29,8 @@ public class Com_equip_codigo {
         Ps = new Pantalla_Equipo();
         Ps.agregar_equipo(Id);
         Ps.setVisible(true);
+        Ps.setSize(820, 570);
+        Ps.setLocationRelativeTo(null);
     }
 
     

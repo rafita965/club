@@ -198,6 +198,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //Boton para volver para atras
     private void btn_VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VolverActionPerformed
         Main vM = new Main();
         this.setVisible(false);
@@ -245,7 +246,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         Pantalla_eleccion cE=new Pantalla_eleccion();
         this.setVisible(false);
         cE.setVisible(true);
-        cE.setSize(700,430);
+        cE.setSize(520, 260);
         cE.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_comprarEquipamientoActionPerformed
 
