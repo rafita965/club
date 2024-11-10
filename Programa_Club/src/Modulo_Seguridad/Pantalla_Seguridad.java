@@ -261,7 +261,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         Pantalla_Guardias pG=new Pantalla_Guardias();
         this.setVisible(false);
         pG.setVisible(true);
-        pG.setSize(700,430);
+        pG.setSize(820, 428);
         pG.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_equiparGuardiasActionPerformed
 
