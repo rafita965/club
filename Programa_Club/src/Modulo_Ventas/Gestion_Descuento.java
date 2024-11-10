@@ -20,34 +20,30 @@ import javax.swing.event.ListSelectionEvent;
  *
  * @author tm_galli
  */
+//Gestionar descuento
 public class Gestion_Descuento extends javax.swing.JFrame {
+    //Declaracion de variables
     private String valorDescuentoOriginal;
-private Date fechaInicioOriginal;
-private Date fechaFinalOriginal;
-    /**
-     * Creates new form Gestion_Promocion
-     */
+    private Date fechaInicioOriginal;
+    private Date fechaFinalOriginal;
+
+    //Constructor
     public Gestion_Descuento() {
         initComponents();
         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
         objetoDescuento.MostrarDescuentos(TablaDescuentos);
         JTextField_ID.setEnabled(false);
-        // Agregar DocumentListener al campo de texto para descuento
-((AbstractDocument) JTextField_Descuento.getDocument()).addDocumentListener(new DocumentListener() {
-    public void insertUpdate(DocumentEvent e) { validarCampos(); }
-    public void removeUpdate(DocumentEvent e) { validarCampos(); }
-    public void changedUpdate(DocumentEvent e) { validarCampos(); }
-});
+        ((AbstractDocument) JTextField_Descuento.getDocument()).addDocumentListener(new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validarCampos(); }
+            public void removeUpdate(DocumentEvent e) { validarCampos(); }
+            public void changedUpdate(DocumentEvent e) { validarCampos(); }
+        });
 
-// Inicializar los botones deshabilitados
-Btn_Guardar.setEnabled(false);
-Btn_Modificar.setEnabled(false);
-Btn_Eliminar.setEnabled(false);
-        // Deshabilitar edición en el JTextField del JDateChooser
+        Btn_Guardar.setEnabled(false);
+        Btn_Modificar.setEnabled(false);
+        Btn_Eliminar.setEnabled(false);
         datechooser_FechaInicio.getDateEditor().setEnabled(false);
         datechooser_FechaFinal.getDateEditor().setEnabled(false);
-
-        // Establecer la fecha mínima en el JDateChooser para Fecha Inicio
         datechooser_FechaInicio.setMinSelectableDate(new Date());
 
         // Prevenir que la Fecha Final sea igual a la Fecha de Inicio
@@ -67,116 +63,99 @@ Btn_Eliminar.setEnabled(false);
         
         // Limitar JTextField_ID a solo dos dígitos numéricos
         ((AbstractDocument) JTextField_Descuento.getDocument()).setDocumentFilter(new DocumentFilter() {
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (string.matches("[0-9]{1,2}")) { // Solo permitir números de hasta dos dígitos
-            if (fb.getDocument().getLength() + string.length() <= 2) {
-                super.insertString(fb, offset, string, attr);
+            @Override
+            public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+                if (string.matches("[0-9]{1,2}")) { // Solo permitir números de hasta dos dígitos
+                    if (fb.getDocument().getLength() + string.length() <= 2) {
+                        super.insertString(fb, offset, string, attr);
+                    }
+                }
+        }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                if (text.matches("[0-9]{1,2}")) { // Solo permitir números de hasta dos dígitos
+                    if (fb.getDocument().getLength() + text.length() - length <= 2) {
+                        super.replace(fb, offset, length, text, attrs);
+                    }
+                }
             }
-        }
-    }
-
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (text.matches("[0-9]{1,2}")) { // Solo permitir números de hasta dos dígitos
-            if (fb.getDocument().getLength() + text.length() - length <= 2) {
-                super.replace(fb, offset, length, text, attrs);
+        });
+        datechooser_FechaFinal.setEnabled(false);
+        ((JTextField) datechooser_FechaFinal.getDateEditor().getUiComponent()).setEnabled(false);  // Desactivar el campo de texto
+        // Listener para habilitar el datechooser_FechaFinal cuando se seleccione una fecha en datechooser_FechaInicio
+        datechooser_FechaInicio.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Verifica si se ha seleccionado una fecha en datechooser_FechaInicio
+                if (datechooser_FechaInicio.getDate() != null) {
+                    // Habilitar datechooser_FechaFinal y su botón
+                    datechooser_FechaFinal.setEnabled(true);
+                    ((JTextField) datechooser_FechaFinal.getDateEditor().getUiComponent()).setEnabled(true);  // Habilitar el campo de texto
+                } else {
+                    // Si no se seleccionó una fecha de inicio, desactivar datechooser_FechaFinal
+                    datechooser_FechaFinal.setEnabled(false);
+                    datechooser_FechaFinal.setDate(null); // Restablecer la fecha final
+                    ((JTextField) datechooser_FechaFinal.getDateEditor().getUiComponent()).setEnabled(false);  // Desactivar el campo de texto
+                }
             }
-        }
-    }
-});
+        });
 
-    // Asumimos que datechooser_FechaInicio y datechooser_FechaFinal son los objetos JDateChooser.
+        // Listener para validar que la fecha final no sea menor o igual a la fecha inicial
+        datechooser_FechaFinal.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Verificar que ambas fechas estén seleccionadas
+                if (datechooser_FechaFinal.getDate() != null && datechooser_FechaInicio.getDate() != null) {
+                    Date fechaInicio = datechooser_FechaInicio.getDate();
+                    Date fechaFinal = datechooser_FechaFinal.getDate();
 
-// Paso 1: Desactivar datechooser_FechaFinal si no se ha seleccionado una fecha en datechooser_FechaInicio
-// Paso 1: Desactivar datechooser_FechaFinal y su botón si no se ha seleccionado una fecha en datechooser_FechaInicio
-// Paso 1: Desactivar datechooser_FechaFinal y su botón si no se ha seleccionado una fecha en datechooser_FechaInicio
-// Desactivar inicialmente el JDateChooser de la fecha final (incluyendo el botón del calendario).
-datechooser_FechaFinal.setEnabled(false);
-((JTextField) datechooser_FechaFinal.getDateEditor().getUiComponent()).setEnabled(false);  // Desactivar el campo de texto
-
-// Listener para habilitar el datechooser_FechaFinal cuando se seleccione una fecha en datechooser_FechaInicio
-datechooser_FechaInicio.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // Verifica si se ha seleccionado una fecha en datechooser_FechaInicio
-        if (datechooser_FechaInicio.getDate() != null) {
-            // Habilitar datechooser_FechaFinal y su botón
-            datechooser_FechaFinal.setEnabled(true);
-            ((JTextField) datechooser_FechaFinal.getDateEditor().getUiComponent()).setEnabled(true);  // Habilitar el campo de texto
-        } else {
-            // Si no se seleccionó una fecha de inicio, desactivar datechooser_FechaFinal
-            datechooser_FechaFinal.setEnabled(false);
-            datechooser_FechaFinal.setDate(null); // Restablecer la fecha final
-            ((JTextField) datechooser_FechaFinal.getDateEditor().getUiComponent()).setEnabled(false);  // Desactivar el campo de texto
-        }
-    }
-});
-
-// Listener para validar que la fecha final no sea menor o igual a la fecha inicial
-datechooser_FechaFinal.getDateEditor().addPropertyChangeListener("date", new PropertyChangeListener() {
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // Verificar que ambas fechas estén seleccionadas
-        if (datechooser_FechaFinal.getDate() != null && datechooser_FechaInicio.getDate() != null) {
-            Date fechaInicio = datechooser_FechaInicio.getDate();
-            Date fechaFinal = datechooser_FechaFinal.getDate();
-
-            // Compara si la fecha final es menor o igual a la fecha de inicio
-            if (fechaFinal.compareTo(fechaInicio) <= 0) {
-                JOptionPane.showMessageDialog(null, "La fecha final no puede ser menor que la fecha inicial.", "Error", JOptionPane.ERROR_MESSAGE);
-                datechooser_FechaFinal.setDate(null); // Limpiar la fecha final si es inválida
+                    // Compara si la fecha final es menor o igual a la fecha de inicio
+                    if (fechaFinal.compareTo(fechaInicio) <= 0) {
+                        JOptionPane.showMessageDialog(null, "La fecha final no puede ser menor que la fecha inicial.", "Error", JOptionPane.ERROR_MESSAGE);
+                        datechooser_FechaFinal.setDate(null); // Limpiar la fecha final si es inválida
+                    }
+                }
             }
-        }
-    }
-});
-datechooser_FechaInicio.addPropertyChangeListener(new PropertyChangeListener() {
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // Verifica que el cambio sea en la fecha y no en otra propiedad
-        if (evt.getPropertyName().equals("date")) {
-            validarCampos();
-        }
-    }
-});
-
-// Para Fecha de Fin
-datechooser_FechaFinal.addPropertyChangeListener(new PropertyChangeListener() {
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        // Verifica que el cambio sea en la fecha y no en otra propiedad
-        if (evt.getPropertyName().equals("date")) {
-            validarCampos();
-        }
-    }
-});
-    TablaDescuentos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-    @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
-            // Obtener el índice de la fila seleccionada
-            int row = TablaDescuentos.getSelectedRow();
-            
-            if (row != -1) {
-                // Obtener el descuento de la fila seleccionada (por ejemplo, de la primera columna)
-                String descuentoSeleccionado = TablaDescuentos.getValueAt(row, 0).toString();
-                
-                // Poner el valor en el JTextField_Descuento
-                JTextField_Descuento.setText(descuentoSeleccionado);
+        });
+        datechooser_FechaInicio.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Verifica que el cambio sea en la fecha y no en otra propiedad
+                if (evt.getPropertyName().equals("date")) {
+                    validarCampos();
+                }
             }
-        }
+        });
+
+        // Para Fecha de Fin
+        datechooser_FechaFinal.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                // Verifica que el cambio sea en la fecha y no en otra propiedad
+                if (evt.getPropertyName().equals("date")) {
+                    validarCampos();
+                }
+            }
+        });
+        TablaDescuentos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    // Obtener el índice de la fila seleccionada
+                    int row = TablaDescuentos.getSelectedRow();
+
+                    if (row != -1) {
+                        // Obtener el descuento de la fila seleccionada (por ejemplo, de la primera columna)
+                        String descuentoSeleccionado = TablaDescuentos.getValueAt(row, 0).toString();
+
+                        // Poner el valor en el JTextField_Descuento
+                        JTextField_Descuento.setText(descuentoSeleccionado);
+                    }
+                }
+            }
+        });
     }
-});
-
-
-
-    }
-
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -402,73 +381,75 @@ datechooser_FechaFinal.addPropertyChangeListener(new PropertyChangeListener() {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-// Método que valida los campos y habilita los botones según las condiciones
-private void validarCampos() {
-    // Verificar si el campo de descuento tiene texto
-    boolean descuentoValido = !JTextField_Descuento.getText().isEmpty();
+    // Método que valida los campos y habilita los botones según las condiciones
+    private void validarCampos() {
+        // Verificar si el campo de descuento tiene texto
+        boolean descuentoValido = !JTextField_Descuento.getText().isEmpty();
+
+        // Verificar si las fechas son válidas (por ejemplo, no vacías y que la fecha de fin sea posterior a la de inicio)
+        boolean fechasValidas = (datechooser_FechaInicio.getDate() != null) && (datechooser_FechaFinal.getDate() != null)
+                && !datechooser_FechaFinal.getDate().before(datechooser_FechaInicio.getDate());
+
+        // Si el campo de descuento no está vacío y las fechas son válidas, habilitar los botones
+        if (descuentoValido && fechasValidas) {
+            Btn_Guardar.setEnabled(true);
+        } else {
+            Btn_Guardar.setEnabled(false);
+        }
+
+        // Si ya existe un descuento seleccionado, habilitar los botones de Modificar y Eliminar
+        if (TablaDescuentos.getSelectionModel().isSelectionEmpty()) {
+        // No hay fila seleccionada
+        } else {
+        // Hay una fila seleccionada
+        Btn_Modificar.setEnabled(true);
+        Btn_Eliminar.setEnabled(true);
+        }
+    }
     
-    // Verificar si las fechas son válidas (por ejemplo, no vacías y que la fecha de fin sea posterior a la de inicio)
-    boolean fechasValidas = (datechooser_FechaInicio.getDate() != null) && (datechooser_FechaFinal.getDate() != null)
-            && !datechooser_FechaFinal.getDate().before(datechooser_FechaInicio.getDate());
-
-    // Si el campo de descuento no está vacío y las fechas son válidas, habilitar los botones
-    if (descuentoValido && fechasValidas) {
-        Btn_Guardar.setEnabled(true);
-    } else {
-        Btn_Guardar.setEnabled(false);
-    }
-
-    // Si ya existe un descuento seleccionado, habilitar los botones de Modificar y Eliminar
-    if (TablaDescuentos.getSelectionModel().isSelectionEmpty()) {
-    // No hay fila seleccionada
-    } else {
-    // Hay una fila seleccionada
-    Btn_Modificar.setEnabled(true);
-    Btn_Eliminar.setEnabled(true);
-    }
-}
+    //Boton Guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
         objetoDescuento.AgregarDescuento(JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
         objetoDescuento.MostrarDescuentos(TablaDescuentos);
         TablaDescuentos.clearSelection();
-
     }//GEN-LAST:event_Btn_GuardarActionPerformed
-
+    
+    //Boton Modificar
     private void Btn_ModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ModificarActionPerformed
         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
         // Verificar si hay cambios en los valores
-    boolean hayCambios = false;
+        boolean hayCambios = false;
 
-    if (!JTextField_Descuento.getText().equals(valorDescuentoOriginal)) {
-        hayCambios = true;
-    }
-    if (datechooser_FechaInicio.getDate() != null && !datechooser_FechaInicio.getDate().equals(fechaInicioOriginal)) {
-        hayCambios = true;
-    }
-    if (datechooser_FechaFinal.getDate() != null && !datechooser_FechaFinal.getDate().equals(fechaFinalOriginal)) {
-        hayCambios = true;
-    }
+        if (!JTextField_Descuento.getText().equals(valorDescuentoOriginal)) {
+            hayCambios = true;
+        }
+        if (datechooser_FechaInicio.getDate() != null && !datechooser_FechaInicio.getDate().equals(fechaInicioOriginal)) {
+            hayCambios = true;
+        }
+        if (datechooser_FechaFinal.getDate() != null && !datechooser_FechaFinal.getDate().equals(fechaFinalOriginal)) {
+            hayCambios = true;
+        }
 
-    if (hayCambios) {
-       objetoDescuento.ModificarDescuento(JTextField_ID,JTextField_Descuento,datechooser_FechaInicio, datechooser_FechaFinal);
-       objetoDescuento.MostrarDescuentos(TablaDescuentos);
-        JOptionPane.showMessageDialog(null, "Descuento modificado correctamente.");
-    } else {
-        JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-    }
-    TablaDescuentos.clearSelection();
-    
+        if (hayCambios) {
+           objetoDescuento.ModificarDescuento(JTextField_ID,JTextField_Descuento,datechooser_FechaInicio, datechooser_FechaFinal);
+           objetoDescuento.MostrarDescuentos(TablaDescuentos);
+            JOptionPane.showMessageDialog(null, "Descuento modificado correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha realizado ningún cambio para modificar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        }
+        TablaDescuentos.clearSelection();
     }//GEN-LAST:event_Btn_ModificarActionPerformed
-
+    
+    //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
         objetoDescuento.EliminarDescuento(JTextField_ID);
         objetoDescuento.MostrarDescuentos(TablaDescuentos);
         TablaDescuentos.clearSelection();
-
     }//GEN-LAST:event_Btn_EliminarActionPerformed
-
+    
+    //Boton Volver
     private void Volver_BtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Volver_BtnActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
         this.setVisible(false);
@@ -476,7 +457,8 @@ private void validarCampos() {
         vV.setLocationRelativeTo(null);
         vV.setVisible(true);
     }//GEN-LAST:event_Volver_BtnActionPerformed
-
+    
+    //Boton ir a pantalla Aplicar Descuento
     private void Btn_AplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AplicarActionPerformed
         Pantalla_AplicarDescuento vAD = new Pantalla_AplicarDescuento();
         this.setVisible(false);
@@ -485,20 +467,20 @@ private void validarCampos() {
         vAD.setVisible(true);
     }//GEN-LAST:event_Btn_AplicarActionPerformed
 
+    //Boton seleccionar descuento
     private void TablaDescuentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDescuentosMouseClicked
-    Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
-    objetoDescuento.SeleccionarDescuentos(TablaDescuentos, JTextField_ID, JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
+        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
+        objetoDescuento.SeleccionarDescuentos(TablaDescuentos, JTextField_ID, JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
 
-    // Guardamos los valores actuales para poder verificar si hubo cambios
-    valorDescuentoOriginal = JTextField_Descuento.getText();
-    fechaInicioOriginal = datechooser_FechaInicio.getDate();
-    fechaFinalOriginal = datechooser_FechaFinal.getDate();
+        // Guardamos los valores actuales para poder verificar si hubo cambios
+        valorDescuentoOriginal = JTextField_Descuento.getText();
+        fechaInicioOriginal = datechooser_FechaInicio.getDate();
+        fechaFinalOriginal = datechooser_FechaFinal.getDate();
 
-    // Habilitar el botón de modificar solo si la tabla tiene un descuento seleccionado
-    Btn_Modificar.setEnabled(true);
-    Btn_Eliminar.setEnabled(true);
+        // Habilitar el botón de modificar solo si la tabla tiene un descuento seleccionado
+        Btn_Modificar.setEnabled(true);
+        Btn_Eliminar.setEnabled(true);
     }//GEN-LAST:event_TablaDescuentosMouseClicked
-    
     
     /**
      * @param args the command line arguments

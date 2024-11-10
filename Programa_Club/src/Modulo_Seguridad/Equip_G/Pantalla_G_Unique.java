@@ -84,7 +84,7 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        Eliminar3.setText("Eliminar equipamiento3");
+        Eliminar3.setText("Colocar/Eliminar equipamiento3");
         Eliminar3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Eliminar3ActionPerformed(evt);
@@ -127,7 +127,7 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
             }
         });
 
-        Eliminar1.setText("Eliminar equipamiento1");
+        Eliminar1.setText("Colocar/Eliminar equipamiento1");
         Eliminar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Eliminar1ActionPerformed(evt);
@@ -141,7 +141,7 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
             }
         });
 
-        Eliminar2.setText("Eliminar equipamiento2");
+        Eliminar2.setText("Colocar/Eliminar equipamiento2");
         Eliminar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Eliminar2ActionPerformed(evt);
@@ -160,20 +160,22 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Equipo3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Combo3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(Eliminar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(Jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(Equipo3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Combo3, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(Jnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Eliminar3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(Equipo1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(Combo1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Eliminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Eliminar1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Eliminar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Eliminar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(261, 261, 261)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -235,6 +237,9 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     
     private void Combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo1ActionPerformed
+        //Cuando se selecciona algo del combobox, se guarda en un string [] para luego sacar la id y que sea insertado en la bdd como tambien que sea mostrado en el texto de al lado
+        //Luego, se reactivan los botones 2 y 3 de Colocar/Eliminar
+        
         Object itemSeleccionado = Combo1.getSelectedItem();
         String[] Elemento = (itemSeleccionado.toString()).split(" // ");
         
@@ -251,6 +256,10 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_Combo1ActionPerformed
 
     private void Eliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Eliminar1ActionPerformed
+        //Cuando se toca el boton, se activa el combobox 1 y se desactiva basicamente todo lo demas.
+        //Si el guardia tiene un equipo en esa posicion, se le eliminara, si no, no pasa nada
+        //Al combobox se le agrega toda la data de los equipos disponibles
+        
         Combo1.setEnabled(true);
         Combo2.setEnabled(false);
         Combo3.setEnabled(false);
@@ -281,6 +290,10 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_Eliminar1ActionPerformed
 
     private void Eliminar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Eliminar2ActionPerformed
+        //Cuando se toca el boton, se activa el combobox 2 y se desactiva basicamente todo lo demas.
+        //Si el guardia tiene un equipo en esa posicion, se le eliminara, si no, no pasa nada
+        //Al combobox se le agrega toda la data de los equipos disponibles
+        
         Combo2.setEnabled(true);
         Combo1.setEnabled(false);
         Combo3.setEnabled(false);
@@ -306,6 +319,10 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_Eliminar2ActionPerformed
 
     private void Eliminar3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Eliminar3ActionPerformed
+        //Cuando se toca el boton, se activa el combobox 3 y se desactiva basicamente todo lo demas.
+        //Si el guardia tiene un equipo en esa posicion, se le eliminara, si no, no pasa nS
+        //Al combobox se le agrega toda la data de los equipos disponibles
+        
         Combo2.setEnabled(false);
         Combo1.setEnabled(false);
         Combo3.setEnabled(true);
@@ -331,6 +348,9 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_Eliminar3ActionPerformed
 
     private void Combo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo2ActionPerformed
+        //Cuando se selecciona algo del combobox, se guarda en un string [] para luego sacar la id y que sea insertado en la bdd como tambien que sea mostrado en el texto de al lado
+        //Luego, se reactivan los botones 1 y 3 de Colocar/Eliminar
+        
         Object itemSeleccionado = Combo2.getSelectedItem();
         String[] Elemento = (itemSeleccionado.toString()).split(" // ");
         
@@ -343,6 +363,9 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_Combo2ActionPerformed
 
     private void Combo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Combo3ActionPerformed
+        //Cuando se selecciona algo del combobox, se guarda en un string [] para luego sacar la id y que sea insertado en la bdd como tambien que sea mostrado en el texto de al lado
+        //Luego, se reactivan los botones 1 y 2 de Colocar/Eliminar
+        
         Object itemSeleccionado = Combo3.getSelectedItem();
         String[] Elemento = (itemSeleccionado.toString()).split(" // ");
         
@@ -355,6 +378,8 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_Combo3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //Este boton quita del guardia todo el equipo que lleve consigo.
+        
         Equipo1.setText("Sin Equipo");
         Equipo2.setText("Sin Equipo");
         Equipo3.setText("Sin Equipo");
@@ -373,6 +398,8 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btn_Volver2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_Volver2ActionPerformed
+        //Este boton vuelve atras
+        
         Pantalla_Guardias pG=new Pantalla_Guardias();
         pG.setVisible(true);
         pG.setLocationRelativeTo(null);
@@ -381,6 +408,8 @@ public class Pantalla_G_Unique extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_Volver2ActionPerformed
 
     public void Cargar_Datos(int Id,String nombre){
+        //Este metodo carga el equipo seleccionado a la bdd
+        
         array_usado =pGuC.cargar_datos(Id);
         this.Id=Id;
         Jnombre.setText(nombre);

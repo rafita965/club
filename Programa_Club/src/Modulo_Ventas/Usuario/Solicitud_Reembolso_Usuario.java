@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modulo_Ventas.Usuario;
 import Modulo_Ventas.Usuario.Reembolso_Usuario;
 import Modulo_Ventas.Pantalla_Ventas;
@@ -18,22 +13,19 @@ import javax.swing.text.AttributeSet;
 import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 import javax.swing.text.BadLocationException;
-
-
 /**
  *
  * @author tm_galli
  */
+//Gestionar solicitud de reembolso
 public class Solicitud_Reembolso_Usuario extends javax.swing.JFrame {
+    //Declaracion de variables
     private Reembolso_Usuario objetoReembolso = new Reembolso_Usuario();
     private String usuarioID; // Variable para almacenar el ID del usuario
     private String IDPedidoSeleccionado;
     private Reembolso_Usuario reembolsoUsuario;
     private boolean updating = false;
-
-    /**
-     * Creates new form Gestion_Reembolso_Usuario
-     */
+    //Constructor
     public Solicitud_Reembolso_Usuario(String usuarioID) {
         initComponents();
         this.usuarioID = usuarioID;
@@ -46,96 +38,65 @@ public class Solicitud_Reembolso_Usuario extends javax.swing.JFrame {
         JTextField_Categoria.setEnabled(false);
         JTextField_Precio.setEnabled(false);
         JTextField_Cantidad.setEnabled(false); 
-        // Al inicializar, aseguramos que el botón esté deshabilitado
         habilitarBotonConfirmar();
-
        ((AbstractDocument) JTextField_Motivo.getDocument()).setDocumentFilter(new LetrasSoloLimitFilter(16));
-       // Asumiendo que TablaPedidos es tu JTable
         TablaPedidos.getSelectionModel().addListSelectionListener(e -> habilitarBotonConfirmar());
         JTextField_Motivo.getDocument().addDocumentListener(new DocumentListener() {
-    public void insertUpdate(DocumentEvent e) {
-        habilitarBotonConfirmar();
-    }
+            public void insertUpdate(DocumentEvent e) {
+                habilitarBotonConfirmar();
+            }
 
-    public void removeUpdate(DocumentEvent e) {
-        habilitarBotonConfirmar();
-    }
+            public void removeUpdate(DocumentEvent e) {
+                habilitarBotonConfirmar();
+            }
 
-    public void changedUpdate(DocumentEvent e) {
-        habilitarBotonConfirmar();
+            public void changedUpdate(DocumentEvent e) {
+                habilitarBotonConfirmar();
+            }
+        });
+        JTextField_Motivo.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validarMotivo(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validarMotivo(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validarMotivo(e);
+            }
+        });
     }
-});
-    // Se agrega un DocumentListener para validar el campo de Motivo en tiempo real
-    JTextField_Motivo.getDocument().addDocumentListener(new DocumentListener() {
-        @Override
-        public void insertUpdate(DocumentEvent e) {
-            validarMotivo(e);
+    // Clase para permitir solo letras y limitar la longitud a un máximo de caracteres
+    private class LetrasSoloLimitFilter extends DocumentFilter {
+        private final int maxLength;
+
+        public LetrasSoloLimitFilter(int maxLength) {
+            this.maxLength = maxLength;
         }
 
         @Override
-        public void removeUpdate(DocumentEvent e) {
-            validarMotivo(e);
+        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
+            if (fb.getDocument().getLength() + string.length() <= maxLength && string.matches("[a-zA-ZáéíóúÁÉÍÓÚ]+")) {
+                super.insertString(fb, offset, string, attr);
+            } else {
+                Toolkit.getDefaultToolkit().beep(); // Da una señal si se intenta ingresar caracteres no válidos
+            }
         }
 
         @Override
-        public void changedUpdate(DocumentEvent e) {
-            validarMotivo(e);
-        }
-    });
-}
-
-// Método de validación para el campo Motivo
-public void validarMotivo(DocumentEvent e) {
-    if (updating) return;  // Evitar recursividad si estamos actualizando el campo
-
-    try {
-        updating = true; // Iniciar la actualización
-        String text = JTextField_Motivo.getText(); // Obtener el texto del campo
-
-        // Validar si el texto contiene números
-        if (text.matches(".*\\d.*")) { // Si contiene números
-            // Si contiene números, limpiamos el campo o ponemos un mensaje de advertencia
-            JTextField_Motivo.setText(""); // Ejemplo: Limpiar el texto
-            JOptionPane.showMessageDialog(this, "El motivo no puede contener números.", "Error", JOptionPane.ERROR_MESSAGE);
-        } 
-        // También puedes agregar más validaciones si es necesario (por ejemplo, para textos vacíos).
-    } finally {
-        updating = false; // Restablecer el flag
-    }
-}
-
-// Clase para permitir solo letras y limitar la longitud a un máximo de caracteres
-private class LetrasSoloLimitFilter extends DocumentFilter {
-    private final int maxLength;
-
-    public LetrasSoloLimitFilter(int maxLength) {
-        this.maxLength = maxLength;
-    }
-
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-        if (fb.getDocument().getLength() + string.length() <= maxLength && string.matches("[a-zA-ZáéíóúÁÉÍÓÚ]+")) {
-            super.insertString(fb, offset, string, attr);
-        } else {
-            Toolkit.getDefaultToolkit().beep(); // Da una señal si se intenta ingresar caracteres no válidos
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            if (fb.getDocument().getLength() - length + text.length() <= maxLength && text.matches("[a-zA-ZáéíóúÁÉÍÓÚ]+")) {
+                super.replace(fb, offset, length, text, attrs);
+            } else {
+                Toolkit.getDefaultToolkit().beep(); // Da una señal si se intenta ingresar caracteres no válidos
+            }
         }
     }
-
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-        if (fb.getDocument().getLength() - length + text.length() <= maxLength && text.matches("[a-zA-ZáéíóúÁÉÍÓÚ]+")) {
-            super.replace(fb, offset, length, text, attrs);
-        } else {
-            Toolkit.getDefaultToolkit().beep(); // Da una señal si se intenta ingresar caracteres no válidos
-        }
-    }
-}
-    
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -336,13 +297,32 @@ private class LetrasSoloLimitFilter extends DocumentFilter {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-private void habilitarBotonConfirmar() {
-    boolean pedidoSeleccionado = TablaPedidos.getSelectedRow() != -1; // Verifica si hay una fila seleccionada
-    boolean motivoEscrito = !JTextField_Motivo.getText().trim().isEmpty(); // Verifica si el campo de texto no está vacío
+    // Método de validación para el campo Motivo
+    public void validarMotivo(DocumentEvent e) {
+        if (updating) return;  // Evitar recursividad si estamos actualizando el campo
 
-    // Habilitar o deshabilitar el botón según las condiciones
-    Btn_Confirmar.setEnabled(pedidoSeleccionado && motivoEscrito);
-}
+        try {
+            updating = true; // Iniciar la actualización
+            String text = JTextField_Motivo.getText(); // Obtener el texto del campo
+
+            // Validar si el texto contiene números
+            if (text.matches(".*\\d.*")) { // Si contiene números
+                // Si contiene números, limpiamos el campo o ponemos un mensaje de advertencia
+                JTextField_Motivo.setText(""); // Ejemplo: Limpiar el texto
+                JOptionPane.showMessageDialog(this, "El motivo no puede contener números.", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+            // También puedes agregar más validaciones si es necesario (por ejemplo, para textos vacíos).
+        } finally {
+            updating = false; // Restablecer el flag
+        }
+    }
+    //Habilita boton confirmar
+    private void habilitarBotonConfirmar() {
+        boolean pedidoSeleccionado = TablaPedidos.getSelectedRow() != -1; // Verifica si hay una fila seleccionada
+        boolean motivoEscrito = !JTextField_Motivo.getText().trim().isEmpty(); // Verifica si el campo de texto no está vacío
+        Btn_Confirmar.setEnabled(pedidoSeleccionado && motivoEscrito);
+    }
+    //Boton confirmar
     private void Btn_ConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ConfirmarActionPerformed
         objetoReembolso.InsertarMotivo(JTextField_Motivo, datechooser_Fecha);
         JTextField_Nombre.setText(""); // Limpia el campo de texto
@@ -350,16 +330,12 @@ private void habilitarBotonConfirmar() {
         JTextField_Categoria.setText("");
         JTextField_Cantidad.setText("");  
         JTextField_Motivo.setText("");
-
-    // También puedes deshabilitar el botón "Confirmar" nuevamente
         Btn_Confirmar.setEnabled(false);
-
-    // Opcionalmente, también puedes deseleccionar cualquier fila en la tabla de pedidos
         TablaPedidos.clearSelection();
         reembolsoUsuario.MostrarProductos(TablaPedidos, usuarioID);
-
     }//GEN-LAST:event_Btn_ConfirmarActionPerformed
-
+    
+    //Volver a la pantalla de usuario
     private void VolverPantallaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverPantallaActionPerformed
         Menu_Usuario mU= new Menu_Usuario(usuarioID);
         this.setVisible(false);
@@ -367,7 +343,8 @@ private void habilitarBotonConfirmar() {
         mU.setLocationRelativeTo(null);
         mU.setVisible(true);
     }//GEN-LAST:event_VolverPantallaActionPerformed
-
+    
+    //Seleccionar pedido
     private void TablaPedidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaPedidosMouseClicked
         int filaSeleccionada = TablaPedidos.getSelectedRow();
         if (filaSeleccionada != -1) {
@@ -376,7 +353,7 @@ private void habilitarBotonConfirmar() {
 
             objetoReembolso.setIDPedidoSeleccionado(idPedido);
             objetoReembolso.SeleccionarProducto(TablaPedidos, JTextField_ID, JTextField_Nombre, JTextField_Precio, JTextField_Categoria, JTextField_Cantidad);
-    }
+        }
     }//GEN-LAST:event_TablaPedidosMouseClicked
 
     /**

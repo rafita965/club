@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modulo_Ventas;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -14,6 +8,7 @@ import Modulo_Ventas.ConexionBDD;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
+//CRUD Categoria
 public class CrudCategoria {
     //Declaracion de variables a usar
     int codigo;
@@ -35,64 +30,60 @@ public class CrudCategoria {
     public void setNombreCategoria(String nombreCategoria) {
         this.nombreCategoria = nombreCategoria;
     }
+    //Funciones
     
     //Insertar
-    //Declaracion de parametros
     public void InsertarCategoria(JTextField paramNombreCategoria){
         setNombreCategoria(paramNombreCategoria.getText());
     
-    // Verificar si ya existe una categoría con ese nombre
-    if (categoriaExiste(getNombreCategoria())) {
-        JOptionPane.showMessageDialog(null, "Error: Ya existe una categoría con ese nombre.");
-        return; // No continuar con la inserción si la categoría ya existe
-    }
+        // Verificar si ya existe una categoría con ese nombre
+        if (categoriaExiste(getNombreCategoria())) {
+            JOptionPane.showMessageDialog(null, "Error: Ya existe una categoría con ese nombre.");
+            return; // No continuar con la inserción si la categoría ya existe
+        }
     
-    //Abrir Conexion
-    ConexionBDD objetoConexion = new ConexionBDD();
-    
-    //Consulta SQL
-    String consulta = "insert into Categorias (NombreCategoria) values (?);";
-    
-    try {
-        //Adquiere los parametros del JTextField
-        CallableStatement cs = objetoConexion.Conectar().prepareCall(consulta);
-        cs.setString(1, getNombreCategoria());
-        
-        // Ejecuta la sentencia con los parámetros
-        cs.execute();
-        
-        JOptionPane.showMessageDialog(null, "Se insertó correctamente la categoría");
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "No se insertó correctamente la categoría, error: " + e.toString());
-    } finally {
-        objetoConexion.cerrarConexion();
-    }
+        ConexionBDD objetoConexion = new ConexionBDD();
+
+        String consulta = "insert into Categorias (NombreCategoria) values (?);";
+
+        try {
+            CallableStatement cs = objetoConexion.Conectar().prepareCall(consulta);
+            cs.setString(1, getNombreCategoria());
+
+            cs.execute();
+
+            JOptionPane.showMessageDialog(null, "Se insertó correctamente la categoría");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se insertó correctamente la categoría, error: " + e.toString());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
     }
     
     // Método para verificar si la categoría ya existe en la base de datos
     public boolean categoriaExiste(String nombreCategoria) {
-    ConexionBDD objetoConexion = new ConexionBDD();
-    String sql = "SELECT COUNT(*) FROM Categorias WHERE NombreCategoria = ?";
-    
-    try {
-        PreparedStatement ps = objetoConexion.Conectar().prepareStatement(sql);
-        ps.setString(1, nombreCategoria);
-        ResultSet rs = ps.executeQuery();
-        
-        if (rs.next()) {
-            // Si el contador es mayor que 0, significa que la categoría existe
-            return rs.getInt(1) > 0;
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String sql = "SELECT COUNT(*) FROM Categorias WHERE NombreCategoria = ?";
+
+        try {
+            PreparedStatement ps = objetoConexion.Conectar().prepareStatement(sql);
+            ps.setString(1, nombreCategoria);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al verificar la categoría: " + e.getMessage());
+        } finally {
+            objetoConexion.cerrarConexion();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al verificar la categoría: " + e.getMessage());
-    } finally {
-        objetoConexion.cerrarConexion();
+
+        return false; 
     }
     
-    return false; // Si no se encuentra la categoría, devolvemos false
-    }
-    //Mostrar
+    //Mostrar categorias
     public void MostrarCategorias(JTable paramTablaTotalCategorias){
         ConexionBDD objetoConexion = new ConexionBDD();
         //Crear modelo de tabla para mostrar
@@ -130,6 +121,7 @@ public class CrudCategoria {
             objetoConexion.cerrarConexion();
         }
     }
+    
     //Seleccionar
     public void SeleccionarCategoria(JTable paramTablaCategorias, JTextField paramID, JTextField paramNombre){
         try{
@@ -149,6 +141,7 @@ public class CrudCategoria {
             JOptionPane.showMessageDialog(null, "Error de seleccion, error:"+e.toString());
         }
     } 
+    
     //Modificar
     public void ModificarCategoria(JTextField paramCodigo, JTextField paramNombre) {
     // Declarar parámetros
@@ -176,27 +169,22 @@ public class CrudCategoria {
         
         JOptionPane.showMessageDialog(null, "Modificación exitosa");
         
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "No se modificó: " + e.toString());
-    } finally {
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "No se modificó: " + e.toString());
+        
+        } finally {
         objetoConexion.cerrarConexion();
+        }
     }
-}
-
     
     //Eliminar
     public void EliminarCategoria(JTextField paramCodigo){
-        //Declarar parametros
         setCodigo(Integer.parseInt(paramCodigo.getText()));
         ConexionBDD objetoConexion= new ConexionBDD();
-        //Consulta SQL
         String consulta="DELETE FROM Categorias WHERE Categorias.CategoriaID=?;";
         try{
-            //Conectar BDD
             CallableStatement cs= objetoConexion.Conectar().prepareCall(consulta);
-            //Adquirir parametros
             cs.setInt(1, getCodigo());
-            //Ejecutar
             cs.execute();
             
             JOptionPane.showMessageDialog(null,"Se eliminó correctamente el registro");
@@ -209,10 +197,7 @@ public class CrudCategoria {
         }
     }
     public void LimpiarCampos(JTextField paramID, JTextField paramNombre) {
-    paramID.setText("");
-    paramNombre.setText("");
-
-}
-
-        
+        paramID.setText("");
+        paramNombre.setText("");
+    }   
 }

@@ -1,14 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Modulo_Ventas.Usuario;
-
-/**
- *
- * @author thiag
- */
 import Modulo_Ventas.ConexionBDD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,9 +8,12 @@ import java.sql.SQLException;
  *
  * @author thiag
  */
+//Verificar botones del menu de usuario
 public class VerificarBotonMenuUsuario {
+    //Declaracion de variables
     private final ConexionBDD conexionBDD = new ConexionBDD();
-
+    //Metodos
+    //Verificar existencia de productos de usuario
     public boolean existeProducto() {
         String sql = "SELECT COUNT(*) FROM Productos WHERE Estado=1";
         try (Connection conn = conexionBDD.Conectar();
@@ -28,7 +21,7 @@ public class VerificarBotonMenuUsuario {
              ResultSet rs = stmt.executeQuery()) {
              
             if (rs.next()) {
-                return rs.getInt(1) > 0; // Retorna true si hay al menos un producto.
+                return rs.getInt(1) > 0; 
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -37,11 +30,12 @@ public class VerificarBotonMenuUsuario {
         }
         return false;
     }
+    //Verificar existencia de pedidos de usuario
     public boolean existePedidoUsuario(String usuarioID) {
         String sql = "SELECT COUNT(*) FROM Pedido WHERE IDUsuario=?";
         try (Connection conn = conexionBDD.Conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, usuarioID); // Asigna el usuarioID al parámetro de la consulta
+            stmt.setString(1, usuarioID); 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
@@ -54,16 +48,17 @@ public class VerificarBotonMenuUsuario {
         }
         return false;
     }
+    //Verificar existencia de reembolso de usuario
     public boolean existeReembolsoUsuario(String usuarioID) {
         String sql = "SELECT COUNT(*) FROM Reembolso_Pedido rp " +
                      "JOIN Pedido p ON rp.IDPedido = p.PedidoID " +
                      "WHERE p.IDUsuario = ? AND rp.Estado=1";
         try (Connection conn = conexionBDD.Conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, usuarioID); // Asigna el usuarioID al parámetro de la consulta
+            stmt.setString(1, usuarioID); 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1) > 0; // Retorna true si hay reembolsos para el usuario
+                    return rs.getInt(1) > 0; 
                 }
             }
         } catch (SQLException e) {

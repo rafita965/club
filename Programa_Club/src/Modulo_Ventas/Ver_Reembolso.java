@@ -8,7 +8,9 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
+//Ver reembolsos
 public class Ver_Reembolso {
+    //Declaracion de variables a usar
     private Date fecha;
     private double monto;
     private String motivo;
@@ -17,7 +19,6 @@ public class Ver_Reembolso {
     private int codigo;
 
     // Getters y setters
-
     public int getEstado() {
         return Estado;
     }
@@ -65,7 +66,7 @@ public class Ver_Reembolso {
     public void setIDPedido(int IDPedido) {
         this.IDPedido = IDPedido;
     }
-
+    //Metodos
     // Método para mostrar los reembolsos en la tabla
     public void MostrarReembolsos(JTable paramTablaTotalReembolso) {
         ConexionBDD objetoConexion = new ConexionBDD();
@@ -143,6 +144,8 @@ public class Ver_Reembolso {
             objetoConexion.cerrarConexion();
         }
     }
+    
+    //Eliminar reembolso
     public void EliminarReembolso(JTextField paramID){
         //Declarar parametros
         setCodigo(Integer.parseInt(paramID.getText()));
@@ -158,8 +161,6 @@ public class Ver_Reembolso {
             cs.execute();
             
             JOptionPane.showMessageDialog(null,"Se eliminó correctamente el reembolso");
-            
-            
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null,"No se eliminó correctamente el registro, error:"+ e.toString())  ;
         }finally{
