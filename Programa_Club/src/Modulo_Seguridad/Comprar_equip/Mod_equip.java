@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -232,14 +233,16 @@ public class Mod_equip extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Btn_Envio)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(69, 69, 69)
                                 .addComponent(btn_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(143, 143, 143)
+                                .addComponent(Btn_Envio)))))
                 .addContainerGap(136, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -249,7 +252,7 @@ public class Mod_equip extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -265,9 +268,9 @@ public class Mod_equip extends javax.swing.JFrame {
                                     .addGap(35, 35, 35)
                                     .addComponent(btn_imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(26, 26, 26)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_Envio)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Btn_Envio))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -360,21 +363,33 @@ public class Mod_equip extends javax.swing.JFrame {
     private void Btn_EnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EnvioActionPerformed
         //Agarra el texto ingresado, lo envia a la bdd y lo muestra
         String Nombre=jTextField1.getText();
-        int Precio=Integer.parseInt(jTextField2.getText());
+        
         String Descripcion=jTextField3.getText();
         String link=jTextField4.getText();
-        
-        mec.Insert(Nombre,Precio,Descripcion,link,ByteImagen);
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        modelo=mec.Cargar_datos(modelo);
-        Lista_equipamiento.setModel(modelo);
-        if (!btn_imagen.isEnabled()){
-            btn_imagen.setEnabled(true);
+        if (Nombre.isEmpty() || jTextField2.getText().isEmpty() || Descripcion.isEmpty() || link.isEmpty()){
+            JOptionPane.showMessageDialog(this,"Porfavor ingrese datos en todos los campos de texto","ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {
+            
+            int Precio=Integer.parseInt(jTextField2.getText());
+            if (Precio>0){
+                mec.Insert(Nombre,Precio,Descripcion,link,ByteImagen);
+                jTextField1.setText("");
+                jTextField2.setText("");
+                jTextField3.setText("");
+                jTextField4.setText("");
+                modelo=mec.Cargar_datos(modelo);
+                Lista_equipamiento.setModel(modelo);
+                if (!btn_imagen.isEnabled()){
+                    btn_imagen.setEnabled(true);
+                }
+            }else{
+                JOptionPane.showMessageDialog(this,"Cantidad invalida, por favor ingrese un numero valido","ERROR", JOptionPane.WARNING_MESSAGE);
+            }
+            }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this,"Cantidad invalida, por favor ingrese un numero valido","ERROR", JOptionPane.WARNING_MESSAGE);
         }
-        
+        }
     }//GEN-LAST:event_Btn_EnvioActionPerformed
 
     private void jTextField4FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusGained
@@ -404,6 +419,8 @@ public class Mod_equip extends javax.swing.JFrame {
            mec.Delete(itemSeleccionado);
            modelo=mec.Cargar_datos(modelo);
            Lista_equipamiento.setModel(modelo);
+        }else{
+            JOptionPane.showMessageDialog(this,"Porfavor seleccione un equipamiento","ERROR", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_btn_borrarActionPerformed
 
@@ -467,17 +484,14 @@ public class Mod_equip extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Btn_Envio;
     private javax.swing.JList<String> Lista_equipamiento;
-    private javax.swing.JButton btn_Volver2;
     private javax.swing.JButton btn_Volver3;
     private javax.swing.JButton btn_borrar;
     private javax.swing.JButton btn_imagen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
