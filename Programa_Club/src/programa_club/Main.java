@@ -1,16 +1,16 @@
 /*
-Indice=
-vS=Pantalla de seguridad del paquete Modulo_Seguridad
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package programa_club;
 import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Abrir_Seguridad;
 import Modulo_Entradas.Principal;
-
-        /**
+/**
  *
- * @author HP OMEN
+ * @author PC
  */
 public class Main extends javax.swing.JFrame {
 
@@ -31,71 +31,22 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        button1 = new java.awt.Button();
-
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-
-        Btn_Seguridad = new javax.swing.JButton();
-        Btn_Productos = new javax.swing.JButton();
-        Btn_Entradas = new javax.swing.JButton();
-
-
-        button1.setLabel("button1");
+        btn_Seguridad = new javax.swing.JButton();
+        btn_Productos = new javax.swing.JButton();
+        btn_Entradas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-
         jPanel1.setBackground(new java.awt.Color(47, 94, 141));
-
-        jButton1.setBackground(new java.awt.Color(99, 140, 181));
-        jButton1.setText("Entrar a seguridad");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-
-        Btn_Seguridad.setText("Entrar a seguridad");
-        Btn_Seguridad.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_SeguridadActionPerformed(evt);
-            }
-        });
-
-
-        jButton3.setBackground(new java.awt.Color(99, 140, 181));
-        jButton3.setText("Entrar a productos");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-
-        Btn_Productos.setText("Entrar a productos");
-        Btn_Productos.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_ProductosActionPerformed(evt);
-            }
-        });
-
-
-        jButton4.setBackground(new java.awt.Color(99, 140, 181));
-        jButton4.setText("Entrar a entradas");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-
-        Btn_Entradas.setText("Entrar a entradas");
-        Btn_Entradas.addActionListener(new java.awt.event.ActionListener() {
-
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_EntradasActionPerformed(evt);
-            }
-        });
-
 
         jPanel2.setBackground(new java.awt.Color(31, 50, 69));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(229, 232, 236));
-        jLabel1.setText("Gestion de club deportivo");
+        jLabel1.setText("Club Master");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -104,15 +55,39 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(73, 73, 73))
+                .addGap(146, 146, 146))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
+
+        btn_Seguridad.setBackground(new java.awt.Color(99, 140, 181));
+        btn_Seguridad.setText("Gestionar seguridad");
+        btn_Seguridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SeguridadActionPerformed(evt);
+            }
+        });
+
+        btn_Productos.setBackground(new java.awt.Color(99, 140, 181));
+        btn_Productos.setText("Gestionar productos");
+        btn_Productos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ProductosActionPerformed(evt);
+            }
+        });
+
+        btn_Entradas.setBackground(new java.awt.Color(99, 140, 181));
+        btn_Entradas.setText("Gestionar entradas");
+        btn_Entradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_EntradasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -120,44 +95,24 @@ public class Main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(128, Short.MAX_VALUE)
+                .addContainerGap(141, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(128, 128, 128))
+                    .addComponent(btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_Entradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(130, 130, 130))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jButton1)
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Entradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(131, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(Btn_Seguridad)
-
-                .addGap(18, 18, 18)
-                .addComponent(Btn_Productos)
-                .addGap(18, 18, 18)
-
-                .addComponent(jButton4)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(btn_Seguridad)
+                .addGap(34, 34, 34)
+                .addComponent(btn_Productos)
+                .addGap(39, 39, 39)
+                .addComponent(btn_Entradas)
+                .addGap(0, 58, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,40 +124,32 @@ public class Main extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
-                .addComponent(Btn_Entradas)
-                .addContainerGap(143, Short.MAX_VALUE))
-
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-//Ingresar a Seguridad
-    private void Btn_SeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SeguridadActionPerformed
+
+    private void btn_SeguridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SeguridadActionPerformed
         Abrir_Seguridad Seguridad = new Abrir_Seguridad();
         Seguridad.Open_Security();
         this.setVisible(false);
-    }//GEN-LAST:event_Btn_SeguridadActionPerformed
+    }//GEN-LAST:event_btn_SeguridadActionPerformed
 
-//Ingresar a Productos
-    private void Btn_ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ProductosActionPerformed
-        // TODO add your handling code here:
+    private void btn_ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProductosActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
         vV.setVisible(true);
         this.setVisible(false);
         vV.setLocationRelativeTo(null);
         vV.setSize(1530,900);
-    }//GEN-LAST:event_Btn_ProductosActionPerformed
+    }//GEN-LAST:event_btn_ProductosActionPerformed
 
-//Ingresar a Entradas    
-    private void Btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EntradasActionPerformed
-        // TODO add your handling code here:
+    private void btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EntradasActionPerformed
         Principal wdw= new Principal();
         wdw.setVisible(true);
         this.setVisible(false);
         wdw.setLocationRelativeTo(null);
         wdw.setSize(900,520);
-    }//GEN-LAST:event_Btn_EntradasActionPerformed
+    }//GEN-LAST:event_btn_EntradasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,17 +187,11 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Btn_Entradas;
-    private javax.swing.JButton Btn_Productos;
-    private javax.swing.JButton Btn_Seguridad;
-    private java.awt.Button button1;
-
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btn_Entradas;
+    private javax.swing.JButton btn_Productos;
+    private javax.swing.JButton btn_Seguridad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-
     // End of variables declaration//GEN-END:variables
 }
