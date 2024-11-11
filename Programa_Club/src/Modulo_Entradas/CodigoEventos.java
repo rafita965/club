@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -22,6 +23,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CodigoEventos {
     BDD.DBConexion conexion = new BDD.DBConexion();
+    private int usuarioID;
+    
+    public CodigoEventos(int usuarioID){
+        this.usuarioID = usuarioID;
+    }
     
     public void buscarEventos(JTable tablaEventos, JComboBox mes, String condicion){
         DefaultTableModel modelo = (DefaultTableModel) tablaEventos.getModel();
@@ -50,27 +56,28 @@ public class CodigoEventos {
         }finally{
             conexion.Desconectar();
         }
-        
-        //desabilita jtable
-        for (int col = 0; col<tablaEventos.getColumnCount();col++){
-            Class <?> columna = tablaEventos.getColumnClass(col);
-            tablaEventos.setDefaultEditor(columna,null);
-        }
     }
     
-    public void seleccionarEvento(JTable tablaEventos,JTextField evento,JTextArea descripcion){
+    public void seleccionarEvento(JTable tablaEventos,JTextField evento,JTextArea descripcion, JButton comprar){
         int index=tablaEventos.getSelectedRow();
         
         try{
             if(index>=0){
                 
-                String consulta = "SELECT nombreEvento,Descripcion FROM Evento WHERE idEvento=?";
+                String consulta = "SELECT E.nombreEvento, E.Descripcion, C.CompraID FROM Evento E " +
+                "LEFT JOIN Compra C ON E.idEvento = C.IdEvento AND C.IDUsuario = ? WHERE E.idEvento = ?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
                 ps.setInt(1, (int)tablaEventos.getValueAt(index, 0));
+                ps.setInt(2, usuarioID);
                 ResultSet rs = ps.executeQuery();
                 evento.setText(rs.getString("nombreEvento"));
                 descripcion.setText(rs.getString("Descripcion"));
+                if(rs.getInt("CompraID")==0){
+                    comprar.setEnabled(false);
+                }else{
+                    comprar.setEnabled(true);
+                }
             }
             
         }catch(Exception e){

@@ -10,12 +10,13 @@ package Modulo_Entradas;
  * @author Agustín Salinas
 **/
 public class panelHistorial extends javax.swing.JPanel {
-    CodigoHistorial cod = new CodigoHistorial();
+    CodigoHistorial cod;
     /**
      * Creates new form panelHistorial
      **/
-    public panelHistorial() {
+    public panelHistorial(int usuarioID) {
         initComponents();
+        this.cod= new CodigoHistorial(usuarioID);
     }
 
     /**
@@ -66,6 +67,7 @@ public class panelHistorial extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaHistorial.setRowHeight(20);
         jScrollPane2.setViewportView(tablaHistorial);
         if (tablaHistorial.getColumnModel().getColumnCount() > 0) {
             tablaHistorial.getColumnModel().getColumn(0).setResizable(false);
@@ -159,7 +161,7 @@ public class panelHistorial extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(68, Short.MAX_VALUE)
+                .addContainerGap(86, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -168,6 +170,7 @@ public class panelHistorial extends javax.swing.JPanel {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57))
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2)
                 .addContainerGap())
         );
@@ -177,9 +180,9 @@ public class panelHistorial extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jLabel4))

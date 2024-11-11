@@ -26,7 +26,7 @@ public class DBConexion {
 
             // Intenta establecer la conexión
             conexion = DriverManager.getConnection(url, user, password);
-            JOptionPane.showMessageDialog(null, "Se conecto correctamente la BDD");   
+            //JOptionPane.showMessageDialog(null, "Se conecto correctamente la BDD");   
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se conecto correctamente la BDD: "+e.toString());
@@ -38,10 +38,14 @@ public class DBConexion {
         try{
             if(conexion != null && !conexion.isClosed()){
                 conexion.close();
-                JOptionPane.showMessageDialog(null, "Se desconecto correctamente la BDD");
+                //JOptionPane.showMessageDialog(null, "Se desconecto correctamente la BDD");
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "ERROR: "+e.toString());
         }
+    }
+    
+    public Connection getConexion(){
+        return conexion;
     }
 }

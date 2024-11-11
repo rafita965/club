@@ -17,9 +17,7 @@ import java.sql.*;
  *
  * @author thiag
  */
-//Funciones del proceso a la entrega de pedido
 public class Funciones_Usuario {
-    //Declaracion de variables
     private Date fecha;
     private String Nombre_Producto;
     private double Precio;
@@ -28,7 +26,6 @@ public class Funciones_Usuario {
     private int codigo;
     private String productoID;
     
-    //Getter y setter
     public String getNombre_Producto() {
         return Nombre_Producto;
     }
@@ -76,25 +73,32 @@ public class Funciones_Usuario {
     public void setIDPedido(int IDPedido) {
         this.IDPedido = IDPedido;
     }
-    
-    //Metodos de Gestion_Compra_Usuario
+
     // Método para mostrar los reembolsos en la tabla
     public void MostrarProductos(JTable paramTablaProductos) {
         ConexionBDD objetoConexion = new ConexionBDD();
         DefaultTableModel modelo = new DefaultTableModel();
         TableRowSorter<TableModel> ordenarTabla = new TableRowSorter<>(modelo);
         paramTablaProductos.setRowSorter(ordenarTabla);
+
+        // Agregar las columnas
         modelo.addColumn("ProductoID"); // Esta columna se va a ocultar
         modelo.addColumn("Nombre");
         modelo.addColumn("Stock");
         modelo.addColumn("Precio");
         modelo.addColumn("Categoria");
+
         paramTablaProductos.setModel(modelo);
+
+        // Consulta SQL para obtener información de Producto
         String sql = "SELECT Productos.ProductoID, Productos.Nombre, Productos.Stock, Productos.Precio, " +
              "Categorias.NombreCategoria FROM Productos " +
              "INNER JOIN Categorias ON Productos.CategoriaID = Categorias.CategoriaID " + // Añadir espacio aquí
              "WHERE Productos.Estado = 1";
+
+
         String[] datos = new String[5];
+
         try {
             Statement st = objetoConexion.Conectar().createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -107,57 +111,69 @@ public class Funciones_Usuario {
 
                 modelo.addRow(datos);
         }
+
+        // Ocultar la columna ProductoID
         paramTablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
         paramTablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
         paramTablaProductos.getColumnModel().getColumn(0).setWidth(0);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }
-    }
-    
-    //Seleccionar producto
+}
+
     public void SeleccionarProducto(JTable paramTablaProductos, JTextField paramID, JTextField paramNombreProducto, JTextField paramPrecioProducto, JTextField paramCategoria) {
-        try {
-            int fila = paramTablaProductos.getSelectedRow();
-            if (fila >= 0) {
-                paramID.setText(paramTablaProductos.getValueAt(fila, 0).toString()); 
-                paramNombreProducto.setText(paramTablaProductos.getValueAt(fila, 1).toString()); 
-                paramPrecioProducto.setText(paramTablaProductos.getValueAt(fila, 3).toString()); 
-                paramCategoria.setText(paramTablaProductos.getValueAt(fila, 4).toString()); 
-                productoID = paramTablaProductos.getValueAt(fila, 0).toString(); 
-            } else {
-                JOptionPane.showMessageDialog(null, "Fila no encontrada.");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error de selección, error: " + e.getMessage());
+    try {
+        int fila = paramTablaProductos.getSelectedRow();
+
+        // Verificar que haya una fila seleccionada
+        if (fila >= 0) {
+            // Almacenar el ProductoID en el JTextField (columna 0)
+            paramID.setText(paramTablaProductos.getValueAt(fila, 0).toString()); // ProductoID
+            
+            // Almacenar otros datos en los JTextFields correspondientes
+            paramNombreProducto.setText(paramTablaProductos.getValueAt(fila, 1).toString()); // Nombre
+            paramPrecioProducto.setText(paramTablaProductos.getValueAt(fila, 3).toString()); // Precio
+            paramCategoria.setText(paramTablaProductos.getValueAt(fila, 4).toString()); // NombreCategoria
+            
+            // Actualiza el productoID en una variable (por ejemplo, una variable de clase)
+            productoID = paramTablaProductos.getValueAt(fila, 0).toString(); // Asegúrate de que esta línea esté presente
+        } else {
+            JOptionPane.showMessageDialog(null, "Fila no encontrada.");
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error de selección, error: " + e.getMessage());
     }
+}
     
-    //Obtener el valor de stock
     protected int obtenerStockProducto(int idProducto) {
-        int stock = 0; 
-        ConexionBDD objetoConexion = new ConexionBDD(); 
-        String sql = "SELECT Stock FROM Productos WHERE ProductoID = ?";
+    int stock = 0; // Variable para almacenar el stock del producto
+    ConexionBDD objetoConexion = new ConexionBDD(); // Conexión a la base de datos
 
-        try {
-            PreparedStatement pst = objetoConexion.Conectar().prepareStatement(sql);
-            pst.setInt(1, idProducto); 
-            ResultSet rs = pst.executeQuery();
+    // Consulta SQL para obtener el stock del producto
+    String sql = "SELECT Stock FROM Productos WHERE ProductoID = ?";
 
-            if (rs.next()) {
-                stock = rs.getInt("Stock");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el stock del producto: " + e.getMessage());
-        } finally {
-            objetoConexion.cerrarConexion(); 
+    try {
+        PreparedStatement pst = objetoConexion.Conectar().prepareStatement(sql);
+        pst.setInt(1, idProducto); // Establecer el ID del producto en la consulta
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            stock = rs.getInt("Stock"); // Obtener el stock del resultado
+            System.out.println("Llamando a obtenerStockProducto con idProducto: " + idProducto);
         }
-        return stock; 
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener el stock del producto: " + e.getMessage());
+    } finally {
+        objetoConexion.cerrarConexion(); // Cerrar la conexión
     }
-  
-    //Metodos para la ventana Ventana_FormaEntrega==============================================
+
+    return stock; // Retornar el stock obtenido
+}
+    
+    //Funciones para la ventana Ventana_FormaEntrega==============================================
     public void MostrarDatos(String usuarioID, JTextField direccion_usuario, JTextField direccion_club, JTextField precioEnvio) {
         ConexionBDD objetoConexion = new ConexionBDD();
         String sql  = "SELECT Direccion FROM Usuario WHERE IDUsuario = ?";
@@ -210,7 +226,57 @@ public class Funciones_Usuario {
             objetoConexion.cerrarConexion();
         }
     }
+    
+    //FUNCION CALCULAR EL TOTAL A PAGAR VENTANA FINALIZARCOMPRA===================================
+    public String TotalPagar(int cantidad, String precio, String envio) {
+        float totalidad = Float.parseFloat(precio) * cantidad + Float.parseFloat(envio);
+        return String.valueOf(totalidad);
+    }
+    //FUNCION PARA FINALIZAR COMPRA===============================================================
+    
+    //public void GuardarTarjeta(String usuarioID, String tipoTarjeta, String nombreTitular, String codigoSeguridad, String numerin){}
+    public void GuardarPedido(String usuarioID, String productoID, String fecha, int cantidad, String formaEntrega, String envioID){
+        String pedidoID = "";
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta = "INSERT INTO Pedido(IDUsuario, Fecha) VALUES (?, ?);";
+        String consulta2 = "INSERT INTO DetallePedido(PedidoID, ProductoID, Cantidad, FormaEntrega, EnvioID) VALUES (?, ?, ?, ?, ?);";
+
+        try {
+            
+            PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, Integer.parseInt(usuarioID));
+            ps.setString(2, fecha);
+            ps.executeUpdate();
+
+           
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                pedidoID = rs.getString(1);  
+            }
+
+            CallableStatement csDetalle = objetoConexion.Conectar().prepareCall(consulta2);
+            csDetalle.setInt(1, Integer.parseInt(pedidoID)); 
+            csDetalle.setInt(2, Integer.parseInt(productoID));
+            csDetalle.setInt(3, cantidad);
+            csDetalle.setString(4, formaEntrega);
+            if(envioID.equals("-")){
+                csDetalle.setNull(5, java.sql.Types.INTEGER); 
+            }else{
+                csDetalle.setInt(5,Integer.parseInt(envioID));
+            }
+            csDetalle.executeUpdate();
+
+            
+            JOptionPane.showMessageDialog(null, "Se guardó el pedido correctamente con ID: " + pedidoID);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.toString());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
+        
+    }
 }
+
 
 
 

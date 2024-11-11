@@ -62,6 +62,32 @@ public class RSButtonMetro extends JButton implements MouseListener, MouseMotion
         this.addMouseMotionListener(this);
     }
 
+    @Override
+    public void setEnabled(boolean b) {
+        super.setEnabled(b);  // Llamamos a la implementación de JButton
+
+        if (!b) {
+            // Cuando el botón está deshabilitado, eliminamos los listeners de mouse
+            this.removeMouseListener(this);
+            this.removeMouseMotionListener(this);
+
+            /* Cambiar los colores a un estado deshabilitado
+            this.setBackground(new Color(200, 200, 200));  // Color gris o cualquier otro para deshabilitado*/
+            this.setForeground(new Color(102,102,102));   // Texto gris
+            this.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(102,102,102)));  // Borde gris
+            this.setCursor(Cursor.getDefaultCursor());      // Cambiar el cursor
+        } else {
+            // Cuando el botón está habilitado, restauramos los listeners de mouse
+            this.addMouseListener(this);
+            this.addMouseMotionListener(this);
+
+            // Restauramos los colores originales
+            this.setBackground(this.colorNormal);
+            this.setForeground(this.colorTextNormal);
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));  // Restaurar el cursor de mano
+            this.setBorder(bordeMoved);
+        }
+    }
     /**
      * se pinta la imagen con dimensiones de ancho y alto iguales al alto del
      * jbutton
@@ -70,7 +96,13 @@ public class RSButtonMetro extends JButton implements MouseListener, MouseMotion
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
     }
+    
+    @Override
     public void mouseClicked(MouseEvent e) {
+        if (!this.isEnabled()) {
+            return; // Si el botón está deshabilitado, no hacemos nada
+        }
+    // Lógica para mouseClicked aquí
     }
 
     /**
@@ -84,16 +116,19 @@ public class RSButtonMetro extends JButton implements MouseListener, MouseMotion
     /**
      * Cuando se leventa el mouse del jbutton se retoman los colores originales
      */
-    public void mouseReleased(MouseEvent e) {       
+    public void mouseReleased(MouseEvent e) {
         this.setBackground(this.colorNormal);
         this.setForeground(this.colorTextNormal);
     }
 
     public void mouseEntered(MouseEvent e) {
+        if (!this.isEnabled()) {
+        return; // Si el botón está deshabilitado, no hacemos nada
+    }
     }
 
     public void mouseExited(MouseEvent e) {
-        this.setBorder(null);
+        //this.setBorder(null);
         this.setBackground(this.colorNormal);
         this.setForeground(this.colorTextNormal);
     }
