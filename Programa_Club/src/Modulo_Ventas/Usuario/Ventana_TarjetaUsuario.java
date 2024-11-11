@@ -163,14 +163,6 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         });
         JTextField_Anio.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
-            public void keyTyped(java.awt.event.KeyEvent e) {
-                String inputText = JTextField_Anio.getText();
-                if (inputText.length() >= 2) {
-                    e.consume(); 
-                }
-            }
-
-            @Override
             public void keyReleased(java.awt.event.KeyEvent e) {
                 String inputText = JTextField_Anio.getText();
                 if (inputText.length() == 2) {
@@ -181,9 +173,18 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                             JTextField_Anio.setText(""); 
                         }
                     } catch (NumberFormatException ex) {
+                        JTextField_Anio.setText(""); 
                     }
                 }
-                verificarCampos(); 
+                verificarCampos();  // Mover la validación aquí para asegurar que siempre se valide después de cada cambio
+            }
+
+            @Override
+            public void keyTyped(java.awt.event.KeyEvent e) {
+                String inputText = JTextField_Anio.getText();
+                if (inputText.length() >= 2) {
+                    e.consume(); 
+                }
             }
         });
         JTextField_NombreTitular.setDocument(new PlainDocument() {
