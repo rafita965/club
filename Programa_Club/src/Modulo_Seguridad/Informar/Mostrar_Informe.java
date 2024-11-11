@@ -180,10 +180,6 @@ public class Mostrar_Informe extends javax.swing.JFrame {
         cI.setVisible(true);
         cI.setLocationRelativeTo(null);
         
-        cI.setSize(500,430);
-        Abrir_Seguridad Seguridad = new Abrir_Seguridad();
-        Seguridad.Open_Security();
-        this.setVisible(false);
     }//GEN-LAST:event_btn_crearInformeActionPerformed
     
     //Combobox para elegir metodo de ordenamiento
