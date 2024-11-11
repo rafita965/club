@@ -141,7 +141,7 @@ public class Pantalla_eleccion extends javax.swing.JFrame {
         Mod_equip mE = new Mod_equip();
         mE.setVisible(true);
         this.setVisible(false);
-        mE.setSize(1253, 587);
+        mE.setSize(1166, 585);
         mE.setLocationRelativeTo(null);
     }//GEN-LAST:event_jButton2ActionPerformed
 

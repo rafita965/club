@@ -7,7 +7,7 @@ package programa_club;
 import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Abrir_Seguridad;
-//import Modulo_Entradas.Principal;
+import Modulo_Entradas.Principal;
 /**
  *
  * @author PC
@@ -100,13 +100,13 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_Entradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(130, Short.MAX_VALUE))
+                .addGap(130, 130, 130))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addComponent(btn_Seguridad)
                 .addGap(34, 34, 34)
                 .addComponent(btn_Productos)
@@ -119,11 +119,11 @@ public class Main extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -137,19 +137,18 @@ public class Main extends javax.swing.JFrame {
 
     private void btn_ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProductosActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
-        this.setVisible(false);
         vV.setVisible(true);
+        this.setVisible(false);
         vV.setLocationRelativeTo(null);
-        vV.setSize(400,440);
+        vV.setSize(1530,900);
     }//GEN-LAST:event_btn_ProductosActionPerformed
 
     private void btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EntradasActionPerformed
-        /*Principal wdw= new Principal();
+        Principal wdw= new Principal();
         wdw.setVisible(true);
         this.setVisible(false);
         wdw.setLocationRelativeTo(null);
-        wdw.setResizable(false);
-        wdw.setSize(900,520);*/
+        wdw.setSize(900,520);
     }//GEN-LAST:event_btn_EntradasActionPerformed
 
     /**

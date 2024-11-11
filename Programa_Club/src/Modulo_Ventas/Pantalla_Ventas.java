@@ -24,43 +24,30 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        Btn_Gestionar_VentaProductos = new javax.swing.JButton();
         Volver = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        Btn_Gestionar_Categoria = new javax.swing.JButton();
         Btn_Gestionar_Productos = new javax.swing.JButton();
         Btn_Gestionar_Descuento = new javax.swing.JButton();
-        Btn_Gestionar_VentaProductos = new javax.swing.JButton();
-        Btn_Gestionar_Pedidos = new javax.swing.JButton();
+        Btn_Gestionar_Categoria = new javax.swing.JButton();
         Btn_Gestionar_Reembolso = new javax.swing.JButton();
         Btn_Gestionar_VistaUsuario = new javax.swing.JButton();
+        Btn_Gestionar_Pedidos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(31, 50, 69));
-        jPanel1.setPreferredSize(new java.awt.Dimension(390, 400));
-        jPanel1.setLayout(null);
+        jLabel1.setText("      Gestion de Ventas");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel1.setText(" Gestion de Ventas");
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(140, 20, 130, 17);
+        Btn_Gestionar_VentaProductos.setText("Gestionar Venta de Productos");
+        Btn_Gestionar_VentaProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Gestionar_VentaProductosActionPerformed(evt);
+            }
+        });
 
         Volver.setText("<--");
         Volver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 VolverActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Volver);
-        Volver.setBounds(10, 17, 62, 23);
-
-        jPanel2.setBackground(new java.awt.Color(47, 94, 141));
-
-        Btn_Gestionar_Categoria.setText("Gestionar Categoria");
-        Btn_Gestionar_Categoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_Gestionar_CategoriaActionPerformed(evt);
             }
         });
 
@@ -78,17 +65,10 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
             }
         });
 
-        Btn_Gestionar_VentaProductos.setText("Gestionar Venta de Productos");
-        Btn_Gestionar_VentaProductos.addActionListener(new java.awt.event.ActionListener() {
+        Btn_Gestionar_Categoria.setText("Gestionar Categoria");
+        Btn_Gestionar_Categoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_Gestionar_VentaProductosActionPerformed(evt);
-            }
-        });
-
-        Btn_Gestionar_Pedidos.setText("Gestionar Pedidos");
-        Btn_Gestionar_Pedidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Btn_Gestionar_PedidosActionPerformed(evt);
+                Btn_Gestionar_CategoriaActionPerformed(evt);
             }
         });
 
@@ -106,54 +86,69 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(104, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Btn_Gestionar_VentaProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                    .addComponent(Btn_Gestionar_Descuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Gestionar_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Gestionar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Gestionar_Pedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Gestionar_Reembolso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Btn_Gestionar_VistaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(105, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(Btn_Gestionar_Categoria)
-                .addGap(17, 17, 17)
-                .addComponent(Btn_Gestionar_Productos)
-                .addGap(17, 17, 17)
-                .addComponent(Btn_Gestionar_Descuento)
-                .addGap(17, 17, 17)
-                .addComponent(Btn_Gestionar_VentaProductos)
-                .addGap(17, 17, 17)
-                .addComponent(Btn_Gestionar_Pedidos)
-                .addGap(17, 17, 17)
-                .addComponent(Btn_Gestionar_Reembolso)
-                .addGap(17, 17, 17)
-                .addComponent(Btn_Gestionar_VistaUsuario)
-                .addContainerGap(56, Short.MAX_VALUE))
-        );
+        Btn_Gestionar_Pedidos.setText("Gestionar Pedidos");
+        Btn_Gestionar_Pedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_Gestionar_PedidosActionPerformed(evt);
+            }
+        });
 
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(0, 60, 400, 340);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(Btn_Gestionar_VentaProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Gestionar_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Gestionar_Descuento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Gestionar_Categoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Gestionar_Reembolso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Gestionar_VistaUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(Btn_Gestionar_Pedidos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(99, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addComponent(Volver))
+                .addGap(55, 55, 55)
+                .addComponent(Btn_Gestionar_Categoria)
+                .addGap(18, 18, 18)
+                .addComponent(Btn_Gestionar_Productos)
+                .addGap(18, 18, 18)
+                .addComponent(Btn_Gestionar_Descuento)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btn_Gestionar_VentaProductos)
+                .addGap(18, 18, 18)
+                .addComponent(Btn_Gestionar_Pedidos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Btn_Gestionar_Reembolso)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btn_Gestionar_VistaUsuario)
+                .addContainerGap(84, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, 400, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -176,7 +171,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void Btn_Gestionar_VentaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Gestionar_VentaProductosActionPerformed
         Gestion_VentaProductos vGVP = new Gestion_VentaProductos();
         this.setVisible(false);
-        vGVP.setSize(1250,590);
+        vGVP.setSize(1000,600);
         vGVP.setLocationRelativeTo(null);
         vGVP.setVisible(true);
     }//GEN-LAST:event_Btn_Gestionar_VentaProductosActionPerformed
@@ -185,7 +180,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
         Main vM = new Main();
         this.setVisible(false);
-        vM.setSize(420,320);
+        vM.setSize(500,500);
         vM.setLocationRelativeTo(null);
         vM.setVisible(true);
     }//GEN-LAST:event_VolverActionPerformed
@@ -195,17 +190,16 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
         // TODO add your handling code here:
         Gestion_Productos  vP = new Gestion_Productos();
         this.setVisible(false);
-        vP.setSize(930,530);
-        vP.setLocationRelativeTo(null); 
-        vP.setVisible(true);
-        
+        vP.setSize(1300,600);
+        vP.setLocationRelativeTo(null);
+        vP.setVisible(true); 
     }//GEN-LAST:event_Btn_Gestionar_ProductosActionPerformed
 
     //Boton ingresar al gestion de descuentos
     private void Btn_Gestionar_DescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Gestionar_DescuentoActionPerformed
         Gestion_Descuento  vD = new Gestion_Descuento();
         this.setVisible(false);
-        vD.setSize(870,570);
+        vD.setSize(1000,600);
         vD.setLocationRelativeTo(null);
         vD.setVisible(true); 
     }//GEN-LAST:event_Btn_Gestionar_DescuentoActionPerformed
@@ -215,7 +209,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
         // TODO add your handling code here:
         Gestion_Categorias  vC = new Gestion_Categorias();
         this.setVisible(false);
-        vC.setSize(770,560);
+        vC.setSize(1300,700);
         vC.setLocationRelativeTo(null);
         vC.setVisible(true); 
     }//GEN-LAST:event_Btn_Gestionar_CategoriaActionPerformed
@@ -224,7 +218,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void Btn_Gestionar_ReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Gestionar_ReembolsoActionPerformed
         Gestion_Reembolso  vR = new Gestion_Reembolso();
         this.setVisible(false);
-        vR.setSize(520,680);
+        vR.setSize(1300,700);
         vR.setLocationRelativeTo(null);
         vR.setVisible(true);
     }//GEN-LAST:event_Btn_Gestionar_ReembolsoActionPerformed
@@ -242,7 +236,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void Btn_Gestionar_PedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Gestionar_PedidosActionPerformed
         Gestion_Pedidos  vP = new Gestion_Pedidos();
         this.setVisible(false);
-        vP.setSize(550,470);
+        vP.setSize(1300,700);
         vP.setLocationRelativeTo(null);
         vP.setVisible(true);
     }//GEN-LAST:event_Btn_Gestionar_PedidosActionPerformed
@@ -293,6 +287,5 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private javax.swing.JButton Volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

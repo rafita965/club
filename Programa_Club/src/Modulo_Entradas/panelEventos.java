@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,23 +5,20 @@
  */
 package Modulo_Entradas;
 
-import java.awt.Window;
-import javax.swing.SwingUtilities;
+import javax.swing.ButtonModel;
 
 /**
  *
  * @author Agustín Salinas
  */
 public class panelEventos extends javax.swing.JPanel {
-    CodigoEventos cod;
-    int usuarioID;
+    CodigoEventos cod = new CodigoEventos();
     /**
      * Creates new form panelEventos
      */
-    public panelEventos(int usuarioID) {
+    public panelEventos() {
         initComponents();
-        this.usuarioID = usuarioID;
-        this.cod = new CodigoEventos(usuarioID);
+        
         //Botones de filtro
         grupoOpc.add(opcAmbos);
         grupoOpc.add(opcPartidos);
@@ -48,7 +44,7 @@ public class panelEventos extends javax.swing.JPanel {
         opcConciertos = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbEventos = new javax.swing.JTable();
+        jTable1 = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtEvento = new javax.swing.JTextField();
@@ -157,8 +153,8 @@ public class panelEventos extends javax.swing.JPanel {
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        tbEventos.setBackground(new java.awt.Color(204, 204, 204));
-        tbEventos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable1.setBackground(new java.awt.Color(204, 204, 204));
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -181,20 +177,15 @@ public class panelEventos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tbEventos.setRowHeight(50);
-        tbEventos.setRowMargin(10);
-        tbEventos.setSelectionBackground(new java.awt.Color(255, 255, 255));
-        tbEventos.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        tbEventos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbEventosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tbEventos);
-        if (tbEventos.getColumnModel().getColumnCount() > 0) {
-            tbEventos.getColumnModel().getColumn(0).setMaxWidth(30);
-            tbEventos.getColumnModel().getColumn(2).setPreferredWidth(30);
-            tbEventos.getColumnModel().getColumn(3).setMaxWidth(70);
+        jTable1.setRowHeight(50);
+        jTable1.setRowMargin(10);
+        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 255));
+        jTable1.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(30);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 10))); // NOI18N
@@ -211,7 +202,6 @@ public class panelEventos extends javax.swing.JPanel {
         });
 
         btnComprar.setText("COMPRAR ENTRADA");
-        btnComprar.setEnabled(false);
         btnComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnComprarActionPerformed(evt);
@@ -281,27 +271,19 @@ public class panelEventos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void opcPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcPartidosActionPerformed
-        cod.buscarEventos(tbEventos, cbbMes, "'Partido'");
+        cod.buscarEventos(jTable1, cbbMes, "'Partido'");
     }//GEN-LAST:event_opcPartidosActionPerformed
 
     private void opcAmbosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcAmbosActionPerformed
-        cod.buscarEventos(tbEventos, cbbMes, "'Partido' OR E.tipoEvento = 'Concierto'");
+        cod.buscarEventos(jTable1, cbbMes, "'Partido' OR E.tipoEvento = 'Concierto'");
     }//GEN-LAST:event_opcAmbosActionPerformed
 
     private void opcConciertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcConciertosActionPerformed
-        cod.buscarEventos(tbEventos, cbbMes, "'Concierto'");
+        cod.buscarEventos(jTable1, cbbMes, "'Concierto'");
     }//GEN-LAST:event_opcConciertosActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        int seleccion = tbEventos.getSelectedRow();
-        if(tbEventos.getSelectedRow()!=-1){
-            int eventoID = ((Integer) tbEventos.getValueAt(seleccion, 0)).intValue();
-            ventanaCompra entradas= new ventanaCompra(usuarioID,eventoID);
-            entradas.setVisible(true);
-            entradas.setLocationRelativeTo(null);
-            Window principal = SwingUtilities.getWindowAncestor(this);
-            principal.dispose();
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void txtEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEventoActionPerformed
@@ -309,18 +291,8 @@ public class panelEventos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtEventoActionPerformed
 
     private void cbbMesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbMesItemStateChanged
-        if(opcAmbos.isSelected()){
-            cod.buscarEventos(tbEventos, cbbMes, "'Partido' OR E.tipoEvento = 'Concierto'");
-        }else if(opcPartidos.isSelected()){
-            cod.buscarEventos(tbEventos, cbbMes, "'Partido'");
-        }else{
-            cod.buscarEventos(tbEventos, cbbMes, "'Concierto'");
-        }
+        
     }//GEN-LAST:event_cbbMesItemStateChanged
-
-    private void tbEventosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEventosMouseClicked
-        cod.seleccionarEvento(tbEventos, txtEvento, txtDescripcion, btnComprar);
-    }//GEN-LAST:event_tbEventosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -334,10 +306,10 @@ public class panelEventos extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JRadioButton opcAmbos;
     private javax.swing.JRadioButton opcConciertos;
     private javax.swing.JRadioButton opcPartidos;
-    private javax.swing.JTable tbEventos;
     private javax.swing.JTextArea txtDescripcion;
     private javax.swing.JTextField txtEvento;
     // End of variables declaration//GEN-END:variables

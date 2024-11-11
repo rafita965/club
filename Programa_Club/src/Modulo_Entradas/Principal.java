@@ -12,7 +12,7 @@ import programa_club.Main;
  * @author Agustín Salinas
  */
 public class Principal extends javax.swing.JFrame {
-    protected int IDUsuario=9;
+
     /**
      * Creates new form Principal
      */
@@ -57,8 +57,7 @@ public class Principal extends javax.swing.JFrame {
 
         cerrar.setBackground(new java.awt.Color(255, 255, 255));
         cerrar.setForeground(new java.awt.Color(31, 50, 69));
-        cerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/klipartz.com(0).png"))); // NOI18N
-        cerrar.setText("HOME      ");
+        cerrar.setText("HOME");
         cerrar.setColorHover(new java.awt.Color(255, 255, 255));
         cerrar.setColorNormal(new java.awt.Color(255, 255, 255));
         cerrar.setColorPressed(new java.awt.Color(38, 86, 186));
@@ -76,8 +75,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         eventos.setBackground(new java.awt.Color(31, 50, 69));
-        eventos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/klipartz.com(2).png"))); // NOI18N
-        eventos.setText("    Eventos         ");
+        eventos.setText("Eventos");
         eventos.setColorHover(new java.awt.Color(47, 94, 141));
         eventos.setColorNormal(new java.awt.Color(31, 50, 69));
         eventos.setColorPressed(new java.awt.Color(229, 232, 236));
@@ -113,7 +111,6 @@ public class Principal extends javax.swing.JFrame {
         });
 
         grupo.setBackground(new java.awt.Color(31, 50, 69));
-        grupo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/klipartz.com(3).png"))); // NOI18N
         grupo.setText("     Mi Grupo         ");
         grupo.setColorHover(new java.awt.Color(47, 94, 141));
         grupo.setColorNormal(new java.awt.Color(31, 50, 69));
@@ -131,8 +128,7 @@ public class Principal extends javax.swing.JFrame {
         });
 
         historial.setBackground(new java.awt.Color(31, 50, 69));
-        historial.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/klipartz.com(1).png"))); // NOI18N
-        historial.setText("    Historial          ");
+        historial.setText("     Historial         ");
         historial.setColorHover(new java.awt.Color(47, 94, 141));
         historial.setColorNormal(new java.awt.Color(31, 50, 69));
         historial.setColorPressed(new java.awt.Color(229, 232, 236));
@@ -171,7 +167,7 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(eventos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(notificaciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(grupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +212,7 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void notificacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notificacionesActionPerformed
-        new CambiaPanel(panelPrincipal, new panelNotificaciones(IDUsuario));
+        new CambiaPanel(panelPrincipal, new panelNotificaciones());
         this.notificaciones.setColorNormal(new java.awt.Color(229,232,236));
         this.notificaciones.setColorTextNormal(new java.awt.Color(31,50,69));
             
@@ -229,7 +225,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_notificacionesActionPerformed
 
     private void grupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grupoActionPerformed
-        new CambiaPanel(panelPrincipal, new panelGrupo(IDUsuario));
+        new CambiaPanel(panelPrincipal, new panelGrupo());
         this.grupo.setColorNormal(new java.awt.Color(229,232,236));
         this.grupo.setColorTextNormal(new java.awt.Color(31,50,69));
             
@@ -242,7 +238,7 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_grupoActionPerformed
 
     private void historialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_historialActionPerformed
-        new CambiaPanel(panelPrincipal, new panelHistorial(IDUsuario));
+        new CambiaPanel(panelPrincipal, new panelHistorial());
         this.historial.setColorNormal(new java.awt.Color(229,232,236));
         this.historial.setColorTextNormal(new java.awt.Color(31,50,69));
             
@@ -256,7 +252,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void eventosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventosActionPerformed
         // TODO add your handling code here:
-        new CambiaPanel(panelPrincipal, new panelEventos(IDUsuario));
+        new CambiaPanel(panelPrincipal, new panelEventos());
         this.eventos.setColorNormal(new java.awt.Color(229,232,236));
         this.eventos.setColorTextNormal(new java.awt.Color(31,50,69));
             
@@ -284,22 +280,22 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_historialMousePressed
 
-    private void cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarActionPerformed
-        Main vM = new Main();
-        vM.setVisible(true);
-        vM.setSize(1530,900);
-        vM.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_cerrarActionPerformed
-
     private void cerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_cerrarMouseClicked
 
+    private void cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarActionPerformed
+        Main vM = new Main();
+        vM.setVisible(true);
+        this.setVisible(false);
+        vM.setSize(1530,900);
+        vM.setLocationRelativeTo(null);
+    }//GEN-LAST:event_cerrarActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(/*int usuarioID*/) {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

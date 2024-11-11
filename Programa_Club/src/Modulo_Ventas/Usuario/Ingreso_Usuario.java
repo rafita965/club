@@ -103,10 +103,9 @@ public class Ingreso_Usuario extends javax.swing.JFrame {
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
         this.setVisible(false);
-        vV.setVisible(true);
+        vV.setSize(500,500);
         vV.setLocationRelativeTo(null);
-        vV.setSize(400,450);
-        
+        vV.setVisible(true);
     }//GEN-LAST:event_VolverActionPerformed
     //Ingresar al menu de usuario
     private void Btn_Menu_UsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Menu_UsuarioActionPerformed
@@ -115,7 +114,7 @@ public class Ingreso_Usuario extends javax.swing.JFrame {
             // Si el ID es válido, abre la ventana de compras
             Menu_Usuario vMU = new Menu_Usuario(usuarioID);
             this.setVisible(false);
-            vMU.setSize(450, 350);
+            vMU.setSize(1000, 600);
             vMU.setLocationRelativeTo(null);
             vMU.setVisible(true); 
         } else {

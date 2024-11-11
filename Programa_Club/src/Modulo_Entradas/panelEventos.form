@@ -245,7 +245,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tbEventos">
+        <Component class="javax.swing.JTable" name="jTable1">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
@@ -294,9 +294,6 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbEventosMouseClicked"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -371,7 +368,6 @@
         <Component class="javax.swing.JButton" name="btnComprar">
           <Properties>
             <Property name="text" type="java.lang.String" value="COMPRAR ENTRADA"/>
-            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarActionPerformed"/>
