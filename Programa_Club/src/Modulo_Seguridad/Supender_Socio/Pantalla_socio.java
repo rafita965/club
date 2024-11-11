@@ -144,7 +144,7 @@ public class Pantalla_socio extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btn_Volver1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(106, 106, 106)
+                .addGap(206, 206, 206)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -185,7 +185,7 @@ public class Pantalla_socio extends javax.swing.JFrame {
                             .addComponent(Razon_s, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(66, 66, 66)))
                 .addComponent(jLabel3)
-                .addGap(47, 231, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -244,21 +244,37 @@ public class Pantalla_socio extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Boton para enviar datos, pregunta si el usuario puso tiempo o puso para de por vida. Luego envia los datos a la bdd
+        if (Razon_s.getText().isEmpty() || Razon_s.getText()=="Escriba la razon para su suspención" || Bandera1 == true){
+            JOptionPane.showMessageDialog(this,"Porfavor ingrese datos en todos los campos de texto","ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
+        
         if (Tiempo_s.isEnabled()){
+            
+            
+            try {
             int tiempo= Integer.parseInt(Tiempo_s.getText());
-            if (tiempo>0){
-                String Razon= Razon_s.getText();
-                LocalDate fechaActual = LocalDate.now();
-                Date sqlDate = Date.valueOf(fechaActual);
-                Boolean resul=conexion.Insert_socio_mal(id_usuario,Razon,tiempo,sqlDate);
-                lomismoqueelbotonparaatras();
+
+            if (tiempo>0 ){
+            String Razon= Razon_s.getText();
+            LocalDate fechaActual = LocalDate.now();
+            Date sqlDate = Date.valueOf(fechaActual);
+            Boolean resul=conexion.Insert_socio_mal(id_usuario,Razon,tiempo,sqlDate);
+            lomismoqueelbotonparaatras();
+
+            btn_Volver1ActionPerformed(evt);
             }
             else{
                 Tiempo_s.setText("Cant. de tiempo suspendido (Dias)");
-                JOptionPane.showMessageDialog(null,"Cantidad invalida, por favor no ingrese un numero negativo");
+                JOptionPane.showMessageDialog(this,"Cantidad invalida, por favor ingrese un numero valido","ERROR", JOptionPane.WARNING_MESSAGE);
                 Bandera2 = true;
-                
             }
+        }catch(NumberFormatException e){
+            Tiempo_s.setText("Cant. de tiempo suspendido (Dias)");
+            JOptionPane.showMessageDialog(this,"Cantidad invalida, por favor ingrese un numero valido","ERROR", JOptionPane.WARNING_MESSAGE);
+            Bandera2 = true;
+            
+        }
+         
         }
         else{
             String Razon= Razon_s.getText();
@@ -267,6 +283,7 @@ public class Pantalla_socio extends javax.swing.JFrame {
             Date sqlDate = Date.valueOf(fechaActual);
             Boolean resul=conexion.Insert_socio_mal(id_usuario,Razon,tiempo,sqlDate);
             lomismoqueelbotonparaatras();
+        }
         }
        
         

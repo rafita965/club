@@ -10,6 +10,7 @@ import Modulo_Seguridad.Informar.Crear_Informe_Codigo;
 import java.sql.Date;
 import java.time.LocalDate;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -181,14 +182,18 @@ public class Crear_Informe extends javax.swing.JFrame {
         Titulo=txtField_titulo.getText();
         Texto=jTextArea1.getText();
         Autor=txtField_autor.getText();
-        LocalDate fechaActual = LocalDate.now();
-        Date sqlDate = Date.valueOf(fechaActual);
-        conexion.Insert_Informe(sqlDate, Texto, Autor, Titulo);
-        Mostrar_Informe mI=new Mostrar_Informe();
-        mI.setVisible(true);
-        mI.setLocationRelativeTo(null);
-        this.setVisible(false);
-        mI.setSize(500,500);
+        if (Titulo.isEmpty() || Texto.isEmpty() || Autor.isEmpty() ){
+            JOptionPane.showMessageDialog(this,"Porfavor ingrese datos en todos los campos de texto","ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
+            LocalDate fechaActual = LocalDate.now();
+            Date sqlDate = Date.valueOf(fechaActual);
+            conexion.Insert_Informe(sqlDate, Texto, Autor, Titulo);
+            Mostrar_Informe mI=new Mostrar_Informe();
+            mI.setVisible(true);
+            mI.setLocationRelativeTo(null);
+            this.setVisible(false);
+            mI.setSize(500,500);
+        }
     }//GEN-LAST:event_btn_confirmarActionPerformed
 
     private void txtField_autorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_autorActionPerformed

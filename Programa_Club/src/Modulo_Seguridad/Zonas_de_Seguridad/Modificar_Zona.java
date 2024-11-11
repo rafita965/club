@@ -8,6 +8,7 @@ import Modulo_Seguridad.Conexion_Bdd_Seguridad;
 import Modulo_Seguridad.Zonas_de_Seguridad.Ver_Zonas_codigo;
 import javax.swing.DefaultListModel;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 /**
  *
  * @author PC
@@ -183,12 +184,17 @@ public class Modificar_Zona extends javax.swing.JFrame {
         Nombre=txtField_Nombre.getText();
         Tamaño=txtField_Tamaño.getText();
         Descripcion=txtField_Descripcion.getText();
+        if (txtField_Nombre.getText().isEmpty() || txtField_Tamaño.getText().isEmpty() || txtField_Descripcion.getText().isEmpty() ){
+            JOptionPane.showMessageDialog(this,"Porfavor ingrese datos en todos los campos de texto","ERROR", JOptionPane.WARNING_MESSAGE);
+        }else{
         conexion.Modificar_Zona_Seguridad(id_zona,Nombre, Tamaño, Descripcion);
         Ver_Zonas vZ = new Ver_Zonas();
         vZ.setVisible(true);
         this.setVisible(false);
         vZ.setSize(700,430);
         vZ.setLocationRelativeTo(null);
+    }
+        
     }//GEN-LAST:event_btn_EnviarActionPerformed
     
     //Boton para volver para atras
