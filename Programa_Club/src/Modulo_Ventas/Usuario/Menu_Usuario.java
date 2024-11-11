@@ -28,6 +28,7 @@ public class Menu_Usuario extends javax.swing.JFrame {
         Volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Btn_Comprar.setText("Comprar producto");
         Btn_Comprar.addActionListener(new java.awt.event.ActionListener() {
@@ -62,27 +63,29 @@ public class Menu_Usuario extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btn_Comprar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_PedirReembolso, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_CancelarReembolso))
+                .addContainerGap(124, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(Btn_CancelarReembolso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_PedirReembolso, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_Comprar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(124, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(Volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addGap(42, 42, 42)
                 .addComponent(Btn_Comprar)
-                .addGap(26, 26, 26)
+                .addGap(29, 29, 29)
                 .addComponent(Btn_PedirReembolso)
-                .addGap(30, 30, 30)
+                .addGap(32, 32, 32)
                 .addComponent(Btn_CancelarReembolso)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
         pack();
@@ -103,7 +106,7 @@ public class Menu_Usuario extends javax.swing.JFrame {
     private void Btn_ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ComprarActionPerformed
         Gestion_Compra_Usuario vCTU = new Gestion_Compra_Usuario(usuarioID);
         this.setVisible(false);
-        vCTU.setSize(1000, 600);
+        vCTU.setSize(1000, 500);
         vCTU.setLocationRelativeTo(null);
         vCTU.setVisible(true); 
     }//GEN-LAST:event_Btn_ComprarActionPerformed
@@ -112,7 +115,7 @@ public class Menu_Usuario extends javax.swing.JFrame {
     private void Btn_PedirReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_PedirReembolsoActionPerformed
         Solicitud_Reembolso_Usuario vRU = new Solicitud_Reembolso_Usuario(usuarioID);
             this.setVisible(false);
-            vRU.setSize(1000, 600);
+            vRU.setSize(820, 500);
             vRU.setLocationRelativeTo(null);
             vRU.setVisible(true); 
     }//GEN-LAST:event_Btn_PedirReembolsoActionPerformed
@@ -120,10 +123,10 @@ public class Menu_Usuario extends javax.swing.JFrame {
     //Boton ingreso a cancelar reembolso
     private void Btn_CancelarReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CancelarReembolsoActionPerformed
         Cancelar_Reembolso_Usuario vCU = new Cancelar_Reembolso_Usuario(usuarioID);
-            this.setVisible(false);
-            vCU.setSize(1000, 600);
-            vCU.setLocationRelativeTo(null);
-            vCU.setVisible(true); 
+        this.setVisible(false);
+        vCU.setSize(610, 460);
+        vCU.setLocationRelativeTo(null);
+        vCU.setVisible(true); 
     }//GEN-LAST:event_Btn_CancelarReembolsoActionPerformed
 
     //Boton a volver Ingreso de usuario
