@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
 /**
@@ -358,21 +359,26 @@ public class Mod_equip extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField3ActionPerformed
 
     private void Btn_EnvioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EnvioActionPerformed
-        //Agarra el texto ingresado, lo envia a la bdd y lo muestra
-        String Nombre=jTextField1.getText();
+        //Agarra el texto ingresado, lo envia a la bdd y lo muestra 
         int Precio=Integer.parseInt(jTextField2.getText());
-        String Descripcion=jTextField3.getText();
-        String link=jTextField4.getText();
-        
-        mec.Insert(Nombre,Precio,Descripcion,link,ByteImagen);
-        jTextField1.setText("");
-        jTextField2.setText("");
-        jTextField3.setText("");
-        jTextField4.setText("");
-        modelo=mec.Cargar_datos(modelo);
-        Lista_equipamiento.setModel(modelo);
-        if (!btn_imagen.isEnabled()){
-            btn_imagen.setEnabled(true);
+        if (Precio>0){
+            
+            String Nombre=jTextField1.getText();
+            String Descripcion=jTextField3.getText();
+            String link=jTextField4.getText();
+
+            mec.Insert(Nombre,Precio,Descripcion,link,ByteImagen);
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            modelo=mec.Cargar_datos(modelo);
+            Lista_equipamiento.setModel(modelo);
+            if (!btn_imagen.isEnabled()){
+                btn_imagen.setEnabled(true);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null,"El precio de equipo es incorrecto, por favor ingresar un precio mayor a 0");
         }
         
     }//GEN-LAST:event_Btn_EnvioActionPerformed
@@ -404,6 +410,9 @@ public class Mod_equip extends javax.swing.JFrame {
            mec.Delete(itemSeleccionado);
            modelo=mec.Cargar_datos(modelo);
            Lista_equipamiento.setModel(modelo);
+        }
+        else{
+            
         }
     }//GEN-LAST:event_btn_borrarActionPerformed
 
