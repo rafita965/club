@@ -124,14 +124,15 @@ public class Pantalla_Equipo extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cant, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cant, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_comprar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addComponent(Nom, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Descri, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Preci, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Lin, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(btn_comprar)))
+                    .addComponent(Lin, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(124, 124, 124))
@@ -149,14 +150,14 @@ public class Pantalla_Equipo extends javax.swing.JFrame {
                         .addComponent(Descri)
                         .addGap(43, 43, 43)
                         .addComponent(Preci)
-                        .addGap(47, 47, 47)
-                        .addComponent(Lin, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addComponent(cant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63)
+                        .addComponent(Lin, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(Imagen, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                .addGap(28, 28, 28)
+                .addComponent(cant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addComponent(btn_comprar)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -194,21 +195,16 @@ public class Pantalla_Equipo extends javax.swing.JFrame {
     }//GEN-LAST:event_cantFocusLost
 
     private void btn_comprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_comprarActionPerformed
-        try {
-            int canti = Integer.parseInt(cant.getText());
-
-            if (canti>0 ){
-            conexion.Insert_pedido_equipamiento(nombre_vec[1],canti,ID_Guardar,Precio);
-
-            btn_Volver2ActionPerformed(evt);
-            }
-            else{
-                JOptionPane.showMessageDialog(this,"Cantidad invalida, por favor ingrese un numero valido","ERROR", JOptionPane.WARNING_MESSAGE);
-                cant.setText("Cant. a comprar");
-                bandera = true;
-            }
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this,"Cantidad invalida, por favor ingrese un numero valido","ERROR", JOptionPane.WARNING_MESSAGE);
+        //Se selecciona para comprar
+        int canti = Integer.parseInt(cant.getText());
+        
+        if (canti>0){
+        conexion.Insert_pedido_equipamiento(nombre_vec[1],canti,ID_Guardar,Precio);
+        
+        btn_Volver2ActionPerformed(evt);
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Cantidad invalida, por favor no ingrese un numero negativo");
             cant.setText("Cant. a comprar");
             bandera = true;
         }

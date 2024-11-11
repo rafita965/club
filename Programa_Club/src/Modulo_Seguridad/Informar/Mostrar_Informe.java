@@ -179,7 +179,6 @@ public class Mostrar_Informe extends javax.swing.JFrame {
         this.setVisible(false);
         cI.setVisible(true);
         cI.setLocationRelativeTo(null);
-        cI.setSize(501, 430);
         
     }//GEN-LAST:event_btn_crearInformeActionPerformed
     

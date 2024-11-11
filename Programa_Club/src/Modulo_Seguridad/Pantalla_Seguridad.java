@@ -238,7 +238,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         Ver_Socios_Suspendidos V_S_S=new Ver_Socios_Suspendidos();
         this.setVisible(false);
         V_S_S.setVisible(true);
-        V_S_S.setSize(500,430);
+        V_S_S.setSize(700,430);
         V_S_S.setLocationRelativeTo(null);
     }//GEN-LAST:event_btn_v_s_sActionPerformed
 
