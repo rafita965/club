@@ -693,7 +693,6 @@ public class Conexion_Bdd_Seguridad {
              while(resul.next()){
                 String Item=resul.getInt("Tipo_Id") + " / " + resul.getString("Nombre")+ " / " + resul.getString("Precio");
                 resultados.add(Item);
-                System.out.println(Item);
             }
             
             miConexion.close();

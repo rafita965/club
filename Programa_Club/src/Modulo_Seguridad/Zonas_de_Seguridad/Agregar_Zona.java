@@ -6,6 +6,7 @@
 package Modulo_Seguridad.Zonas_de_Seguridad;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Conexion_Bdd_Seguridad;
+import javax.swing.JOptionPane;
 /**
  *
  * @author PC
@@ -176,12 +177,18 @@ public class Agregar_Zona extends javax.swing.JFrame {
         Nombre=txtField_Nombre.getText();
         Tamaño=txtField_Tamaño.getText();
         Descripcion=txtField_Descripcion.getText();
+        if (txtField_Nombre.getText().isEmpty() || txtField_Tamaño.getText().isEmpty() || txtField_Descripcion.getText().isEmpty() ){
+            JOptionPane.showMessageDialog(this,"Porfavor ingrese datos en todos los campos de texto","ERROR", JOptionPane.WARNING_MESSAGE);
+
+    }else{
         conexion.Insert_Zona_Seguridad(Nombre, Tamaño, Descripcion);
         Ver_Zonas VerZonas=new Ver_Zonas();
         VerZonas.setVisible(true);
         this.setVisible(false);
         VerZonas.setSize(700,430);
         VerZonas.setLocationRelativeTo(null);
+    }
+        
     }//GEN-LAST:event_btn_EnviarActionPerformed
     
     //Boton para volver a la pantalla de zonas
