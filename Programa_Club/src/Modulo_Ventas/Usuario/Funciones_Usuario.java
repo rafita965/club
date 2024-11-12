@@ -227,12 +227,12 @@ public class Funciones_Usuario {
         }
     }
     
-    //FUNCION CALCULAR EL TOTAL A PAGAR VENTANA FINALIZARCOMPRA===================================
+    //Metodo CALCULAR EL TOTAL A PAGAR VENTANA FINALIZARCOMPRA===================================
     public String TotalPagar(int cantidad, String precio, String envio) {
         float totalidad = Float.parseFloat(precio) * cantidad + Float.parseFloat(envio);
         return String.valueOf(totalidad);
     }
-    //FUNCION PARA FINALIZAR COMPRA===============================================================
+    //Metodo PARA FINALIZAR COMPRA===============================================================
     
     //public void GuardarTarjeta(String usuarioID, String tipoTarjeta, String nombreTitular, String codigoSeguridad, String numerin){}
     public void GuardarPedido(String usuarioID, String productoID, String fecha, int cantidad, String formaEntrega, String envioID){
