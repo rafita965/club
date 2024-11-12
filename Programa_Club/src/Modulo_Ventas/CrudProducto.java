@@ -143,17 +143,17 @@ public class CrudProducto {
     }
 
     // Insertar productos
-    public void InsertarProducto(JTextField paramNombreProducto, JTextField paramPrecioProducto, JTextField paramStockProducto, JComboBox<CategoriaItem> comboBoxCategorias) {
+    public void InsertarProducto(JTextField paramNombreProducto, JTextField paramStockProducto, JTextField paramPrecioProducto, JComboBox<CategoriaItem> comboBoxCategorias) {
         // Abrir conexión
         ConexionBDD objetoConexion = new ConexionBDD();
-        String consulta = "INSERT INTO Productos (Nombre, Precio, Stock, CategoriaID,Estado) "
+        String consulta = "INSERT INTO Productos (Nombre, Stock, Precio, CategoriaID,Estado) "
                 + "VALUES (?, ?, ?, ?,0);";
 
         try {
             CallableStatement cs = objetoConexion.Conectar().prepareCall(consulta);
             cs.setString(1, paramNombreProducto.getText());
-            cs.setFloat(2, Float.parseFloat(paramPrecioProducto.getText()));
-            cs.setInt(3, Integer.parseInt(paramStockProducto.getText()));
+            cs.setInt(2, Integer.parseInt(paramStockProducto.getText()));
+            cs.setFloat(3, Float.parseFloat(paramPrecioProducto.getText()));
 
             // Obtener el objeto CategoriaItem y su idCategoria
             CategoriaItem selectedItem = (CategoriaItem) comboBoxCategorias.getSelectedItem();
@@ -179,9 +179,9 @@ public class CrudProducto {
    
         String sql="";
         modelo.addColumn("ID");
-        modelo.addColumn("Nombres");
-        modelo.addColumn("Precio");
+        modelo.addColumn("Nombre");
         modelo.addColumn("Stock");
+        modelo.addColumn("Precio");
         modelo.addColumn("Categoría");
         paramTablaProductos.setModel(modelo);
        
@@ -201,7 +201,7 @@ public class CrudProducto {
                 String categoria = rs.getString("NombreCategoria");
 
                
-                modelo.addRow(new Object[]{id,nombres,precios,stocks,categoria});
+                modelo.addRow(new Object[]{id,nombres,stocks,precios,categoria});
             }
             paramTablaProductos.setModel(modelo);
         } catch (SQLException e) {
@@ -258,15 +258,15 @@ public class CrudProducto {
     }
 
     // Seleccionar producto
-    public void SeleccionarProducto(JTable paramTablaProductos, JTextField paramID, JTextField paramNombreProducto, JTextField paramStockProducto, JTextField paramPrecioProducto, JComboBox<CategoriaItem> comboBoxCategorias) {
+    public void SeleccionarProducto(JTable paramTablaProductos, JTextField paramID, JTextField paramNombreProducto, JTextField paramStockProducto, JTextField paramPrecioProducto,JComboBox<CategoriaItem> comboBoxCategorias) {
         try {
             int fila = paramTablaProductos.getSelectedRow();
 
             if (fila >= 0) {
                 paramID.setText(paramTablaProductos.getValueAt(fila, 0).toString());
                 paramNombreProducto.setText(paramTablaProductos.getValueAt(fila, 1).toString());
-                paramPrecioProducto.setText(paramTablaProductos.getValueAt(fila, 2).toString());
-                paramStockProducto.setText(paramTablaProductos.getValueAt(fila, 3).toString());
+                paramStockProducto.setText(paramTablaProductos.getValueAt(fila, 2).toString());
+                paramPrecioProducto.setText(paramTablaProductos.getValueAt(fila, 3).toString());
 
                 String nombreCategoria = paramTablaProductos.getValueAt(fila, 4).toString();
 
@@ -323,26 +323,41 @@ public class CrudProducto {
             JOptionPane.showMessageDialog(null, "Error en el formato de los números: " + e.getMessage());
         }finally{
                 objetoConexion.cerrarConexion();
-            }
+        }
     }
 
-    // Eliminar
     public void EliminarCategoria(JTextField paramCodigo) {
         setCodigo(Integer.parseInt(paramCodigo.getText()));
         ConexionBDD objetoConexion = new ConexionBDD();
-        String consulta = "DELETE FROM Productos WHERE Productos.ProductoID=?;";
 
-        try (PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta)) {
-            ps.setInt(1, getCodigo());
-            ps.executeUpdate();
+        String consulta1 = "DELETE FROM DescuentoProductos WHERE ProductoID = ?;";
+        String consulta2 = "DELETE FROM DetallePedido WHERE ProductoID = ?;";
+        String consulta3 = "DELETE FROM Productos WHERE ProductoID = ?;";
+
+
+
+        try (PreparedStatement ps1 = objetoConexion.Conectar().prepareStatement(consulta1);
+             PreparedStatement ps2 = objetoConexion.Conectar().prepareStatement(consulta2);
+             PreparedStatement ps3 = objetoConexion.Conectar().prepareStatement(consulta3)){
+
+            ps1.setInt(1, getCodigo());
+            ps1.executeUpdate();
+
+            ps2.setInt(1, getCodigo());
+            ps2.executeUpdate();
+            
+            ps3.setInt(1, getCodigo());
+            ps3.executeUpdate();
 
             JOptionPane.showMessageDialog(null, "Se eliminó correctamente el registro");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se eliminó correctamente el registro, error: " + e.getMessage());
-        }finally{
+            System.out.println(e.toString());
+        } finally {
             objetoConexion.cerrarConexion();
         }
     }
+
    //Limpiar campos
     public void LimpiarCampos(JTextField paramID, JTextField paramNombreProducto, JTextField paramStockProducto, JTextField paramPrecioProducto, JComboBox<CategoriaItem> comboBoxCategorias) {
         paramID.setText("");
