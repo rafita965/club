@@ -44,4 +44,8 @@ public class DBConexion {
             JOptionPane.showMessageDialog(null, "ERROR: "+e.toString());
         }
     }
+    
+    public Connection getConexion(){
+        return conexion;
+    }
 }
