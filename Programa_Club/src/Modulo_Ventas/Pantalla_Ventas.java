@@ -224,7 +224,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void Btn_Gestionar_ReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Gestionar_ReembolsoActionPerformed
         Gestion_Reembolso  vR = new Gestion_Reembolso();
         this.setVisible(false);
-        vR.setSize(520,680);
+        vR.setSize(500,640);
         vR.setLocationRelativeTo(null);
         vR.setVisible(true);
     }//GEN-LAST:event_Btn_Gestionar_ReembolsoActionPerformed
@@ -242,7 +242,7 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void Btn_Gestionar_PedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Gestionar_PedidosActionPerformed
         Gestion_Pedidos  vP = new Gestion_Pedidos();
         this.setVisible(false);
-        vP.setSize(550,470);
+        vP.setSize(530,440);
         vP.setLocationRelativeTo(null);
         vP.setVisible(true);
     }//GEN-LAST:event_Btn_Gestionar_PedidosActionPerformed

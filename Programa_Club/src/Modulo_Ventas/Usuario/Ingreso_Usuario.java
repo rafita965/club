@@ -115,7 +115,7 @@ public class Ingreso_Usuario extends javax.swing.JFrame {
             // Si el ID es válido, abre la ventana de compras
             Menu_Usuario vMU = new Menu_Usuario(usuarioID);
             this.setVisible(false);
-            vMU.setSize(450, 350);
+            vMU.setSize(380, 320);
             vMU.setLocationRelativeTo(null);
             vMU.setVisible(true); 
         } else {
