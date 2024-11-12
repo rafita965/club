@@ -35,7 +35,7 @@ public class Pantalla_Guardia_Codigo {
         Pantalla_G_Unique pGu=new Pantalla_G_Unique();
         pGu.setVisible(true);
         pGu.setLocationRelativeTo(null);
-        pGu.setSize(785,630);
+        pGu.setSize(652, 619);
         pGu.Cargar_Datos(id,nombre);
         
     }

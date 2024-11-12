@@ -36,7 +36,7 @@ public class Suspender_socio_codigo {
         Ps.agregar_socio(id);
         Ps.setVisible(true);
         Ps.setLocationRelativeTo(null);
-        Ps.setSize(689, 611);
+        Ps.setSize(465, 611);
     }
     
 }
