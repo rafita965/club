@@ -210,6 +210,56 @@ public class Funciones_Usuario {
             objetoConexion.cerrarConexion();
         }
     }
+
+    
+    //Metodo CALCULAR EL TOTAL A PAGAR VENTANA FINALIZARCOMPRA===================================
+    public String TotalPagar(int cantidad, String precio, String envio) {
+        float totalidad = Float.parseFloat(precio) * cantidad + Float.parseFloat(envio);
+        return String.valueOf(totalidad);
+    }
+    //Metodo PARA FINALIZAR COMPRA===============================================================
+    
+    //public void GuardarTarjeta(String usuarioID, String tipoTarjeta, String nombreTitular, String codigoSeguridad, String numerin){}
+    public void GuardarPedido(String usuarioID, String productoID, String fecha, int cantidad, String formaEntrega, String envioID){
+        String pedidoID = "";
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta = "INSERT INTO Pedido(IDUsuario, Fecha) VALUES (?, ?);";
+        String consulta2 = "INSERT INTO DetallePedido(PedidoID, ProductoID, Cantidad, FormaEntrega, EnvioID) VALUES (?, ?, ?, ?, ?);";
+
+        try {
+            
+            PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, Integer.parseInt(usuarioID));
+            ps.setString(2, fecha);
+            ps.executeUpdate();
+
+           
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                pedidoID = rs.getString(1);  
+            }
+
+            CallableStatement csDetalle = objetoConexion.Conectar().prepareCall(consulta2);
+            csDetalle.setInt(1, Integer.parseInt(pedidoID)); 
+            csDetalle.setInt(2, Integer.parseInt(productoID));
+            csDetalle.setInt(3, cantidad);
+            csDetalle.setString(4, formaEntrega);
+            if(envioID.equals("-")){
+                csDetalle.setNull(5, java.sql.Types.INTEGER); 
+            }else{
+                csDetalle.setInt(5,Integer.parseInt(envioID));
+            }
+            csDetalle.executeUpdate();
+
+            
+            JOptionPane.showMessageDialog(null, "Se guardó el pedido correctamente con ID: " + pedidoID);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.toString());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
+        
+    }
 }
 
 
