@@ -70,7 +70,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
             }
         });
 
-        btn_verZonas.setText("Ver Zonas");
+        btn_verZonas.setText("Gestionar Zonas");
         btn_verZonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_verZonasActionPerformed(evt);
@@ -91,7 +91,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
             }
         });
 
-        btn_mostrarInforme.setText("Mostrar informes");
+        btn_mostrarInforme.setText("Gestionar informes");
         btn_mostrarInforme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_mostrarInformeActionPerformed(evt);

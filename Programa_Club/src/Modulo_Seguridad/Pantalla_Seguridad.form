@@ -119,7 +119,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_verZonas">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ver Zonas"/>
+            <Property name="text" type="java.lang.String" value="Gestionar Zonas"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_verZonasActionPerformed"/>
@@ -143,7 +143,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="btn_mostrarInforme">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Mostrar informes"/>
+            <Property name="text" type="java.lang.String" value="Gestionar informes"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_mostrarInformeActionPerformed"/>
