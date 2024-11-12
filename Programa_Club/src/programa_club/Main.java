@@ -8,6 +8,7 @@ import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Abrir_Seguridad;
 import Modulo_Entradas.Principal;
+import Modulo_GestionDeFinanzas.PlanificacionFinanciera;
 /**
  *
  * @author PC
@@ -36,6 +37,7 @@ public class Main extends javax.swing.JFrame {
         btn_Productos = new javax.swing.JButton();
         btn_Entradas = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btn_gestionf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +69,14 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo (1) (1) (2).png"))); // NOI18N
 
+        btn_gestionf.setBackground(new java.awt.Color(99, 140, 181));
+        btn_gestionf.setText("Gestionar finanzas");
+        btn_gestionf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_gestionfActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -76,23 +86,27 @@ public class Main extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_Entradas, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_gestionf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_Entradas, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(136, 136, 136))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(btn_Seguridad)
-                .addGap(34, 34, 34)
+                .addGap(28, 28, 28)
                 .addComponent(btn_Productos)
-                .addGap(39, 39, 39)
+                .addGap(28, 28, 28)
                 .addComponent(btn_Entradas)
-                .addGap(39, 39, 39))
+                .addGap(28, 28, 28)
+                .addComponent(btn_gestionf)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -130,6 +144,13 @@ public class Main extends javax.swing.JFrame {
         wdw.setLocationRelativeTo(null);
         wdw.setSize(900,520);
     }//GEN-LAST:event_btn_EntradasActionPerformed
+
+    private void btn_gestionfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestionfActionPerformed
+        PlanificacionFinanciera pF= new PlanificacionFinanciera();
+        pF.setVisible(true);
+        this.setVisible(false);
+        pF.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btn_gestionfActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,6 +191,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btn_Entradas;
     private javax.swing.JButton btn_Productos;
     private javax.swing.JButton btn_Seguridad;
+    private javax.swing.JButton btn_gestionf;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
