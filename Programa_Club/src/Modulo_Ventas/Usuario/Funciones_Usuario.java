@@ -211,6 +211,7 @@ public class Funciones_Usuario {
         }
     }
 
+
     
     //Metodo CALCULAR EL TOTAL A PAGAR VENTANA FINALIZARCOMPRA===================================
     public String TotalPagar(int cantidad, String precio, String envio) {
@@ -260,6 +261,7 @@ public class Funciones_Usuario {
         }
         
     }
+
 }
 
 

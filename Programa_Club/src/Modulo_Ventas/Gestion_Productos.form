@@ -92,8 +92,8 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="JTextField_StockProducto" min="-2" pref="88" max="-2" attributes="0"/>
                               <Component id="JTextField_precioProducto" min="-2" pref="88" max="-2" attributes="0"/>
+                              <Component id="JTextField_StockProducto" min="-2" pref="88" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Component id="Btn_Mod" alignment="1" min="-2" pref="151" max="-2" attributes="0"/>
@@ -129,14 +129,14 @@
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                      <Component id="JTextField_StockProducto" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JTextField_precioProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="JTextField_StockProducto" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="ComboBoxCategoria" min="-2" max="-2" attributes="0"/>
@@ -147,9 +147,13 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="Btn_Eliminar" min="-2" max="-2" attributes="0"/>
 
+
                   <EmptySpace max="32767" attributes="0"/>
 
                   <EmptySpace pref="82" max="32767" attributes="0"/>
+
+
+                  <EmptySpace max="32767" attributes="0"/>
 
               </Group>
           </Group>
@@ -203,24 +207,32 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
 
+
             <Property name="text" type="java.lang.String" value="Precio"/>
 
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f0" green="f0" red="f0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Stock"/>
+
+
+            <Property name="text" type="java.lang.String" value="Precio"/>
 
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
 
+
             <Property name="text" type="java.lang.String" value="Stock"/>
 
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f0" green="f0" red="f0" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Precio"/>
+
+
+            <Property name="text" type="java.lang.String" value="Stock"/>
 
           </Properties>
         </Component>

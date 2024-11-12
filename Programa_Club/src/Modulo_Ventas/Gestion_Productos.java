@@ -201,6 +201,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
         jLabel3.setText("Nombre");
 
 
+
         jLabel4.setText("Precio");
 
         jLabel5.setText("Stock");
@@ -210,6 +211,11 @@ public class Gestion_Productos extends javax.swing.JFrame {
 
         jLabel5.setForeground(new java.awt.Color(240, 240, 240));
         jLabel5.setText("Precio");
+
+
+        jLabel4.setText("Precio");
+
+        jLabel5.setText("Stock");
 
 
         ComboBoxCategoria.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -228,8 +234,8 @@ public class Gestion_Productos extends javax.swing.JFrame {
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JTextField_StockProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JTextField_precioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(JTextField_precioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JTextField_StockProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(Btn_Mod, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Btn_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -255,13 +261,13 @@ public class Gestion_Productos extends javax.swing.JFrame {
                     .addComponent(JTextField_nombreProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(JTextField_StockProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
                     .addComponent(JTextField_precioProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JTextField_StockProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -271,9 +277,13 @@ public class Gestion_Productos extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Btn_Eliminar)
 
+
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 
                 .addContainerGap(82, Short.MAX_VALUE))
+
+
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 
         );
 
@@ -398,11 +408,8 @@ public class Gestion_Productos extends javax.swing.JFrame {
             precioOriginal.equals(JTextField_precioProducto.getText()) &&
             stockOriginal.equals(JTextField_StockProducto.getText())) {
             JOptionPane.showMessageDialog(null, "No se detectaron cambios en el producto.");
-            crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto,JTextField_precioProducto, JTextField_StockProducto,  ComboBoxCategoria);
-
         } else {
             crudProducto.ModificarProducto(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
-            crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto,JTextField_precioProducto, JTextField_StockProducto,  ComboBoxCategoria);
             actualizarVista();
         }
         TablaProductos.clearSelection();
@@ -414,11 +421,9 @@ public class Gestion_Productos extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Completar los datos faltantes.");
         } else if (crudProducto.existeProductoConNombre(JTextField_nombreProducto.getText())) {
             JOptionPane.showMessageDialog(null, "El producto con este nombre ya existe.");
-            crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto,JTextField_precioProducto, JTextField_StockProducto,  ComboBoxCategoria);
         } else {
             crudProducto.InsertarProducto(JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
             actualizarVista();
-            crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto,JTextField_precioProducto, JTextField_StockProducto,  ComboBoxCategoria);
         }
         TablaProductos.clearSelection();
     }//GEN-LAST:event_Btn_GuardarActionPerformed
@@ -442,7 +447,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
     
     //Seleccionar producto
     private void TablaProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaProductosMouseClicked
-       crudProducto.SeleccionarProducto(TablaProductos, JTextField_IDProducto, JTextField_nombreProducto, JTextField_StockProducto, JTextField_precioProducto, ComboBoxCategoria);
+       crudProducto.SeleccionarProducto(TablaProductos, JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
         habilitarBotones();
     }//GEN-LAST:event_TablaProductosMouseClicked
     
