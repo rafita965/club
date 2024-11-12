@@ -45,13 +45,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="141" max="32767" attributes="0"/>
+                  <EmptySpace pref="118" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="btn_Productos" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_Seguridad" alignment="0" max="32767" attributes="0"/>
                       <Component id="btn_Entradas" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="130" max="32767" attributes="0"/>
+                  <EmptySpace pref="107" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -128,7 +128,7 @@
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="b5" green="8c" red="63" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Gestionar productos"/>
+            <Property name="text" type="java.lang.String" value="Gestionar ventas de producto"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ProductosActionPerformed"/>
