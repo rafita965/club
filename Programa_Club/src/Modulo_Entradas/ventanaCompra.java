@@ -48,13 +48,7 @@ public class ventanaCompra extends javax.swing.JFrame {
         setChecks();
         
         cargarSectores();
-        cmbSectores.setSelectedIndex(0);
         //cmbSectores.setSelectedIndex(0);
-        String itemSeleccionado = (String) cmbSectores.getSelectedItem();
-            
-            // Dividir la cadena usando "_" como delimitador
-        int value = Integer.parseInt(itemSeleccionado.split("|")[0].trim());
-        String select=(String)cmbSectores.getSelectedItem();
     }
 
     /**
@@ -264,9 +258,8 @@ public class ventanaCompra extends javax.swing.JFrame {
             try{String consulta = "SELECT Asientos FROM Sector_Evento WHERE IdSector=? AND IdEvento=?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                System.out.println(select.split("|")[0].trim());
                 ps.setInt(1, Integer.parseInt(select.split("|")[0].trim()));
-                ps.setInt(2, eventoID);
+                ps.setInt(2, 1);
                 ResultSet rs = ps.executeQuery();
                 if(rs.next()){
                     String jsonData = rs.getString("Asientos");
@@ -292,9 +285,8 @@ public class ventanaCompra extends javax.swing.JFrame {
                                             PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
                                             ps.setInt(1, fila);
                                             ps.setInt(2, columna);
-                                            String sect =select.split("|")[0].trim();
-                                            ps.setInt(3, Integer.parseInt(sect));
-                                            ps.setInt(4, eventoID);
+                                            ps.setInt(3, 1);
+                                            ps.setInt(4, 1);
                                             ResultSet rs = ps.executeQuery();
                                             if(rs.next()){
                                                 boolean libre= rs.getBoolean("libre");
@@ -413,7 +405,6 @@ public class ventanaCompra extends javax.swing.JFrame {
                     ps.setInt(1, (Integer) modelo.getValueAt(f, 2));
                     ps.setInt(2, (Integer) modelo.getValueAt(f, 3));
                     String item = (String) cmbSectores.getSelectedItem();
-                    System.out.println(item.split("|")[0].trim());
                     ps.setInt(3, Integer.valueOf(item.split("| ")[0].trim()));
                     ps.setInt(4, 1);
                     ps.executeUpdate();
@@ -440,7 +431,7 @@ public class ventanaCompra extends javax.swing.JFrame {
      */
     private void setChecks(){
         try{
-            int ejeY =5;
+            int ejeY =0;
             String consulta = "SELECT U.IDUsuario, U.Nombre_usuario, SS.ID, C.CompraID, M.Descuento " +
                         "FROM Usuario U INNER JOIN Grupo G ON U.IDUsuario=G.IDUsuario " +
                         "LEFT JOIN Compra C ON U.IDUsuario = C.IDUsuario AND C.IdEvento = ? " +
@@ -460,16 +451,16 @@ public class ventanaCompra extends javax.swing.JFrame {
                 int suspendido= rs.getInt("ID");
                 
                 JCheckBox box = new JCheckBox(nombreUsuario);
-                box.setBounds(10,ejeY+38,130,23);
+                box.setBounds(5,ejeY+38,130,23);
                 
-                if(!rs.wasNull() || compra!=0){
+                if(rs.wasNull() || compra!=0){
                     box.setEnabled(false);
                 }else{
                     int Descuento= rs.getInt("Descuento");
                     int Id= rs.getInt("IDUsuario");
                     if(Id==usuarioID){
                         box.setText(nombreUsuario+"(Tú)");
-                        box.setBounds(10,20,130,23);
+                        box.setBounds(5,15,130,23);
                         box.setSelected(true);
                         box.setEnabled(false);
                         DefaultTableModel modelo = (DefaultTableModel) tblEntradas.getModel();
@@ -494,23 +485,22 @@ public class ventanaCompra extends javax.swing.JFrame {
                     });
                         arrMiembros.add(nombreUsuario);
                         arrDescs.add(Descuento);
-                        ejeY+=23;
                     }
                 }
                 pnlGrupo.add(box);
+                ejeY+=23;
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al conusltar grupo: "+e.toString());
         }finally{
             conexion.Desconectar();
-            System.out.println("checkslistos");
         }
     }
     
     private void cargarSectores(){
         try{
                 String consulta = "SELECT S.idSector, S.NombreSector, SE.Precio FROM Sector S " +
-                        "INNER JOIN Sector_Evento SE ON SE.IdSector=S.IdSector WHERE SE.IdEvento=?;";
+                        "INNER JOIN Sector_Evento SE ON SE.IdEvento=S.IdSector WHERE SE.IdEvento=?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
                 ps.setInt(1, eventoID);
@@ -527,9 +517,6 @@ public class ventanaCompra extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error al conusltar sectores: "+e.toString());
             }finally{
                 conexion.Desconectar();
-                
-            //String select=(String)cmbSectores.getSelectedItem();
-            System.out.println("sectoreslistos");
             }
     }
     

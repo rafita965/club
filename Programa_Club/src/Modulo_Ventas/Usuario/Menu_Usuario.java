@@ -26,8 +26,13 @@ public class Menu_Usuario extends javax.swing.JFrame {
         Btn_PedirReembolso = new javax.swing.JButton();
         Btn_CancelarReembolso = new javax.swing.JButton();
         Volver = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+        getContentPane().setLayout(null);
 
         Btn_Comprar.setText("Comprar producto");
         Btn_Comprar.addActionListener(new java.awt.event.ActionListener() {
@@ -35,6 +40,8 @@ public class Menu_Usuario extends javax.swing.JFrame {
                 Btn_ComprarActionPerformed(evt);
             }
         });
+        getContentPane().add(Btn_Comprar);
+        Btn_Comprar.setBounds(124, 76, 129, 23);
 
         Btn_PedirReembolso.setText("Pedir Reembolso");
         Btn_PedirReembolso.addActionListener(new java.awt.event.ActionListener() {
@@ -42,6 +49,8 @@ public class Menu_Usuario extends javax.swing.JFrame {
                 Btn_PedirReembolsoActionPerformed(evt);
             }
         });
+        getContentPane().add(Btn_PedirReembolso);
+        Btn_PedirReembolso.setBounds(124, 128, 129, 23);
 
         Btn_CancelarReembolso.setText("Cancelar Reembolso");
         Btn_CancelarReembolso.addActionListener(new java.awt.event.ActionListener() {
@@ -49,6 +58,8 @@ public class Menu_Usuario extends javax.swing.JFrame {
                 Btn_CancelarReembolsoActionPerformed(evt);
             }
         });
+        getContentPane().add(Btn_CancelarReembolso);
+        Btn_CancelarReembolso.setBounds(124, 183, 129, 23);
 
         Volver.setText("<--");
         Volver.addActionListener(new java.awt.event.ActionListener() {
@@ -56,34 +67,50 @@ public class Menu_Usuario extends javax.swing.JFrame {
                 VolverActionPerformed(evt);
             }
         });
+        getContentPane().add(Volver);
+        Volver.setBounds(10, 11, 62, 23);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(124, 124, 124)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Btn_Comprar, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_PedirReembolso, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Btn_CancelarReembolso))
-                .addContainerGap(124, Short.MAX_VALUE))
+        jPanel1.setBackground(new java.awt.Color(47, 94, 141));
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 380, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(Volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(Btn_Comprar)
-                .addGap(26, 26, 26)
-                .addComponent(Btn_PedirReembolso)
-                .addGap(30, 30, 30)
-                .addComponent(Btn_CancelarReembolso)
-                .addContainerGap(97, Short.MAX_VALUE))
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 240, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPanel1);
+        jPanel1.setBounds(0, 50, 380, 240);
+
+        jPanel2.setBackground(new java.awt.Color(31, 50, 69));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setText("MENÚ");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(170, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(168, 168, 168))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 0, 380, 50);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -103,7 +130,7 @@ public class Menu_Usuario extends javax.swing.JFrame {
     private void Btn_ComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_ComprarActionPerformed
         Gestion_Compra_Usuario vCTU = new Gestion_Compra_Usuario(usuarioID);
         this.setVisible(false);
-        vCTU.setSize(1000, 600);
+        vCTU.setSize(1000, 500);
         vCTU.setLocationRelativeTo(null);
         vCTU.setVisible(true); 
     }//GEN-LAST:event_Btn_ComprarActionPerformed
@@ -112,7 +139,7 @@ public class Menu_Usuario extends javax.swing.JFrame {
     private void Btn_PedirReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_PedirReembolsoActionPerformed
         Solicitud_Reembolso_Usuario vRU = new Solicitud_Reembolso_Usuario(usuarioID);
             this.setVisible(false);
-            vRU.setSize(1000, 600);
+            vRU.setSize(820, 460);
             vRU.setLocationRelativeTo(null);
             vRU.setVisible(true); 
     }//GEN-LAST:event_Btn_PedirReembolsoActionPerformed
@@ -120,10 +147,10 @@ public class Menu_Usuario extends javax.swing.JFrame {
     //Boton ingreso a cancelar reembolso
     private void Btn_CancelarReembolsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_CancelarReembolsoActionPerformed
         Cancelar_Reembolso_Usuario vCU = new Cancelar_Reembolso_Usuario(usuarioID);
-            this.setVisible(false);
-            vCU.setSize(1000, 600);
-            vCU.setLocationRelativeTo(null);
-            vCU.setVisible(true); 
+        this.setVisible(false);
+        vCU.setSize(610, 440);
+        vCU.setLocationRelativeTo(null);
+        vCU.setVisible(true); 
     }//GEN-LAST:event_Btn_CancelarReembolsoActionPerformed
 
     //Boton a volver Ingreso de usuario
@@ -171,5 +198,8 @@ public class Menu_Usuario extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Comprar;
     private javax.swing.JButton Btn_PedirReembolso;
     private javax.swing.JButton Volver;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }

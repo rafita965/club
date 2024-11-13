@@ -7,7 +7,6 @@
 package Modulo_Entradas;
 
 import java.awt.Window;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 /**
@@ -29,8 +28,6 @@ public class panelEventos extends javax.swing.JPanel {
         grupoOpc.add(opcPartidos);
         grupoOpc.add(opcConciertos);
         grupoOpc.setSelected(opcAmbos.getModel(),true);
-        
-        cod.cargarEventos(tbEventos);
     }
 
     /**
@@ -284,24 +281,23 @@ public class panelEventos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void opcPartidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcPartidosActionPerformed
-        cod.buscarEventos(tbEventos, cbbMes, " AND (E.tipoEvento = 'Partido');");
+        cod.buscarEventos(tbEventos, cbbMes, "'Partido'");
     }//GEN-LAST:event_opcPartidosActionPerformed
 
     private void opcAmbosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcAmbosActionPerformed
-        cod.buscarEventos(tbEventos, cbbMes, ";");
+        cod.buscarEventos(tbEventos, cbbMes, "'Partido' OR E.tipoEvento = 'Concierto'");
     }//GEN-LAST:event_opcAmbosActionPerformed
 
     private void opcConciertosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcConciertosActionPerformed
-        cod.buscarEventos(tbEventos, cbbMes, " AND (E.tipoEvento = 'Concierto');");
+        cod.buscarEventos(tbEventos, cbbMes, "'Concierto'");
     }//GEN-LAST:event_opcConciertosActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         int seleccion = tbEventos.getSelectedRow();
-        if(seleccion!=-1){
-            int eventoID = Integer.parseInt(tbEventos.getValueAt(seleccion, 0).toString());
+        if(tbEventos.getSelectedRow()!=-1){
+            int eventoID = ((Integer) tbEventos.getValueAt(seleccion, 0)).intValue();
             ventanaCompra entradas= new ventanaCompra(usuarioID,eventoID);
             entradas.setVisible(true);
-            entradas.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             entradas.setLocationRelativeTo(null);
             Window principal = SwingUtilities.getWindowAncestor(this);
             principal.dispose();
@@ -314,11 +310,11 @@ public class panelEventos extends javax.swing.JPanel {
 
     private void cbbMesItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbMesItemStateChanged
         if(opcAmbos.isSelected()){
-            cod.buscarEventos(tbEventos, cbbMes, ";");
+            cod.buscarEventos(tbEventos, cbbMes, "'Partido' OR E.tipoEvento = 'Concierto'");
         }else if(opcPartidos.isSelected()){
-            cod.buscarEventos(tbEventos, cbbMes, " AND (E.tipoEvento = 'Partido');");
+            cod.buscarEventos(tbEventos, cbbMes, "'Partido'");
         }else{
-            cod.buscarEventos(tbEventos, cbbMes, " AND (E.tipoEvento = 'Concierto');");
+            cod.buscarEventos(tbEventos, cbbMes, "'Concierto'");
         }
     }//GEN-LAST:event_cbbMesItemStateChanged
 

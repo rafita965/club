@@ -14,7 +14,8 @@ import javax.swing.JTextField;
  * @author tm_galli
  */
 public class ControlDePresupuesto extends javax.swing.JFrame {
-
+    boolean id_sacar = false;
+    boolean id_meter = false;
     /**
      * Creates new form GestionDePagosYCambios
      */
@@ -44,6 +45,23 @@ public class ControlDePresupuesto extends javax.swing.JFrame {
         });
         */
         
+    }
+    
+    private Object[][] tableToArray(JTable table) {
+        int rowCount = table.getRowCount();
+        int columnCount = table.getColumnCount();
+
+        // Crear un array bidimensional
+        Object[][] dataArray = new Object[rowCount][columnCount];
+
+        // Llenar el array con los valores de la tabla
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                dataArray[i][j] = table.getValueAt(i, j);
+            }
+        }
+
+        return dataArray;
     }
     
 

@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -17,9 +17,7 @@ import java.sql.*;
  *
  * @author thiag
  */
-//Funciones del proceso a la entrega de pedido
 public class Funciones_Usuario {
-    //Declaracion de variables
     private Date fecha;
     private String Nombre_Producto;
     private double Precio;
@@ -28,7 +26,6 @@ public class Funciones_Usuario {
     private int codigo;
     private String productoID;
     
-    //Getter y setter
     public String getNombre_Producto() {
         return Nombre_Producto;
     }
@@ -76,25 +73,42 @@ public class Funciones_Usuario {
     public void setIDPedido(int IDPedido) {
         this.IDPedido = IDPedido;
     }
-    
-    //Metodos de Gestion_Compra_Usuario
+
     // Método para mostrar los reembolsos en la tabla
     public void MostrarProductos(JTable paramTablaProductos) {
         ConexionBDD objetoConexion = new ConexionBDD();
         DefaultTableModel modelo = new DefaultTableModel();
         TableRowSorter<TableModel> ordenarTabla = new TableRowSorter<>(modelo);
         paramTablaProductos.setRowSorter(ordenarTabla);
+
+        // Agregar las columnas
         modelo.addColumn("ProductoID"); // Esta columna se va a ocultar
         modelo.addColumn("Nombre");
         modelo.addColumn("Stock");
         modelo.addColumn("Precio");
         modelo.addColumn("Categoria");
+
         paramTablaProductos.setModel(modelo);
-        String sql = "SELECT Productos.ProductoID, Productos.Nombre, Productos.Stock, Productos.Precio, " +
-             "Categorias.NombreCategoria FROM Productos " +
-             "INNER JOIN Categorias ON Productos.CategoriaID = Categorias.CategoriaID " + // Añadir espacio aquí
-             "WHERE Productos.Estado = 1";
+
+        // Consulta SQL para obtener información de Producto
+        String sql = "SELECT p.ProductoID, " +
+                     "       p.Nombre, " +
+                     "       p.Stock, " +
+                     "       c.NombreCategoria, " +
+                     "       COALESCE(dp.PrecioFinal, p.Precio) AS PrecioFinal " +
+                     "FROM Productos p " +
+                     "LEFT JOIN DescuentoProductos dp " +
+                     "    ON p.ProductoID = dp.ProductoID " +
+                     "LEFT JOIN Descuento d " +
+                     "    ON dp.DescuentoID = d.DescuentoID " +
+                     "    AND CURDATE() BETWEEN d.Fecha_Inicio AND d.Fecha_Final " +
+                     "LEFT JOIN Categorias c " +
+                     "    ON p.CategoriaID = c.CategoriaID " +
+                     "WHERE p.Estado = 1;";
+
+
         String[] datos = new String[5];
+
         try {
             Statement st = objetoConexion.Conectar().createStatement();
             ResultSet rs = st.executeQuery(sql);
@@ -102,62 +116,74 @@ public class Funciones_Usuario {
                 datos[0] = rs.getString("ProductoID");
                 datos[1] = rs.getString("Nombre");
                 datos[2] = rs.getString("Stock");
-                datos[3] = rs.getString("Precio");
+                datos[3] = rs.getString("PrecioFinal");
                 datos[4] = rs.getString("NombreCategoria");
 
                 modelo.addRow(datos);
         }
+
+        // Ocultar la columna ProductoID
         paramTablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
         paramTablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
         paramTablaProductos.getColumnModel().getColumn(0).setWidth(0);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }
-    }
-    
-    //Seleccionar producto
+}
+
     public void SeleccionarProducto(JTable paramTablaProductos, JTextField paramID, JTextField paramNombreProducto, JTextField paramPrecioProducto, JTextField paramCategoria) {
-        try {
-            int fila = paramTablaProductos.getSelectedRow();
-            if (fila >= 0) {
-                paramID.setText(paramTablaProductos.getValueAt(fila, 0).toString()); 
-                paramNombreProducto.setText(paramTablaProductos.getValueAt(fila, 1).toString()); 
-                paramPrecioProducto.setText(paramTablaProductos.getValueAt(fila, 3).toString()); 
-                paramCategoria.setText(paramTablaProductos.getValueAt(fila, 4).toString()); 
-                productoID = paramTablaProductos.getValueAt(fila, 0).toString(); 
-            } else {
-                JOptionPane.showMessageDialog(null, "Fila no encontrada.");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error de selección, error: " + e.getMessage());
+    try {
+        int fila = paramTablaProductos.getSelectedRow();
+
+        // Verificar que haya una fila seleccionada
+        if (fila >= 0) {
+            // Almacenar el ProductoID en el JTextField (columna 0)
+            paramID.setText(paramTablaProductos.getValueAt(fila, 0).toString()); // ProductoID
+            
+            // Almacenar otros datos en los JTextFields correspondientes
+            paramNombreProducto.setText(paramTablaProductos.getValueAt(fila, 1).toString()); // Nombre
+            paramPrecioProducto.setText(paramTablaProductos.getValueAt(fila, 3).toString()); // Precio
+            paramCategoria.setText(paramTablaProductos.getValueAt(fila, 4).toString()); // NombreCategoria
+            
+            // Actualiza el productoID en una variable (por ejemplo, una variable de clase)
+            productoID = paramTablaProductos.getValueAt(fila, 0).toString(); // Asegúrate de que esta línea esté presente
+        } else {
+            JOptionPane.showMessageDialog(null, "Fila no encontrada.");
         }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error de selección, error: " + e.getMessage());
     }
+}
     
-    //Obtener el valor de stock
     protected int obtenerStockProducto(int idProducto) {
-        int stock = 0; 
-        ConexionBDD objetoConexion = new ConexionBDD(); 
-        String sql = "SELECT Stock FROM Productos WHERE ProductoID = ?";
+    int stock = 0; // Variable para almacenar el stock del producto
+    ConexionBDD objetoConexion = new ConexionBDD(); // Conexión a la base de datos
 
-        try {
-            PreparedStatement pst = objetoConexion.Conectar().prepareStatement(sql);
-            pst.setInt(1, idProducto); 
-            ResultSet rs = pst.executeQuery();
+    // Consulta SQL para obtener el stock del producto
+    String sql = "SELECT Stock FROM Productos WHERE ProductoID = ?";
 
-            if (rs.next()) {
-                stock = rs.getInt("Stock");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el stock del producto: " + e.getMessage());
-        } finally {
-            objetoConexion.cerrarConexion(); 
+    try {
+        PreparedStatement pst = objetoConexion.Conectar().prepareStatement(sql);
+        pst.setInt(1, idProducto); // Establecer el ID del producto en la consulta
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            stock = rs.getInt("Stock"); // Obtener el stock del resultado
+            System.out.println("Llamando a obtenerStockProducto con idProducto: " + idProducto);
         }
-        return stock; 
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener el stock del producto: " + e.getMessage());
+    } finally {
+        objetoConexion.cerrarConexion(); // Cerrar la conexión
     }
-  
-    //Metodos para la ventana Ventana_FormaEntrega==============================================
+
+    return stock; // Retornar el stock obtenido
+}
+    
+    //Funciones para la ventana Ventana_FormaEntrega==============================================
     public void MostrarDatos(String usuarioID, JTextField direccion_usuario, JTextField direccion_club, JTextField precioEnvio) {
         ConexionBDD objetoConexion = new ConexionBDD();
         String sql  = "SELECT Direccion FROM Usuario WHERE IDUsuario = ?";
@@ -210,8 +236,6 @@ public class Funciones_Usuario {
             objetoConexion.cerrarConexion();
         }
     }
-
-
     
     //Metodo CALCULAR EL TOTAL A PAGAR VENTANA FINALIZARCOMPRA===================================
     public String TotalPagar(int cantidad, String precio, String envio) {
@@ -261,8 +285,8 @@ public class Funciones_Usuario {
         }
         
     }
-
 }
+
 
 
 

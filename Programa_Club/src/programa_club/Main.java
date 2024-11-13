@@ -7,8 +7,8 @@ package programa_club;
 import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Abrir_Seguridad;
-import Modulo_Entradas.Principal;
 import Modulo_GestionDeFinanzas.PlanificacionFinanciera;
+//import Modulo_Entradas.Principal;
 /**
  *
  * @author PC
@@ -36,15 +36,20 @@ public class Main extends javax.swing.JFrame {
         btn_Seguridad = new javax.swing.JButton();
         btn_Productos = new javax.swing.JButton();
         btn_Entradas = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        btn_gestionf = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(47, 94, 141));
 
         btn_Seguridad.setBackground(new java.awt.Color(99, 140, 181));
-        btn_Seguridad.setText("Gestionar seguridad");
+        btn_Seguridad.setText("Gestionar Seguridad");
         btn_Seguridad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_SeguridadActionPerformed(evt);
@@ -52,7 +57,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_Productos.setBackground(new java.awt.Color(99, 140, 181));
-        btn_Productos.setText("Gestionar productos");
+        btn_Productos.setText("Gestionar Productos");
         btn_Productos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_ProductosActionPerformed(evt);
@@ -60,53 +65,91 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_Entradas.setBackground(new java.awt.Color(99, 140, 181));
-        btn_Entradas.setText("Gestionar entradas");
+        btn_Entradas.setText("Gestionar Entradas");
         btn_Entradas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_EntradasActionPerformed(evt);
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo (1) (1) (2).png"))); // NOI18N
-
-        btn_gestionf.setBackground(new java.awt.Color(99, 140, 181));
-        btn_gestionf.setText("Gestionar finanzas");
-        btn_gestionf.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setBackground(new java.awt.Color(99, 140, 181));
+        jButton1.setText("Gestionar Finanzas");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_gestionfActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
+
+        jButton2.setBackground(new java.awt.Color(99, 140, 181));
+        jButton2.setText("Gestion de Eventos");
+
+        jButton3.setBackground(new java.awt.Color(99, 140, 181));
+        jButton3.setText("Gestion de Socios");
+
+        jButton4.setBackground(new java.awt.Color(99, 140, 181));
+        jButton4.setText("Gestión de Dirigencia");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setBackground(new java.awt.Color(99, 140, 181));
+        jButton5.setText("Gestion de Deportistas");
+
+        jButton6.setBackground(new java.awt.Color(99, 140, 181));
+        jButton6.setText("Gestio de Recursos.H");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo (1) (1) (2).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_gestionf, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Entradas, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(136, 136, 136))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_Productos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_Seguridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_Entradas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel2)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(btn_Seguridad)
-                .addGap(28, 28, 28)
-                .addComponent(btn_Productos)
-                .addGap(28, 28, 28)
-                .addComponent(btn_Entradas)
-                .addGap(28, 28, 28)
-                .addComponent(btn_gestionf)
-                .addContainerGap())
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Seguridad)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Productos)
+                    .addComponent(jButton2)
+                    .addComponent(jButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_Entradas)
+                    .addComponent(jButton1)
+                    .addComponent(jButton6))
+                .addGap(76, 76, 76))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -117,7 +160,7 @@ public class Main extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -131,26 +174,33 @@ public class Main extends javax.swing.JFrame {
 
     private void btn_ProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProductosActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
-        vV.setVisible(true);
         this.setVisible(false);
+        vV.setVisible(true);
         vV.setLocationRelativeTo(null);
-        vV.setSize(1530,900);
+        vV.setSize(400,440);
     }//GEN-LAST:event_btn_ProductosActionPerformed
 
     private void btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EntradasActionPerformed
-        Principal wdw= new Principal();
+        /*Principal wdw= new Principal();
         wdw.setVisible(true);
         this.setVisible(false);
         wdw.setLocationRelativeTo(null);
-        wdw.setSize(900,520);
+        wdw.setResizable(false);
+        wdw.setSize(900,520);*/
     }//GEN-LAST:event_btn_EntradasActionPerformed
 
-    private void btn_gestionfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_gestionfActionPerformed
-        PlanificacionFinanciera pF= new PlanificacionFinanciera();
-        pF.setVisible(true);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        PlanificacionFinanciera wdw= new PlanificacionFinanciera();
+        wdw.setVisible(true);
         this.setVisible(false);
-        pF.setLocationRelativeTo(null);
-    }//GEN-LAST:event_btn_gestionfActionPerformed
+        wdw.setLocationRelativeTo(null);
+        wdw.setResizable(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,7 +241,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btn_Entradas;
     private javax.swing.JButton btn_Productos;
     private javax.swing.JButton btn_Seguridad;
-    private javax.swing.JButton btn_gestionf;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

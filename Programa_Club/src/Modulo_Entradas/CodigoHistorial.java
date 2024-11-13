@@ -26,7 +26,6 @@ public class CodigoHistorial {
     
     public void verHistorial(JTable tablaCompras,JLabel totalCompras){
         DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
-        modelo.setRowCount(0);
         
         try{
             int compras = 0;
@@ -63,7 +62,6 @@ public class CodigoHistorial {
     public void comprasFecha(JDateChooser desde,JDateChooser hasta,JTable tablaCompras,JLabel totalCompras){
         
         DefaultTableModel modelo = (DefaultTableModel) tablaCompras.getModel();
-        modelo.setRowCount(0);
         
         try{
             int compras = 0;

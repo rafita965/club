@@ -187,7 +187,6 @@ public class panelGrupo extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (btnSalir.isEnabled()) {
         cod.salirGrupo();
-        pnlMiembros.removeAll();
         cod.cargarMiembros(pnlMiembros, btnSalir, btnSolicitud);}
     }//GEN-LAST:event_btnSalirMouseClicked
 

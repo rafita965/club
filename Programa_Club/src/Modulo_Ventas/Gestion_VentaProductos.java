@@ -26,6 +26,10 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btn_volver = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Tabla_productosVenta = new javax.swing.JTable();
@@ -38,11 +42,48 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         Btn_Guardar = new javax.swing.JButton();
         Btn_Eliminar = new javax.swing.JButton();
         JTextField_IDProducto = new javax.swing.JTextField();
-        btn_volver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        btn_volver.setText("<-----");
+        btn_volver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_volverActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_volver);
+        btn_volver.setBounds(10, 11, 61, 23);
+
+        jPanel3.setLayout(null);
+
+        jPanel4.setBackground(new java.awt.Color(31, 50, 69));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel3.setText("GESTION DE VENTA DE PRODUCTOS");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(532, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(450, 450, 450))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(12, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel4);
+        jPanel4.setBounds(0, 0, 1240, 40);
+
+        jPanel1.setBackground(new java.awt.Color(47, 94, 141));
 
         Tabla_productosVenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -62,32 +103,36 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(Tabla_productosVenta);
 
+        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("PRODUCTOS A LA VENTA");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(352, 352, 352)
-                .addComponent(jLabel1)
-                .addContainerGap(412, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(383, 383, 383))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel3.add(jPanel1);
+        jPanel1.setBounds(350, 50, 890, 500);
+
+        jPanel2.setBackground(new java.awt.Color(47, 94, 141));
 
         Tabla_Productos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -107,6 +152,7 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(Tabla_Productos);
 
+        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
         jLabel2.setText(" PRODUCTOS NO EN VENTA");
 
         Btn_Guardar.setText("PONER A LA VENTA");
@@ -165,43 +211,14 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
                 .addComponent(Btn_Guardar)
                 .addGap(18, 18, 18)
                 .addComponent(Btn_Eliminar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
-        btn_volver.setText("<-----");
-        btn_volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_volverActionPerformed(evt);
-            }
-        });
+        jPanel3.add(jPanel2);
+        jPanel2.setBounds(0, 50, 320, 500);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btn_volver)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_volver)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel3);
+        jPanel3.setBounds(0, 0, 1240, 550);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -210,9 +227,9 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
         this.setVisible(false);
-        vV.setSize(500,500);
-        vV.setLocationRelativeTo(null);
         vV.setVisible(true);
+        vV.setLocationRelativeTo(null);
+        vV.setSize(400,450);
     }//GEN-LAST:event_btn_volverActionPerformed
     
     //Seleccionar producto
@@ -231,6 +248,9 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         Tabla_Productos.clearSelection();
         Tabla_Productos.clearSelection();
         Tabla_productosVenta.clearSelection();
+        objetoVentaProductos.MostrarProductos(Tabla_productosVenta);
+        objetoVentaProductos.MostrarProductosNoDisponibles(Tabla_Productos);
+
     }//GEN-LAST:event_Btn_GuardarActionPerformed
     
     //Boton Eliminar
@@ -240,6 +260,8 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         Btn_Eliminar.setEnabled(false);
         Tabla_Productos.clearSelection();
         Tabla_productosVenta.clearSelection();
+        objetoVentaProductos.MostrarProductos(Tabla_productosVenta);
+        objetoVentaProductos.MostrarProductosNoDisponibles(Tabla_Productos);
     }//GEN-LAST:event_Btn_EliminarActionPerformed
     
     //Seleccionar productos en venta
@@ -296,8 +318,11 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
     private javax.swing.JButton btn_volver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
