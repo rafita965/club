@@ -421,17 +421,21 @@ public class Gestion_Productos extends javax.swing.JFrame {
     
     //Boton Guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
-        if (JTextField_nombreProducto.getText().isEmpty() || JTextField_precioProducto.getText().isEmpty() || JTextField_StockProducto.getText().isEmpty()) {
+    // Obtener el ID de la categoría desde el ComboBox
+    int idCategoria = ComboBoxCategoria.getSelectedIndex()+1; // O usar otro método si es necesario
+    System.out.print(idCategoria);
+    if (JTextField_nombreProducto.getText().isEmpty() || JTextField_precioProducto.getText().isEmpty() || JTextField_StockProducto.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null, "Completar los datos faltantes.");
-        } else if (crudProducto.existeProductoConNombre(JTextField_nombreProducto.getText())) {
-            JOptionPane.showMessageDialog(null, "El producto con este nombre ya existe.");
-            crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto,JTextField_precioProducto, JTextField_StockProducto,  ComboBoxCategoria);
-        } else {
-            crudProducto.InsertarProducto(JTextField_nombreProducto, JTextField_StockProducto, JTextField_precioProducto,ComboBoxCategoria);
-            actualizarVista();
-            crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto,JTextField_precioProducto, JTextField_StockProducto,  ComboBoxCategoria);
-        }
-        TablaProductos.clearSelection();
+    } else if (crudProducto.existeProductoConNombreYCategoria(JTextField_nombreProducto.getText(), idCategoria)) {
+        JOptionPane.showMessageDialog(null, "El producto con este nombre y categoría ya existe.");
+        crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
+    } else {
+        crudProducto.InsertarProducto(JTextField_nombreProducto, JTextField_StockProducto, JTextField_precioProducto, ComboBoxCategoria);
+        actualizarVista();
+        crudProducto.LimpiarCampos(JTextField_IDProducto, JTextField_nombreProducto, JTextField_precioProducto, JTextField_StockProducto, ComboBoxCategoria);
+    }
+    TablaProductos.clearSelection();
+
     }//GEN-LAST:event_Btn_GuardarActionPerformed
     
     //Boton Volver
