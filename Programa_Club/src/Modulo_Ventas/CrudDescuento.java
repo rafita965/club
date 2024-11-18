@@ -127,29 +127,33 @@ public class CrudDescuento {
         
     }
     //METODO SELECCIONAR DESCUENTOS======================================================================
-    public void SeleccionarDescuentos(JTable totalDescuentos, JTextField id, JTextField descuento, JDateChooser fechaInicio, JDateChooser fechaFinal){
-          int fila = totalDescuentos.getSelectedRow();
-          if(fila>=0){
-            id.setText(totalDescuentos.getValueAt(fila,0).toString());
-            descuento.setText(totalDescuentos.getValueAt(fila,1).toString());
-              
-            String fechaString = totalDescuentos.getValueAt(fila,2).toString();
-            String fechaString2 = totalDescuentos.getValueAt(fila,3).toString();
-            try{
+    public void SeleccionarDescuentos(JTable totalDescuentos, JTextField id, JTextField descuento, JDateChooser fechaInicio, JDateChooser fechaFinal) {
+        int fila = totalDescuentos.getSelectedRow();
+        if (fila >= 0) {
+            id.setText(totalDescuentos.getValueAt(fila, 0).toString());
+
+            // Obtener el valor del descuento y eliminar el símbolo '%'
+            String descuentoTexto = totalDescuentos.getValueAt(fila, 1).toString(); 
+            if (descuentoTexto.endsWith("%")) {
+                descuentoTexto = descuentoTexto.substring(0, descuentoTexto.length() - 1); // Elimina el '%'
+            }
+            descuento.setText(descuentoTexto.trim()); // Asigna solo el número
+
+            String fechaString = totalDescuentos.getValueAt(fila, 2).toString();
+            String fechaString2 = totalDescuentos.getValueAt(fila, 3).toString();
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date fechaDate = sdf.parse(fechaString);
-                
-                SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-                Date fechaDate2 = sdf2.parse(fechaString2);
-                
+                Date fechaDate2 = sdf.parse(fechaString2);
+
                 fechaInicio.setDate(fechaDate);
                 fechaFinal.setDate(fechaDate2);
-                
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(null,"Error al seleccionar, error: " + e.toString());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Error al seleccionar, error: " + e.toString());
             }
         }
     }
+
     //METODO MODIFICAR DESCUENTO=========================================================================
     public void ModificarDescuento(JTextField paramid,JTextField paramPorcentaje, JDateChooser paramFechaInicio, JDateChooser paramFechaFinal){
         ConexionBDD objetoConexion = new ConexionBDD();

@@ -206,23 +206,77 @@ public class Reembolso_Usuario {
             JOptionPane.showMessageDialog(null, "Error de selección, error: " + e.getMessage());
         }
     }
-    //Eliminar reembolso
     public void EliminarReembolso(JTextField paramID) {
         setCodigo(Integer.parseInt(paramID.getText()));
         ConexionBDD objetoConexion = new ConexionBDD();
-        String consulta = "DELETE FROM Reembolso_Pedido WHERE IDPedido = ? AND Estado = 1;";
-        System.out.println(codigo);
+
+        // Primero verificamos si el reembolso tiene el estado 1
+        String consultaEstado = "SELECT Estado FROM Reembolso_Pedido WHERE IDPedido = ?";
         try {
-            PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta);
-            ps.setInt(1, getCodigo());
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Se eliminó correctamente el reembolso");
+            PreparedStatement psEstado = objetoConexion.Conectar().prepareStatement(consultaEstado);
+            psEstado.setInt(1, getCodigo());
+            ResultSet rsEstado = psEstado.executeQuery();
+
+            if (rsEstado.next()) {
+                int estado = rsEstado.getInt("Estado");
+
+                if (estado == 1) {
+                    // Si el estado es 1, se devuelve la cantidad al stock
+                    devolverStockAlProducto(getCodigo());
+                }
+
+                // Ahora eliminamos el reembolso
+                String consultaEliminar = "DELETE FROM Reembolso_Pedido WHERE IDPedido = ? AND Estado = 1";
+                PreparedStatement psEliminar = objetoConexion.Conectar().prepareStatement(consultaEliminar);
+                psEliminar.setInt(1, getCodigo());
+                int filasAfectadas = psEliminar.executeUpdate();
+
+                if (filasAfectadas > 0) {
+                    JOptionPane.showMessageDialog(null, "Se eliminó correctamente el reembolso");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró un reembolso con el ID especificado o ya está en otro estado.");
+                }
+
             } else {
-                JOptionPane.showMessageDialog(null, "No se encontró un reembolso con el ID especificado o ya está en otro estado.");
+                JOptionPane.showMessageDialog(null, "No se encontró el reembolso con el ID especificado.");
             }
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se eliminó correctamente el registro, error: " + e.toString());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
+    }
+
+    private void devolverStockAlProducto(int idReembolso) {
+        ConexionBDD objetoConexion = new ConexionBDD();
+
+        try {
+            // Obtener los productos y las cantidades del reembolso
+            String consultaDetalle = 
+                "SELECT dp.ProductoID, dp.Cantidad " +
+                "FROM DetallePedido dp " +
+                "JOIN Reembolso_Pedido rp ON dp.PedidoID = rp.IDPedido " +
+                "WHERE rp.IDReembolso = ?";
+
+            PreparedStatement psDetalle = objetoConexion.Conectar().prepareStatement(consultaDetalle);
+            psDetalle.setInt(1, idReembolso);
+            ResultSet rsDetalle = psDetalle.executeQuery();
+
+            while (rsDetalle.next()) {
+                int productoID = rsDetalle.getInt("ProductoID");
+                int cantidad = rsDetalle.getInt("Cantidad");
+
+                // Actualizar el stock de los productos
+                String actualizarStock = "UPDATE Productos SET Stock = Stock + ? WHERE ProductoID = ?";
+                PreparedStatement psUpdate = objetoConexion.Conectar().prepareStatement(actualizarStock);
+                psUpdate.setInt(1, cantidad);
+                psUpdate.setInt(2, productoID);
+                psUpdate.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al devolver el stock: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }

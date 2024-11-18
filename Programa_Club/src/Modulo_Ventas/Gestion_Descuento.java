@@ -479,11 +479,16 @@ public class Gestion_Descuento extends javax.swing.JFrame {
     private void TablaDescuentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaDescuentosMouseClicked
         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
         objetoDescuento.SeleccionarDescuentos(TablaDescuentos, JTextField_ID, JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
-
-        // Guardamos los valores actuales para poder verificar si hubo cambios
-        valorDescuentoOriginal = JTextField_Descuento.getText();
-        fechaInicioOriginal = datechooser_FechaInicio.getDate();
-        fechaFinalOriginal = datechooser_FechaFinal.getDate();
+        int filaSeleccionada = TablaDescuentos.getSelectedRow();
+        if (filaSeleccionada >= 0) {
+            objetoDescuento.SeleccionarDescuentos(TablaDescuentos, JTextField_ID, JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
+            
+            // Guardar los valores originales para validación de cambios
+            valorDescuentoOriginal = JTextField_Descuento.getText();
+            fechaInicioOriginal = datechooser_FechaInicio.getDate();
+            fechaFinalOriginal = datechooser_FechaFinal.getDate();
+        }
+        
 
         // Habilitar el botón de modificar solo si la tabla tiene un descuento seleccionado
         Btn_Modificar.setEnabled(true);

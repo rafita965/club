@@ -122,9 +122,9 @@ public class Ver_Reembolso {
         }
     }
 
-    // Método para alternar el estado de reembolso
+    // Método para alternar el estado de reembolso y actualizar el stock
     public void ModificarEstadoReembolso(JTextField paramID) {
-        setCodigo(Integer.parseInt(paramID.getText()));
+        setCodigo(Integer.parseInt(paramID.getText())); // ID del reembolso
         ConexionBDD objetoConexion = new ConexionBDD();
         String consulta = "UPDATE Reembolso_Pedido SET Estado = ? WHERE IDReembolso = ?";
 
@@ -132,18 +132,28 @@ public class Ver_Reembolso {
         int nuevoEstado = (obtenerEstadoActual(getCodigo()) == 0) ? 1 : 0;
 
         try {
+            // Alternar estado de reembolso
             PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta);
             ps.setInt(1, nuevoEstado); // Nuevo estado (0 o 1)
             ps.setInt(2, getCodigo()); // ID del reembolso a modificar
             ps.executeUpdate();
 
-            JOptionPane.showMessageDialog(null, "Estado modificado exitosamente");
+            // Si el nuevo estado es 1 (reembolsado), recuperar stock
+            if (nuevoEstado == 1) {
+                actualizarStock(getCodigo(), true); // Recuperar stock
+            } else { 
+                actualizarStock(getCodigo(), false); // Descontar stock
+            }
+
+            JOptionPane.showMessageDialog(null, "Estado y stock actualizados exitosamente");
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "No se pudo modificar el estado: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }
     }
+
     
     //Eliminar reembolso
     public void EliminarReembolso(JTextField paramID){
@@ -188,5 +198,41 @@ public class Ver_Reembolso {
         }
 
         return estadoActual;
+    }
+    // Método para actualizar el stock según el estado del reembolso
+    private void actualizarStock(int idReembolso, boolean incrementar) {
+        ConexionBDD objetoConexion = new ConexionBDD();
+
+        try {
+            // Obtener el PedidoID y ProductoID del reembolso
+            String consultaDetalle = 
+            "SELECT dp.ProductoID, dp.Cantidad " +
+            "FROM DetallePedido dp " +
+            "JOIN Reembolso_Pedido rp ON dp.PedidoID = rp.IDPedido " +
+            "WHERE rp.IDReembolso = ?";
+
+
+            PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consultaDetalle);
+            ps.setInt(1, idReembolso);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int productoID = rs.getInt("ProductoID");
+                int cantidad = rs.getInt("Cantidad");
+
+                // Actualizar el stock de la tabla Productos
+                String actualizarStock = "UPDATE Productos SET Stock = Stock " + (incrementar ? "+ ?" : "- ?") + " WHERE ProductoID = ?";
+                PreparedStatement psUpdate = objetoConexion.Conectar().prepareStatement(actualizarStock);
+                psUpdate.setInt(1, cantidad);
+                psUpdate.setInt(2, productoID);
+                psUpdate.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el stock: " + e.toString());
+            System.out.println(e.toString());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
     }
 }

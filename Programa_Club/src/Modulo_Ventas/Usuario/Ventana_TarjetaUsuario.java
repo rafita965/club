@@ -38,155 +38,7 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         Combo_TipoTarjeta.addItem("Debito");
         Combo_TipoTarjeta.addItem("Credito");
         Btn_Guardar.setEnabled(true);
-        JTextField_NumTarjeta.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-        });
-
-        // Para JTextField_NombreTitular
-        JTextField_NombreTitular.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-        });
-
-        // Para JTextField_Mes
-        JTextField_Mes.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-        });
-
-        // Para JTextField_Anio
-        JTextField_Anio.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                verificarCampos(); // Asegúrate de llamar siempre a verificarCampos
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-        });
-
-        // Para JTextField_CodigoSeguridad
-        JTextField_CodigoSeguridad.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                verificarCampos();
-            }
-        });
-
-        JTextField_CodigoSeguridad.setDocument(new PlainDocument() {
-            @Override
-            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-                // Solo permitimos dígitos
-                if (str.matches("[0-9]*")) {
-                    // Limitar a 3 caracteres
-                    if (getLength() + str.length() <= 3) {
-                        super.insertString(offs, str, a);
-                    }
-                }
-            }
-        });
-
-        JTextField_Mes.setDocument(new PlainDocument() {
-            private static final int MAX_LENGTH = 2;
-
-            @Override
-            public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-                if (str == null) {
-                    return;
-                }
-
-                if ((getLength() + str.length()) <= MAX_LENGTH && str.matches("[0-9]*")) {
-                    super.insertString(offs, str, a);
-                    String inputText = JTextField_Mes.getText();
-                    if (!inputText.isEmpty()) {
-                        int month = Integer.parseInt(inputText);
-                        if (month < 1 || month > 12) {
-                            JTextField_Mes.setText(inputText.substring(0, inputText.length() - 1));
-                        }
-                    }
-                }
-            }
-        });
-        JTextField_Anio.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
-            public void keyReleased(java.awt.event.KeyEvent e) {
-                String inputText = JTextField_Anio.getText();
-                if (inputText.length() == 2) {
-                    try {
-                        int year = Integer.parseInt(inputText);
-                        if (year <= 23) {
-                            JOptionPane.showMessageDialog(null, "El año debe ser mayor a 23.");
-                            JTextField_Anio.setText(""); 
-                        }
-                    } catch (NumberFormatException ex) {
-                        JTextField_Anio.setText(""); 
-                    }
-                }
-                verificarCampos();  // Mover la validación aquí para asegurar que siempre se valide después de cada cambio
-            }
-
-            @Override
-            public void keyTyped(java.awt.event.KeyEvent e) {
-                String inputText = JTextField_Anio.getText();
-                if (inputText.length() >= 2) {
-                    e.consume(); 
-                }
-            }
-        });
+        
         JTextField_NombreTitular.setDocument(new PlainDocument() {
             private static final int MAX_LENGTH = 40;
 
@@ -488,50 +340,7 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    //Verificar campos
-    private void verificarCampos() {
-        /*
-         boolean isValid = true;
-
-        // Validar número de tarjeta
-        String tarjeta = JTextField_NumTarjeta.getText().replaceAll(" ", "");
-        if (tarjeta.length() != 16 || !tarjeta.matches("[0-9]{16}")) {
-            isValid = false;
-        }
-
-        // Validar nombre del titular
-        String nombreTitular = JTextField_NombreTitular.getText();
-        if (nombreTitular.isEmpty() || nombreTitular.length() > 40) {
-            isValid = false;
-        }
-
-        // Validar mes
-        String mes = JTextField_Mes.getText();
-        try {
-            int mesNum = Integer.parseInt(mes);
-            if (mes.length() != 2 || mesNum < 1 || mesNum > 12) {
-                isValid = false;
-            }
-        } catch (NumberFormatException e) {
-            isValid = false;
-        }
-
-        // Validación para el año (debe ser mayor que 23)
-        String anio = JTextField_Anio.getText();
-        if (anio.length() != 2 || !anio.matches("\\d{2}") || Integer.parseInt(anio) < 24) {
-            isValid = false;
-        }
-
-        // Validar código de seguridad
-        String codigoSeguridad = JTextField_CodigoSeguridad.getText();
-        if (codigoSeguridad.length() != 3 || !codigoSeguridad.matches("[0-9]{3}")) {
-            isValid = false;
-        }
-
-        // Verificación final del botón
-        Btn_Guardar.setEnabled(isValid && condicion1);
-        */
-    }
+    
     
     //Boton a volver forma de entrega
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
@@ -544,26 +353,47 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
     
     //Boton guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
-        System.out.println("condicion1 : "+condicion1 + "--" + "condicion2 :" + condicion2);
-        //Esto sirve para que si la tarjeta es valida y no está vencida pueda continuar
-        //if(condicion1 == true && condicion2 == true){
-                  tipoTarjeta = (String)Combo_TipoTarjeta.getSelectedItem();
-                  numerinTarjeta = JTextField_NumTarjeta.getText();
-                  nombreTitular = JTextField_NombreTitular.getText();
-                  codigoSeguridad = JTextField_CodigoSeguridad.getText();
-            
-                  Ventana_FinalizarCompra ventanaFinCompra = new Ventana_FinalizarCompra(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega,tipoTarjeta, numerinTarjeta, nombreTitular, codigoSeguridad);
-                  this.setVisible(false);
-                  ventanaFinCompra.setSize(450, 650);
-                  ventanaFinCompra.setLocationRelativeTo(null);
-                  ventanaFinCompra.setVisible(true); 
+    // Variables para las validaciones
+    tipoTarjeta = (String) Combo_TipoTarjeta.getSelectedItem();
+    numerinTarjeta = JTextField_NumTarjeta.getText();
+    nombreTitular = JTextField_NombreTitular.getText();
+    codigoSeguridad = JTextField_CodigoSeguridad.getText();
+    String mes = JTextField_Mes.getText();
+    String año = JTextField_Anio.getText();
+    
+    // Validación de todos los campos
+    boolean validCodigoSeguridad = codigoSeguridad.matches("[0-9]{3}"); // 3 dígitos
+    boolean validMes = mes.matches("^(0[1-9]|1[0-2])$"); // Mes entre 01 y 12
+    boolean validAño = año.matches("^[0-9]{2}$") && Integer.parseInt(año) >= 24; // Año >= 24 (2024)
+    boolean validNombreTitular = !nombreTitular.trim().isEmpty(); // Nombre titular no vacío
+    boolean validNumTarjeta = numerinTarjeta.matches("[0-9]{16}"); // Número de tarjeta 16 dígitos
+    
+    // Mostrar un mensaje de error si alguna validación falla
+     // Si todas las validaciones fallan
+    if (!validCodigoSeguridad && !validMes && !validAño && !validNombreTitular && !validNumTarjeta) {
+        JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos correctamente.");
+    } 
+    // Mostrar un mensaje de error si alguna validación falla
+    else if (!validCodigoSeguridad) {
+        JOptionPane.showMessageDialog(null, "El código de seguridad debe tener exactamente 3 dígitos.");
+    } else if (!validMes) {
+        JOptionPane.showMessageDialog(null, "El mes debe estar entre 01 y 12.");
+    } else if (!validAño) {
+        JOptionPane.showMessageDialog(null, "El año debe ser 2024 o posterior.");
+    } else if (!validNombreTitular) {
+        JOptionPane.showMessageDialog(null, "El nombre del titular no puede estar vacío.");
+    } else if (!validNumTarjeta) {
+        JOptionPane.showMessageDialog(null, "El número de tarjeta debe tener exactamente 16 dígitos.");
+    } else {
+        // Si todas las validaciones son correctas, habilitar el botón y continuar con la siguiente ventana
+        Ventana_FinalizarCompra ventanaFinCompra = new Ventana_FinalizarCompra(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega, tipoTarjeta, numerinTarjeta, nombreTitular, codigoSeguridad);
+        this.setVisible(false);
+        ventanaFinCompra.setSize(450, 650);
+        ventanaFinCompra.setLocationRelativeTo(null);
+        ventanaFinCompra.setVisible(true);
+    }
                   
-            condicion1 = false;
-            condicion2 = false;
-        //}else{
-            //JOptionPane.showMessageDialog(null,"Ups, verifica que los datos de la tarjeta sean correctos para continuar");
-        //}
-        
+
     }//GEN-LAST:event_Btn_GuardarActionPerformed
     /**
      * @param args the command line arguments
