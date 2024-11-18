@@ -4,11 +4,11 @@
  * and open the template in the editor.
  */
 package programa_club;
+import Modulo_Entradas.Principal;
 import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Abrir_Seguridad;
 import Modulo_GestionDeFinanzas.PlanificacionFinanciera;
-//import Modulo_Entradas.Principal;
 /**
  *
  * @author PC
@@ -181,12 +181,12 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ProductosActionPerformed
 
     private void btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EntradasActionPerformed
-        /*Principal wdw= new Principal();
+        Principal wdw= new Principal();
         wdw.setVisible(true);
         this.setVisible(false);
         wdw.setLocationRelativeTo(null);
         wdw.setResizable(false);
-        wdw.setSize(900,520);*/
+        wdw.setSize(900,520);
     }//GEN-LAST:event_btn_EntradasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

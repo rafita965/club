@@ -194,7 +194,7 @@ public class panelEventos extends javax.swing.JPanel {
         if (tbEventos.getColumnModel().getColumnCount() > 0) {
             tbEventos.getColumnModel().getColumn(0).setMaxWidth(30);
             tbEventos.getColumnModel().getColumn(2).setPreferredWidth(30);
-            tbEventos.getColumnModel().getColumn(3).setMaxWidth(70);
+            tbEventos.getColumnModel().getColumn(3).setPreferredWidth(30);
         }
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Información", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 10))); // NOI18N

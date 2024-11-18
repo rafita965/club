@@ -193,7 +193,7 @@ public class dialogTarjeta extends javax.swing.JDialog {
         // TODO add your handling code here:
         try{
             if(txtNumero.getText().length()>19){
-                throw new Exception("Numero de tarjeta inválido");
+                throw new Exception("Número de tarjeta inválido");
             }
             String consulta = "SELECT validarTarjeta(?,?,?,?,?,?) AS retorno;";
             
@@ -223,16 +223,33 @@ public class dialogTarjeta extends javax.swing.JDialog {
                             ps.setInt(1, usuarioID);
                             ps.setInt(2, Integer.parseInt(txtNumero.getText()));
                             String item = (String) combo.getSelectedItem();
-                            ps.setInt(3, Integer.valueOf(item.split("| ")[0].trim()));
+                            ps.setInt(3, Integer.valueOf(item.split("\\| ")[0].trim()));
                             ps.setInt(4, eventoID);
-                            ps.setInt(5, (Integer) table.getValueAt(f, 2));
-                            ps.setInt(6, (Integer) table.getValueAt(f, 3));
+                            ps.setInt(5, (Integer) table.getValueAt(f, 2)-1);
+                            ps.setInt(6, (Integer) table.getValueAt(f, 3)-1);
                             ps.setDouble(7, 0);
                             if(f==0){
                                 ps.setDouble(7, Double.parseDouble(total.getText()));
+                            }else{
+                                String consultaNot = "INSERT INTO Notificacion (Asunto, Enunciado,IDUsuario) " +
+                                                    "SELECT 'Has recibido una entrada', " +
+                                                    "CONCAT('De: ', ?, ', al evento: ', E.nombreEvento), U.IDUsuario " +
+                                                    "FROM Usuario U JOIN Evento E ON E.idEvento = ? " +
+                                                    "WHERE U.Nombre_usuario = ?;";
+
+                                PreparedStatement ps2 = conexion.getConexion().prepareStatement(consultaNot);
+                                ps.setString(1, (String) table.getValueAt(0, 0));
+                                ps.setInt(2, eventoID);
+                                ps2.setString(3, (String) table.getValueAt(f, 0));
+                                ps2.executeUpdate();
                             }
                             ps.executeUpdate();
                         }
+                        String consulta3 = "UPDATE Cuenta SET saldo = saldo + ? WHERE id_cuenta = ?;";
+                        ps = conexion.getConexion().prepareStatement(consulta3);
+                        ps.setDouble(1, Double.parseDouble(total.getText()));
+                        ps.setInt(2, 7);
+                        ps.executeUpdate();
                         
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error al comprar: " + e.toString());
@@ -262,7 +279,7 @@ public class dialogTarjeta extends javax.swing.JDialog {
             try{String consulta = "SELECT NumeroTarjeta, Tipo, Vencimiento FROM Tarjeta WHERE NumeroTarjeta=?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                ps.setInt(1, Integer.parseInt(select.split("|")[0].trim()));
+                ps.setInt(1, Integer.parseInt(select.split("\\| ")[0].trim()));
                 ResultSet rs = ps.executeQuery();
                 if(rs.next()){
                     int numero = rs.getInt("NumeroTarjeta");

@@ -7,19 +7,18 @@ package Modulo_Entradas;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
-import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,9 +45,8 @@ public class ventanaCompra extends javax.swing.JFrame {
         this.eventoID = eventoID;
         
         setChecks();
-        
         cargarSectores();
-        //cmbSectores.setSelectedIndex(0);
+        cmbSectores.setSelectedIndex(0); // Establecer el primer ítem como seleccionado
     }
 
     /**
@@ -65,12 +63,13 @@ public class ventanaCompra extends javax.swing.JFrame {
         pnlGrupo = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblEntradas = new javax.swing.JTable();
-        pnlAsientos = new javax.swing.JPanel();
         cmbSectores = new javax.swing.JComboBox<>();
         btnComprar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        pnlAsientos = new javax.swing.JPanel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -95,14 +94,14 @@ public class ventanaCompra extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Usuario", "Sector", "Fila", "Asiento", "Precio"
+                "Usuario", "Sector", "Fila", "Asiento", "Precio", "Descuento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -123,19 +122,6 @@ public class ventanaCompra extends javax.swing.JFrame {
             tblEntradas.getColumnModel().getColumn(2).setPreferredWidth(50);
             tblEntradas.getColumnModel().getColumn(3).setPreferredWidth(50);
         }
-
-        pnlAsientos.setBorder(javax.swing.BorderFactory.createTitledBorder("Asientos disponibles"));
-
-        javax.swing.GroupLayout pnlAsientosLayout = new javax.swing.GroupLayout(pnlAsientos);
-        pnlAsientos.setLayout(pnlAsientosLayout);
-        pnlAsientosLayout.setHorizontalGroup(
-            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlAsientosLayout.setVerticalGroup(
-            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
-        );
 
         cmbSectores.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -178,6 +164,21 @@ public class ventanaCompra extends javax.swing.JFrame {
             }
         });
 
+        pnlAsientos.setBorder(javax.swing.BorderFactory.createTitledBorder("Asientos disponibles"));
+
+        javax.swing.GroupLayout pnlAsientosLayout = new javax.swing.GroupLayout(pnlAsientos);
+        pnlAsientos.setLayout(pnlAsientosLayout);
+        pnlAsientosLayout.setHorizontalGroup(
+            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlAsientosLayout.setVerticalGroup(
+            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 296, Short.MAX_VALUE)
+        );
+
+        jScrollPane2.setViewportView(pnlAsientos);
+
         javax.swing.GroupLayout pnlEntradasLayout = new javax.swing.GroupLayout(pnlEntradas);
         pnlEntradas.setLayout(pnlEntradasLayout);
         pnlEntradasLayout.setHorizontalGroup(
@@ -185,7 +186,6 @@ public class ventanaCompra extends javax.swing.JFrame {
             .addGroup(pnlEntradasLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlEntradasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlAsientos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlEntradasLayout.createSequentialGroup()
                         .addComponent(pnlGrupo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -200,7 +200,8 @@ public class ventanaCompra extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnComprar)))
+                        .addComponent(btnComprar))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         pnlEntradasLayout.setVerticalGroup(
@@ -217,7 +218,7 @@ public class ventanaCompra extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlAsientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar)
                 .addGap(42, 42, 42))
@@ -258,17 +259,18 @@ public class ventanaCompra extends javax.swing.JFrame {
             try{String consulta = "SELECT Asientos FROM Sector_Evento WHERE IdSector=? AND IdEvento=?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                ps.setInt(1, Integer.parseInt(select.split("|")[0].trim()));
-                ps.setInt(2, 1);
+                ps.setInt(1, Integer.parseInt(select.split("\\| ")[0].trim()));
+                ps.setInt(2, eventoID);
                 ResultSet rs = ps.executeQuery();
                 if(rs.next()){
                     String jsonData = rs.getString("Asientos");
                     jsonAsientos = new JSONArray(jsonData);
+                    matAsientos= new JToggleButton[jsonAsientos.length()][jsonAsientos.getJSONArray(0).length()];
                     
                     for(int f = 0; f<jsonAsientos.length(); f++){
                         for(int c = 0; c<jsonAsientos.getJSONArray(0).length(); c++){
                             matAsientos[f][c]=new JToggleButton();
-                            matAsientos[f][c].setBounds(f*40 +5, c*40 +5, 40, 40);
+                            matAsientos[f][c].setBounds(c*(612/jsonAsientos.getJSONArray(0).length()) +5, f*(612/jsonAsientos.getJSONArray(0).length()) +20, 612/jsonAsientos.getJSONArray(0).length(), 612/jsonAsientos.getJSONArray(0).length());
                             matAsientos[f][c].setText("");
                             if(jsonAsientos.getJSONArray(f).getInt(c) == 0 && matAsientos[f][c].isEnabled()){
                                 matAsientos[f][c].setEnabled(false);}
@@ -285,8 +287,8 @@ public class ventanaCompra extends javax.swing.JFrame {
                                             PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
                                             ps.setInt(1, fila);
                                             ps.setInt(2, columna);
-                                            ps.setInt(3, 1);
-                                            ps.setInt(4, 1);
+                                            ps.setInt(3, Integer.parseInt(select.split("\\| ")[0].trim()));
+                                            ps.setInt(4, eventoID);
                                             ResultSet rs = ps.executeQuery();
                                             if(rs.next()){
                                                 boolean libre= rs.getBoolean("libre");
@@ -297,36 +299,39 @@ public class ventanaCompra extends javax.swing.JFrame {
                                                         Object asiento = modelo.getValueAt(r, 3);
                                                         if (asiento == null) {
                                                             String item = (String) cmbSectores.getSelectedItem();
-                                                            modelo.setValueAt(item.split("| ")[1], r, 1);
-                                                            modelo.setValueAt(fila, r, 2);
-                                                            modelo.setValueAt(columna, r, 3);
+                                                            modelo.setValueAt(item.split("\\| ")[1].trim(), r, 1);
+                                                            modelo.setValueAt(fila+1, r, 2);
+                                                            modelo.setValueAt(columna+1, r, 3);
                                                             int descuento = arrDescs.get(arrMiembros.indexOf(modelo.getValueAt(r, 0)));
                                                             double coste = arrPrecios.get(cmbSectores.getSelectedIndex());
                                                             modelo.setValueAt(coste-((descuento*coste)/100), r, 4);
+                                                            modelo.setValueAt(String.valueOf(descuento)+"%", r, 5);
                                                             txtTotal.setText(String.valueOf(Double.parseDouble(txtTotal.getText()) + (coste-((descuento*coste)/100))));
-                                                            JOptionPane.showMessageDialog(null, "Se le ha aplicado un descuento del: "+String.valueOf(descuento)+'%');
+                                                            //JOptionPane.showMessageDialog(null, "Se le ha aplicado un descuento del: "+String.valueOf(descuento)+'%');
                                                             break;
                                                         }}
                                                 }else{
                                                     JOptionPane.showMessageDialog(null, "El asiento ya está ocupado");
                                                     jsonAsientos.getJSONArray(fila).put(columna,0);
                                                 }
-                                                uptBotones();
-                                            }
+                                                
+                                            }uptBotones();
                                         }catch(Exception e2){
                                             JOptionPane.showMessageDialog(null, "Error al conusltar asiento: "+e2.toString());
                                         }finally{
                                             conexion.Desconectar();
                                         }
-                                    }else{
+                                    }else if (e.getStateChange() == ItemEvent.DESELECTED){
                                         try{
-                                            String consulta = "CALL liberarAsiento(?,?,?,?);";
+                                            String consulta = "UPDATE Sector_Evento " +
+                                                                "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
+                                                                "WHERE IdSector = ? AND IdEvento = ?;";
 
                                             PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
                                             ps.setInt(1, fila);
                                             ps.setInt(2, columna);
                                             String item = (String) cmbSectores.getSelectedItem();
-                                            ps.setInt(3, Integer.parseInt(item.split("| ")[0].trim()));
+                                            ps.setInt(3, Integer.parseInt(item.split("\\| ")[0].trim()));
                                             ps.setInt(4, eventoID);
                                             ps.executeUpdate();
                                             
@@ -334,11 +339,13 @@ public class ventanaCompra extends javax.swing.JFrame {
                                             for (int r = 0; r < modelo.getRowCount(); r++) {
                                                 Object fil = modelo.getValueAt(r, 2);
                                                 Object asiento = modelo.getValueAt(r, 3);
-                                                if (asiento!=null && (Integer)asiento == columna && (Integer)fil == fila) {
+                                                if ((Integer)asiento-1 == columna && (Integer)fil-1 == fila) {
                                                     modelo.setValueAt(null, r, 1);
                                                     modelo.setValueAt(null, r, 2);
                                                     modelo.setValueAt(null, r, 3);
+                                                    txtTotal.setText(String.valueOf(Double.parseDouble(txtTotal.getText()) - (Double)modelo.getValueAt(r, 4)));
                                                     modelo.setValueAt(null, r, 4);
+                                                    modelo.setValueAt(null, r, 5);
                                                     break;
                                                 }
                                             }
@@ -355,6 +362,7 @@ public class ventanaCompra extends javax.swing.JFrame {
                             }
                             pnlAsientos.add(matAsientos[f][c]);
                         }
+                        System.out.println(jsonAsientos.getJSONArray(f).toString());
                     }
                 }
             }catch(Exception e){
@@ -379,13 +387,6 @@ public class ventanaCompra extends javax.swing.JFrame {
                 break;}
         }
         if(espacio == false){
-        //this.setEnabled(false);
-        /*ventanaTarjeta wPago = new ventanaTarjeta(tblEntradas);
-        wPago.setLocationRelativeTo(null);
-        wPago.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE); // Solo cierra la ventanaTarjeta
-        wPago.setVisible(true);
-        wPago.toFront();  // Mueve la ventana secundaria al frente
-        wPago.requestFocus();*/
             dialogTarjeta dialog = new dialogTarjeta(ventanaCompra.this,true,tblEntradas,cmbSectores,txtTotal,usuarioID,eventoID);
             dialog.setVisible(true);
         }else{
@@ -399,14 +400,16 @@ public class ventanaCompra extends javax.swing.JFrame {
             Object celda = modelo.getValueAt(f, 3);
             if (celda != null) {
                 try{
-                    String consulta = "CALL liberarAsiento(?,?,?,?);";
+                    String consulta = "UPDATE Sector_Evento " +
+                                        "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
+                                        "WHERE IdSector = ? AND IdEvento = ?;";
 
                     PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                    ps.setInt(1, (Integer) modelo.getValueAt(f, 2));
-                    ps.setInt(2, (Integer) modelo.getValueAt(f, 3));
+                    ps.setInt(1, (Integer)modelo.getValueAt(f, 2)-1);
+                    ps.setInt(2, (Integer)modelo.getValueAt(f, 3)-1);
                     String item = (String) cmbSectores.getSelectedItem();
-                    ps.setInt(3, Integer.valueOf(item.split("| ")[0].trim()));
-                    ps.setInt(4, 1);
+                    ps.setInt(3, Integer.valueOf(item.split("\\| ")[0].trim()));
+                    ps.setInt(4, eventoID);
                     ps.executeUpdate();
                 }catch(Exception e2){
                     JOptionPane.showMessageDialog(null, "Error al liberar asiento: "+e2.toString());
@@ -431,7 +434,7 @@ public class ventanaCompra extends javax.swing.JFrame {
      */
     private void setChecks(){
         try{
-            int ejeY =0;
+            int ejeY =5;
             String consulta = "SELECT U.IDUsuario, U.Nombre_usuario, SS.ID, C.CompraID, M.Descuento " +
                         "FROM Usuario U INNER JOIN Grupo G ON U.IDUsuario=G.IDUsuario " +
                         "LEFT JOIN Compra C ON U.IDUsuario = C.IDUsuario AND C.IdEvento = ? " +
@@ -451,16 +454,17 @@ public class ventanaCompra extends javax.swing.JFrame {
                 int suspendido= rs.getInt("ID");
                 
                 JCheckBox box = new JCheckBox(nombreUsuario);
-                box.setBounds(5,ejeY+38,130,23);
+                box.setBounds(10,ejeY+38,130,23);
                 
-                if(rs.wasNull() || compra!=0){
+                if(!rs.wasNull() || compra!=0){
+                    System.out.println(nombreUsuario);
                     box.setEnabled(false);
                 }else{
                     int Descuento= rs.getInt("Descuento");
                     int Id= rs.getInt("IDUsuario");
                     if(Id==usuarioID){
                         box.setText(nombreUsuario+"(Tú)");
-                        box.setBounds(5,15,130,23);
+                        box.setBounds(10,20,130,23);
                         box.setSelected(true);
                         box.setEnabled(false);
                         DefaultTableModel modelo = (DefaultTableModel) tblEntradas.getModel();
@@ -477,18 +481,42 @@ public class ventanaCompra extends javax.swing.JFrame {
                                 modelo.addRow(new Object[]{nombreUsuario,null,null,null,null});
                             }else{
                                 for (int r = 0; r < modelo.getRowCount(); r++) {
-                                    if(modelo.getValueAt(r, 0)==nombreUsuario){
+                                    int fila =(Integer)modelo.getValueAt(r, 2);
+                                    int asiento =(Integer)modelo.getValueAt(r, 3);
+                                    if(modelo.getValueAt(r, 0)==nombreUsuario && modelo.getValueAt(r, 3)!=null){
+                                        System.out.println(modelo.getValueAt(r, 3)+","+modelo.getValueAt(r, 3).toString().trim());
+                                        if(modelo.getValueAt(r, 3)!=null || !String.valueOf(asiento).trim().isEmpty()){
+                                            try{txtTotal.setText(String.valueOf(Double.parseDouble(txtTotal.getText()) - (Double)modelo.getValueAt(r, 4)));
+                                            String consulta = "UPDATE Sector_Evento " +
+                                                                "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
+                                                                "WHERE IdSector = ? AND IdEvento = ?;";
+
+                                            PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
+                                            ps.setInt(1, fila-1);
+                                            ps.setInt(2, asiento-1);
+                                            String item = (String) cmbSectores.getSelectedItem();
+                                            ps.setInt(3, Integer.parseInt(item.split("\\| ")[0].trim()));
+                                            ps.setInt(4, eventoID);
+                                            ps.executeUpdate();
+                                            jsonAsientos.getJSONArray(fila).put(asiento,1);
+                                            matAsientos[fila][asiento].setSelected(false);
+                                            }catch(Exception e2){
+                                                JOptionPane.showMessageDialog(null, "Error al liberar: "+e2.toString());
+                                            }finally{
+                                                conexion.Desconectar();
+                                            }
+                                        }
                                         modelo.removeRow(r);}}
+                                }
+                                uptBotones();
                             }
-                            uptBotones();
-                        }
-                    });
+                        });
                         arrMiembros.add(nombreUsuario);
                         arrDescs.add(Descuento);
+                        ejeY+=23;
                     }
                 }
                 pnlGrupo.add(box);
-                ejeY+=23;
             }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al conusltar grupo: "+e.toString());
@@ -499,8 +527,8 @@ public class ventanaCompra extends javax.swing.JFrame {
     
     private void cargarSectores(){
         try{
-                String consulta = "SELECT S.idSector, S.NombreSector, SE.Precio FROM Sector S " +
-                        "INNER JOIN Sector_Evento SE ON SE.IdEvento=S.IdSector WHERE SE.IdEvento=?;";
+                String consulta = "SELECT S.idSector, S.NombreSector, PS.Precio FROM PrecioSectorEvento PS " +
+                        "INNER JOIN Sector S ON PS.idSector=S.idSector WHERE PS.idEvento=?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
                 ps.setInt(1, eventoID);
@@ -514,9 +542,10 @@ public class ventanaCompra extends javax.swing.JFrame {
                     cmbSectores.addItem(String.format("%" + 3 + "s",String.valueOf(id))+"| "+nombre);
                 }
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error al conusltar sectores: "+e.toString());
+                JOptionPane.showMessageDialog(null, "Error al consultar sectores: "+e.toString());
             }finally{
                 conexion.Desconectar();
+                
             }
     }
     
@@ -525,19 +554,19 @@ public class ventanaCompra extends javax.swing.JFrame {
             DefaultTableModel modelo = (DefaultTableModel) tblEntradas.getModel();
             for (int f = 0; f < modelo.getRowCount(); f++) {
                 Object celda = modelo.getValueAt(f, 3);
-                if (celda == null) {
+                if (celda == null || (Integer) celda == 0) {
                     espacio = true;
                     break;
                 }
             }
             for(int f = 0; f<jsonAsientos.length(); f++){
                 for(int c = 0; c<jsonAsientos.getJSONArray(0).length(); c++){
-                    if(espacio==false && jsonAsientos.getJSONArray(f).getInt(c) != 2){
-                        matAsientos[f][c].setEnabled(false);}
                     if(jsonAsientos.getJSONArray(f).getInt(c) == 0 && matAsientos[f][c].isEnabled()){
                         matAsientos[f][c].setEnabled(false);}
                     if(jsonAsientos.getJSONArray(f).getInt(c) == 1 && !matAsientos[f][c].isEnabled()){
                         matAsientos[f][c].setEnabled(true);}
+                    if(espacio==false && jsonAsientos.getJSONArray(f).getInt(c) != 2){
+                        matAsientos[f][c].setEnabled(false);}
                 }
             }
         }catch(JSONException e){
@@ -587,6 +616,7 @@ public class ventanaCompra extends javax.swing.JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlAsientos;
     private javax.swing.JPanel pnlEntradas;
     private javax.swing.JPanel pnlGrupo;

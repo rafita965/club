@@ -29,11 +29,36 @@ public class CodigoEventos {
         this.usuarioID = usuarioID;
     }
     
+    public void cargarEventos(JTable tablaEventos){
+        DefaultTableModel modelo = (DefaultTableModel) tablaEventos.getModel();
+        try{
+            String consulta = "SELECT E.idEvento,E.nombreEvento,C.Fecha,C.Hora " +
+                                "FROM Evento E INNER JOIN Calendario C ON C.idCalendario=E.idCalendario " +
+                                "WHERE C.Fecha >= CURDATE();";
+            
+            PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int idEvento= rs.getInt("idEvento");
+                String nombreEvento= rs.getString("nombreEvento");
+                Date Fecha= rs.getDate("Fecha");
+                Time Hora= rs.getTime("Hora");
+                
+                modelo.addRow(new Object[] {idEvento,nombreEvento,Fecha,Hora});
+            }
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Error al conusltar eventos: "+e.toString());
+        }finally{
+            conexion.Desconectar();
+        }
+    }
+    
     public void buscarEventos(JTable tablaEventos, JComboBox mes, String condicion){
         DefaultTableModel modelo = (DefaultTableModel) tablaEventos.getModel();
         
         try{
-            String consulta = "SELECT E.idEvento,E.nombreEvento,E.tipoEvento,C.Fecha,C.Hora " +
+            String consulta = "SELECT E.idEvento,E.nombreEvento,C.Fecha,C.Hora " +
                                 "FROM Evento E INNER JOIN Calendario C ON C.idCalendario=E.idCalendario " +
                                 "WHERE C.Fecha >= CURDATE() AND C.Fecha LIKE CONCAT('%/%',?,'/%') AND (E.tipoEvento = ?)";
             
@@ -44,11 +69,10 @@ public class CodigoEventos {
             while(rs.next()){
                 int idEvento= rs.getInt("idEvento");
                 String nombreEvento= rs.getString("nombreEvento");
-                String tipoEvento= rs.getString("tipoEvento");
                 Date Fecha= rs.getDate("Fecha");
                 Time Hora= rs.getTime("Hora");
                 
-                modelo.addRow(new Object[] {idEvento,nombreEvento,tipoEvento,Fecha,Hora});
+                modelo.addRow(new Object[] {idEvento,nombreEvento,Fecha,Hora});
             }
             
         }catch(Exception e){
