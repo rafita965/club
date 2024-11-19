@@ -391,6 +391,9 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         ventanaFinCompra.setSize(450, 650);
         ventanaFinCompra.setLocationRelativeTo(null);
         ventanaFinCompra.setVisible(true);
+                
+        Tarjeta_Usuario tarjetita = new Tarjeta_Usuario();
+        tarjetita.GuardarDatosTarjeta(usuarioID, JTextField_NumTarjeta, JTextField_NombreTitular, JTextField_Mes, JTextField_Anio, JTextField_CodigoSeguridad, Combo_TipoTarjeta);
     }
                   
 

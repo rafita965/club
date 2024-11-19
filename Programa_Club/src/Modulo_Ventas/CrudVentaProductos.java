@@ -1,6 +1,7 @@
 package Modulo_Ventas;
 
 import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -129,5 +130,59 @@ public class CrudVentaProductos {
             } else {
                 JOptionPane.showMessageDialog(null, "Fila no encontrada");
             }
+    }
+    
+        //Funciones para la ventana PrecioEnvio
+    public void MostrarPrecio(JTextField precioEnvioActual){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String sql="SELECT PrecioEnvio FROM Envio";
+        try{
+            Statement st;
+            st = objetoConexion.Conectar().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()) {
+                String precio = rs.getString("PrecioEnvio");
+               
+                precioEnvioActual.setText(precio);
+            }
+           
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente el precio de envio actual: " + e.getMessage());
+        }finally{
+            objetoConexion.cerrarConexion();
+        }
+    }
+    public void IngresarPrecio(JTextField textField_PrecioNuevo) {
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String sqlSelect = "SELECT EnvioID FROM Envio LIMIT 1";
+        String sqlInsert = "INSERT INTO Envio (PrecioEnvio, Activo) VALUES (?, ?)";
+        String sqlUpdate = "UPDATE Envio SET PrecioEnvio = ? WHERE EnvioID = ?";
+
+        try {
+            Statement st = objetoConexion.Conectar().createStatement();
+            ResultSet rs = st.executeQuery(sqlSelect);
+
+            if (rs.next()) {
+                int envioID = rs.getInt("EnvioID");
+                PreparedStatement actualizar = objetoConexion.Conectar().prepareStatement(sqlUpdate);
+                actualizar.setBigDecimal(1, new java.math.BigDecimal(textField_PrecioNuevo.getText()));
+                actualizar.setInt(2, envioID);
+                actualizar.executeUpdate();
+                actualizar.close();
+            } else {
+                PreparedStatement insertar = objetoConexion.Conectar().prepareStatement(sqlInsert);
+                insertar.setBigDecimal(1, new java.math.BigDecimal(textField_PrecioNuevo.getText()));
+                insertar.setInt(2, 1); // Activo = 1
+                insertar.executeUpdate();
+                insertar.close();
+            }
+            
+            JOptionPane.showMessageDialog(null, "Se colocó el precio correctamente");
+            st.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar el precio de envío: " + e.getMessage());
+        } finally {
+            objetoConexion.cerrarConexion();
+         }
     }
 }

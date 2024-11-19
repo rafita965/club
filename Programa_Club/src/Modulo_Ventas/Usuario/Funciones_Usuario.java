@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.sql.*;
+import javax.swing.JComboBox;
 /**
  *
  * @author thiag
@@ -285,6 +286,7 @@ public class Funciones_Usuario {
         }
         
     }
+
 }
 
 

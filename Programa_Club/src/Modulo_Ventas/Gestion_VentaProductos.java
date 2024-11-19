@@ -42,6 +42,7 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         Btn_Guardar = new javax.swing.JButton();
         Btn_Eliminar = new javax.swing.JButton();
         JTextField_IDProducto = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -111,8 +112,8 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 889, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -130,7 +131,7 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         );
 
         jPanel3.add(jPanel1);
-        jPanel1.setBounds(350, 50, 890, 500);
+        jPanel1.setBounds(330, 50, 910, 500);
 
         jPanel2.setBackground(new java.awt.Color(47, 94, 141));
 
@@ -169,6 +170,13 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("DEFINIR PRECIO DE ENVIO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -182,7 +190,8 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
                         .addGap(69, 69, 69)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Btn_Guardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(Btn_Eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(Btn_Eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -207,11 +216,13 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JTextField_ProductoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTextField_IDProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(Btn_Guardar)
                 .addGap(18, 18, 18)
                 .addComponent(Btn_Eliminar)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel2);
@@ -272,6 +283,15 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
         objetoVentaProductos.SeleccionarProductos(Tabla_productosVenta, JTextField_IDProducto, JTextField_ProductoNombre);
     }//GEN-LAST:event_Tabla_productosVentaMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Ventana_PrecioEnvio ventanita = new Ventana_PrecioEnvio();
+        this.setVisible(false);
+        ventanita.setVisible(true);
+        ventanita.setLocationRelativeTo(null);
+        ventanita.setSize(520,520);
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,6 +336,7 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
     private javax.swing.JTable Tabla_Productos;
     private javax.swing.JTable Tabla_productosVenta;
     private javax.swing.JButton btn_volver;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
