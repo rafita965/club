@@ -192,7 +192,7 @@ public class dialogTarjeta extends javax.swing.JDialog {
     private void btnPagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPagarMouseClicked
         // TODO add your handling code here:
         try{
-            if(txtNumero.getText().length()>19){
+            if(txtNumero.getText().length()>19 || txtNumero.getText().length()<14){
                 throw new Exception("Número de tarjeta inválido");
             }
             String consulta = "SELECT validarTarjeta(?,?,?,?,?,?) AS retorno;";
@@ -294,7 +294,7 @@ public class dialogTarjeta extends javax.swing.JDialog {
                     spnVencimiento.setValue(vencimiento);
                 }
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error al consultar asientos: "+e.toString());
+                JOptionPane.showMessageDialog(null, "Error al consultar tarjetas: "+e.toString());
             }finally{
                 conexion.Desconectar();
             }
@@ -317,7 +317,7 @@ public class dialogTarjeta extends javax.swing.JDialog {
                         +"| Saldo:"+String.valueOf(saldo));
             }
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar sectores: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al cargar tarjetas: "+e.toString());
         }finally{
             conexion.Desconectar();
         }

@@ -10,12 +10,15 @@ package Modulo_Entradas;
  * @author Agustín Salinas
  */
 public class panelNotificaciones extends javax.swing.JPanel {
-    CodigoNotificaciones cod = new CodigoNotificaciones();
+    CodigoNotificaciones cod;
     /**
      * Creates new form panelNotificaciones
      */
     public panelNotificaciones(int usuarioID) {
         initComponents();
+        this.cod= new CodigoNotificaciones(usuarioID);
+        
+        cod.cargarNotificaciones(tblNotificaciones);
     }
 
     /**
@@ -31,12 +34,12 @@ public class panelNotificaciones extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tablaHistorial = new javax.swing.JTable();
+        tblNotificaciones = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        txtAsunto = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
 
         jToggleButton1.setText("jToggleButton1");
@@ -47,28 +50,42 @@ public class panelNotificaciones extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("HISTORIAL DE COMPRA DE ENTRADAS");
 
-        tablaHistorial.setBorder(javax.swing.BorderFactory.createTitledBorder("Doble click para aceptar solicitud"));
-        tablaHistorial.setModel(new javax.swing.table.DefaultTableModel(
+        tblNotificaciones.setBorder(javax.swing.BorderFactory.createTitledBorder("Doble click para aceptar solicitud"));
+        tblNotificaciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null}
+                {null, null, null}
             },
             new String [] {
-                "Asunto", "Enunciado"
+                "ID", "Asunto", "Enunciado"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tablaHistorial.setRowHeight(20);
-        jScrollPane2.setViewportView(tablaHistorial);
-        if (tablaHistorial.getColumnModel().getColumnCount() > 0) {
-            tablaHistorial.getColumnModel().getColumn(0).setPreferredWidth(250);
-            tablaHistorial.getColumnModel().getColumn(0).setMaxWidth(250);
+        tblNotificaciones.setRowHeight(20);
+        tblNotificaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNotificacionesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblNotificaciones);
+        if (tblNotificaciones.getColumnModel().getColumnCount() > 0) {
+            tblNotificaciones.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblNotificaciones.getColumnModel().getColumn(0).setMaxWidth(40);
+            tblNotificaciones.getColumnModel().getColumn(1).setPreferredWidth(250);
+            tblNotificaciones.getColumnModel().getColumn(1).setMaxWidth(250);
         }
 
         jPanel1.setBackground(new java.awt.Color(31, 50, 69));
@@ -114,7 +131,7 @@ public class panelNotificaciones extends javax.swing.JPanel {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAsunto, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35))
@@ -125,7 +142,7 @@ public class panelNotificaciones extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscar)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAsunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(5, 14, Short.MAX_VALUE))
         );
@@ -158,8 +175,24 @@ public class panelNotificaciones extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        
+        cod.filtrarNotificaciones(txtAsunto,tblNotificaciones);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tblNotificacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNotificacionesMouseClicked
+       if (evt.getClickCount() == 2) {
+        int index = tblNotificaciones.getSelectedRow();
+        if (index >= 0) {
+            String asunto = (String) tblNotificaciones.getValueAt(index, 1);
+
+            // Verifica el contenido del asunto
+            if (asunto != null && asunto.trim().equals("Solicitud a Nuevo grupo")) {
+                System.out.println("activacion");
+                cod.aceptarSolicitud(tblNotificaciones, index);
+                cod.cargarNotificaciones(tblNotificaciones);
+            }
+        }
+    }
+    }//GEN-LAST:event_tblNotificacionesMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -171,8 +204,8 @@ public class panelNotificaciones extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JTable tablaHistorial;
+    private javax.swing.JTable tblNotificaciones;
+    private javax.swing.JTextField txtAsunto;
     // End of variables declaration//GEN-END:variables
 }

@@ -74,7 +74,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="tablaHistorial">
+        <Component class="javax.swing.JTable" name="tblNotificaciones">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -82,13 +82,19 @@
               </Border>
             </Property>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="2" rowCount="1">
-                <Column editable="false" title="Asunto" type="java.lang.Object"/>
-                <Column editable="false" title="Enunciado" type="java.lang.Object"/>
+              <Table columnCount="3" rowCount="1">
+                <Column editable="false" title="ID" type="java.lang.Integer"/>
+                <Column editable="false" title="Asunto" type="java.lang.String"/>
+                <Column editable="false" title="Enunciado" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="40" minWidth="-1" prefWidth="40" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="250" minWidth="-1" prefWidth="250" resizable="true">
                   <Title/>
                   <Editor/>
@@ -106,6 +112,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblNotificacionesMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -166,7 +175,7 @@
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextField2" min="-2" pref="179" max="-2" attributes="0"/>
+                  <Component id="txtAsunto" min="-2" pref="179" max="-2" attributes="0"/>
                   <EmptySpace pref="47" max="32767" attributes="0"/>
                   <Component id="btnBuscar" min="-2" pref="96" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
@@ -179,7 +188,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtAsunto" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="5" pref="14" max="32767" attributes="0"/>
@@ -196,7 +205,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField2">
+        <Component class="javax.swing.JTextField" name="txtAsunto">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>

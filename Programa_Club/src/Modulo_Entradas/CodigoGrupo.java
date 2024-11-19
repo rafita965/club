@@ -60,7 +60,7 @@ public class CodigoGrupo {
                 if(Id==usuarioID){
                     box.setText(nombreUsuario+"(Tú)");
                 }else{
-                    box.setText(nombreUsuario+"(Tú)");
+                    box.setText(nombreUsuario);
                 }
                 box.setSelected(true);
                     
