@@ -78,7 +78,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
             if (string.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
                 super.insertString(fb, offset, string, attr);
             } else {
-                JOptionPane.showMessageDialog(null, "Solo se permiten letras.");
+                java.awt.Toolkit.getDefaultToolkit().beep();
             }
         }
         @Override
@@ -86,7 +86,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
             if (text.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
                 super.replace(fb, offset, length, text, attrs);
             } else {
-                JOptionPane.showMessageDialog(null, "Solo se permiten letras.");
+                java.awt.Toolkit.getDefaultToolkit().beep();
             }
         }
     }
@@ -121,8 +121,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
             if (string.matches("\\d+")) { // Permitir solo dígitos
                 super.insertString(fb, offset, string, attr);
             } else {
-                JOptionPane.showMessageDialog(null, "Solo se permiten números.");
-            }
+                java.awt.Toolkit.getDefaultToolkit().beep();            }
         }
 
         @Override
@@ -130,7 +129,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
             if (text.matches("\\d+")) { // Permitir solo dígitos
                 super.replace(fb, offset, length, text, attrs);
             } else {
-                JOptionPane.showMessageDialog(null, "Solo se permiten números.");
+                java.awt.Toolkit.getDefaultToolkit().beep();
             }
         }
     }

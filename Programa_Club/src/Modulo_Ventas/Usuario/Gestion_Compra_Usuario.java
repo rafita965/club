@@ -371,7 +371,6 @@ public class Gestion_Compra_Usuario extends javax.swing.JFrame {
                     return;
                 } else {
                     cantidadSeleccionada = cantidad; 
-                    JOptionPane.showMessageDialog(this, "Cantidad seleccionada: " + cantidadSeleccionada);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Por favor, selecciona un producto para verificar el stock.", "Error", JOptionPane.ERROR_MESSAGE);            }

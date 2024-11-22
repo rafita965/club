@@ -279,6 +279,7 @@ public class Funciones_Usuario {
 
             
             JOptionPane.showMessageDialog(null, "Se guardó el pedido correctamente con ID: " + pedidoID);
+            JOptionPane.showMessageDialog(null, "Tiene 30 dias para decidir reembolsar.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.toString());
         } finally {

@@ -1,9 +1,9 @@
 package Modulo_Ventas.Usuario;
 import Modulo_Ventas.ConexionBDD;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.sql.*;
+
 /**
  *
  * @author thiag
@@ -30,15 +30,28 @@ public class VerificarBotonMenuUsuario {
         }
         return false;
     }
-    //Verificar existencia de pedidos de usuario
     public boolean existePedidoUsuario(String usuarioID) {
-        String sql = "SELECT COUNT(*) FROM Pedido WHERE IDUsuario=?";
+        String sql = "SELECT Fecha FROM Pedido WHERE IDUsuario = ? " +
+                 "AND Pedido.PedidoID NOT IN (SELECT IDPedido FROM Reembolso_Pedido) " +
+                 "ORDER BY Fecha DESC LIMIT 1";
         try (Connection conn = conexionBDD.Conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, usuarioID); 
+
+            stmt.setString(1, usuarioID);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1) > 0;
+                    // Obtener la fecha de la base de datos
+                    Date fechaPedido = rs.getDate("Fecha");
+                    LocalDate fechaPedidoLocal = fechaPedido.toLocalDate();
+                   
+                    // Obtener la fecha actual del sistema
+                    LocalDate fechaActual = LocalDate.now();
+                    // Calcular la diferencia en días
+                    long diferenciaDias = ChronoUnit.DAYS.between(fechaPedidoLocal, fechaActual);
+
+                    // Verificar si la diferencia es menor a 30 días
+                    return diferenciaDias < 30;
                 }
             }
         } catch (SQLException e) {
@@ -50,15 +63,28 @@ public class VerificarBotonMenuUsuario {
     }
     //Verificar existencia de reembolso de usuario
     public boolean existeReembolsoUsuario(String usuarioID) {
-        String sql = "SELECT COUNT(*) FROM Reembolso_Pedido rp " +
+        String sql = "SELECT FechaReembolso FROM Reembolso_Pedido rp " +
                      "JOIN Pedido p ON rp.IDPedido = p.PedidoID " +
-                     "WHERE p.IDUsuario = ? AND rp.Estado=1";
+                     "WHERE p.IDUsuario = ? AND rp.Estado=1 "+ 
+                     "ORDER BY FechaReembolso DESC LIMIT 1";
         try (Connection conn = conexionBDD.Conectar();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, usuarioID); 
+
+            stmt.setString(1, usuarioID);
+
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getInt(1) > 0; 
+                    // Obtener la fecha de la base de datos
+                    Date fechaReembolso = rs.getDate("FechaReembolso");
+                    LocalDate fechaReembolsoLocal = fechaReembolso.toLocalDate();
+                   
+                    // Obtener la fecha actual del sistema
+                    LocalDate fechaActual = LocalDate.now();
+                    // Calcular la diferencia en días
+                    long diferenciaDias = ChronoUnit.DAYS.between(fechaReembolsoLocal, fechaActual);
+
+                    // Verificar si la diferencia es menor a 30 días
+                    return diferenciaDias < 30;
                 }
             }
         } catch (SQLException e) {

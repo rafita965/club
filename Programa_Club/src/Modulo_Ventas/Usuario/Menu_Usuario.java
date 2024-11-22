@@ -16,7 +16,6 @@ public class Menu_Usuario extends javax.swing.JFrame {
         this.usuarioID = usuarioID;
         initComponents();
         verificarBotones();
-        System.out.println("ID del usuario en Menu_Usuario: " + this.usuarioID);    
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

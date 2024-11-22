@@ -1,11 +1,8 @@
 package Modulo_Ventas.Usuario;
 import Modulo_Ventas.ConexionBDD;
-import java.sql.CallableStatement;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -133,15 +130,19 @@ public class Reembolso_Usuario {
         DefaultTableModel modelo = new DefaultTableModel();
         TableRowSorter<TableModel> ordenarTabla = new TableRowSorter<>(modelo);
         paramTablaProductos.setRowSorter(ordenarTabla);
+
         modelo.addColumn("PedidoID"); 
         modelo.addColumn("ProductoID");
         modelo.addColumn("Nombre");
         modelo.addColumn("Precio");
         modelo.addColumn("Categoria");
         modelo.addColumn("Cantidad");
+        modelo.addColumn("FechaPedido"); // Nueva columna para mostrar la fecha
+
         paramTablaProductos.setModel(modelo);
+
         String sql = "SELECT Pedido.PedidoID, Productos.ProductoID, Productos.Nombre, Productos.Precio, " +
-                     "Categorias.NombreCategoria, DetallePedido.Cantidad " +
+                     "Categorias.NombreCategoria, DetallePedido.Cantidad, Pedido.Fecha " +
                      "FROM Pedido " +
                      "INNER JOIN DetallePedido ON Pedido.PedidoID = DetallePedido.PedidoID " +
                      "INNER JOIN Productos ON DetallePedido.ProductoID = Productos.ProductoID " +
@@ -151,25 +152,45 @@ public class Reembolso_Usuario {
         try (PreparedStatement ps = objetoConexion.Conectar().prepareStatement(sql)) {
             ps.setString(1, usuarioID); 
             ResultSet rs = ps.executeQuery();
+            LocalDate fechaActual = LocalDate.now(); // Fecha actual del sistema
+
             while (rs.next()) {
-                String[] datos = new String[6];
+                // Recuperar y procesar la fecha del pedido
+                Date fechaPedidoSQL = rs.getDate("Fecha");
+                LocalDate fechaPedido = fechaPedidoSQL.toLocalDate();
+
+                // Calcular la diferencia en días
+                long diferenciaDias = ChronoUnit.DAYS.between(fechaPedido, fechaActual);
+
+                // Si la diferencia es mayor a 30 días, omitir el registro
+                if (diferenciaDias > 30) {
+                    continue;
+                }
+
+                // Agregar el registro a la tabla
+                String[] datos = new String[7];
                 datos[0] = rs.getString("PedidoID");       
                 datos[1] = rs.getString("ProductoID");     
                 datos[2] = rs.getString("Nombre");
                 datos[3] = rs.getString("Precio");
                 datos[4] = rs.getString("NombreCategoria");
                 datos[5] = rs.getString("Cantidad");
+                datos[6] = rs.getString("Fecha"); // Mostrar la fecha en la tabla
                 modelo.addRow(datos);
             }
+
+            // Ocultar columna PedidoID si es necesario
             paramTablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
             paramTablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
             paramTablaProductos.getColumnModel().getColumn(0).setWidth(0);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }
     }
+
     
     //Seleccionar producto
     public void SeleccionarProducto(JTable paramTablaProductos, JTextField paramID, JTextField paramNombreProducto, JTextField paramPrecioProducto, JTextField paramCategoria, JTextField paramCantidad) {
@@ -296,7 +317,7 @@ public class Reembolso_Usuario {
         modelo.addColumn("Cantidad");
         paramTablaProductos.setModel(modelo);
         String sql = "SELECT Pedido.PedidoID, Productos.ProductoID, Productos.Nombre, Productos.Precio, " +
-                     "Categorias.NombreCategoria, DetallePedido.Cantidad " +
+                     "Categorias.NombreCategoria, DetallePedido.Cantidad, Reembolso_Pedido.FechaReembolso " +
                      "FROM Pedido " +
                      "INNER JOIN DetallePedido ON Pedido.PedidoID = DetallePedido.PedidoID " +
                      "INNER JOIN Productos ON DetallePedido.ProductoID = Productos.ProductoID " +
@@ -307,9 +328,20 @@ public class Reembolso_Usuario {
         try (PreparedStatement ps = objetoConexion.Conectar().prepareStatement(sql)) {
             ps.setString(1, usuarioID); 
             ResultSet rs = ps.executeQuery();
-            boolean hayDatos = false;
+            LocalDate fechaActual = LocalDate.now(); // Fecha actual del sistema
             while (rs.next()) {
-                hayDatos = true;
+                // Recuperar y procesar la fecha del pedido
+                Date fechaPedidoSQL = rs.getDate("FechaReembolso");
+                LocalDate fechaReembolso = fechaPedidoSQL.toLocalDate();
+
+                // Calcular la diferencia en días
+                long diferenciaDias = ChronoUnit.DAYS.between(fechaReembolso, fechaActual);
+
+                // Si la diferencia es mayor a 30 días, omitir el registro
+                if (diferenciaDias > 30) {
+                    continue;
+                }
+
                 String[] datos = new String[6];
                 datos[0] = rs.getString("PedidoID");
                 datos[1] = rs.getString("ProductoID");
@@ -318,9 +350,6 @@ public class Reembolso_Usuario {
                 datos[4] = rs.getString("NombreCategoria");
                 datos[5] = rs.getString("Cantidad");
                 modelo.addRow(datos);
-            }
-            if (!hayDatos) {
-                JOptionPane.showMessageDialog(null, "No hay datos para mostrar con el usuarioID especificado.");
             }
             paramTablaProductos.getColumnModel().getColumn(0).setMinWidth(0);
             paramTablaProductos.getColumnModel().getColumn(0).setMaxWidth(0);
