@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ModuloUsuario;
+package ModuloUsuarios1;
 
-import static ModuloUsuario.DatabaseConnection.actualizarMembresia;
+import static ModuloUsuarios1.DatabaseConnection.actualizarMembresia;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
