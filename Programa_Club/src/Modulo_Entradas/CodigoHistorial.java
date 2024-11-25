@@ -54,7 +54,7 @@ public class CodigoHistorial {
             totalCompras.setText(String.valueOf(compras));
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar compras: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al consultar compras: "+e.toString());
         }finally{
             conexion.Desconectar();
         }
@@ -98,7 +98,7 @@ public class CodigoHistorial {
             totalCompras.setText(String.valueOf(compras));
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar compras: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al consultar compras: "+e.toString());
         }finally{
             conexion.Desconectar();
         }

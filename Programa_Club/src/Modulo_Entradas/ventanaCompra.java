@@ -5,6 +5,8 @@
  */
 package Modulo_Entradas;
 
+import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.Array;
@@ -164,19 +166,11 @@ public class ventanaCompra extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setToolTipText("");
+
         pnlAsientos.setBorder(javax.swing.BorderFactory.createTitledBorder("Asientos disponibles"));
-
-        javax.swing.GroupLayout pnlAsientosLayout = new javax.swing.GroupLayout(pnlAsientos);
-        pnlAsientos.setLayout(pnlAsientosLayout);
-        pnlAsientosLayout.setHorizontalGroup(
-            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnlAsientosLayout.setVerticalGroup(
-            pnlAsientosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 296, Short.MAX_VALUE)
-        );
-
+        pnlAsientos.setLayout(new java.awt.GridLayout());
         jScrollPane2.setViewportView(pnlAsientos);
 
         javax.swing.GroupLayout pnlEntradasLayout = new javax.swing.GroupLayout(pnlEntradas);
@@ -218,7 +212,7 @@ public class ventanaCompra extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCancelar)
                 .addGap(42, 42, 42))
@@ -266,13 +260,16 @@ public class ventanaCompra extends javax.swing.JFrame {
                     String jsonData = rs.getString("Asientos");
                     jsonAsientos = new JSONArray(jsonData);
                     matAsientos= new JToggleButton[jsonAsientos.length()][jsonAsientos.getJSONArray(0).length()];
+                    pnlAsientos.removeAll();
+                    pnlAsientos.setLayout(new GridLayout(jsonAsientos.length(),jsonAsientos.getJSONArray(0).length(),0,5));
                     
                     for(int f = 0; f<jsonAsientos.length(); f++){
                         for(int c = 0; c<jsonAsientos.getJSONArray(0).length(); c++){
                             matAsientos[f][c]=new JToggleButton();
-                            matAsientos[f][c].setBounds(c*(612/jsonAsientos.getJSONArray(0).length()) +5, f*(612/jsonAsientos.getJSONArray(0).length()) +20, 612/jsonAsientos.getJSONArray(0).length(), 612/jsonAsientos.getJSONArray(0).length());
-                            matAsientos[f][c].setText("");
-                            if(jsonAsientos.getJSONArray(f).getInt(c) == 0 && matAsientos[f][c].isEnabled()){
+                            matAsientos[f][c].setPreferredSize(new Dimension(50,50));
+                            pnlAsientos.add(matAsientos[f][c]);
+                            //matAsientos[f][c].setBounds(c*(612/jsonAsientos.getJSONArray(0).length()) +5, f*(612/jsonAsientos.getJSONArray(0).length()) +20, 612/jsonAsientos.getJSONArray(0).length(), 612/jsonAsientos.getJSONArray(0).length());
+                            if(jsonAsientos.getJSONArray(f).getInt(c) == 0){
                                 matAsientos[f][c].setEnabled(false);}
                             
                             final int fila = f;  // Usamos 'final' para que esté disponible dentro de la clase anónima
@@ -317,7 +314,7 @@ public class ventanaCompra extends javax.swing.JFrame {
                                                 
                                             }uptBotones();
                                         }catch(Exception e2){
-                                            JOptionPane.showMessageDialog(null, "Error al conusltar asiento: "+e2.toString());
+                                            JOptionPane.showMessageDialog(null, "Error al consultar asiento: "+e2.toString());
                                         }finally{
                                             conexion.Desconectar();
                                         }
@@ -473,41 +470,49 @@ public class ventanaCompra extends javax.swing.JFrame {
                         arrDescs.add(0,Descuento);
                     }else{
                         box.addItemListener(new ItemListener() {
+                            private boolean inProgress;
                         @Override
                         public void itemStateChanged(ItemEvent e) {
                             DefaultTableModel modelo = (DefaultTableModel) tblEntradas.getModel();
                             
-                            if(e.getStateChange() == ItemEvent.SELECTED){
+                            if(e.getStateChange() == ItemEvent.SELECTED && !inProgress){
                                 modelo.addRow(new Object[]{nombreUsuario,null,null,null,null});
-                            }else{
+                            }else if(e.getStateChange() == ItemEvent.DESELECTED){
+                                inProgress = true;
                                 for (int r = 0; r < modelo.getRowCount(); r++) {
-                                    int fila =(Integer)modelo.getValueAt(r, 2);
-                                    int asiento =(Integer)modelo.getValueAt(r, 3);
-                                    if(modelo.getValueAt(r, 0)==nombreUsuario && modelo.getValueAt(r, 3)!=null){
-                                        System.out.println(modelo.getValueAt(r, 3)+","+modelo.getValueAt(r, 3).toString().trim());
-                                        if(modelo.getValueAt(r, 3)!=null || !String.valueOf(asiento).trim().isEmpty()){
-                                            try{txtTotal.setText(String.valueOf(Double.parseDouble(txtTotal.getText()) - (Double)modelo.getValueAt(r, 4)));
-                                            String consulta = "UPDATE Sector_Evento " +
-                                                                "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
-                                                                "WHERE IdSector = ? AND IdEvento = ?;";
+                                    System.out.println(r);
+                                    if(modelo.getValueAt(r, 0)==nombreUsuario){
+                                        if(modelo.getValueAt(r, 3)!=null){
+                                            int fila =(Integer)modelo.getValueAt(r, 2);
+                                            int asiento =(Integer)modelo.getValueAt(r, 3);
+                                            try{
+                                                String consulta = "UPDATE Sector_Evento " +
+                                                                    "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
+                                                                    "WHERE IdSector = ? AND IdEvento = ?;";
 
-                                            PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                                            ps.setInt(1, fila-1);
-                                            ps.setInt(2, asiento-1);
-                                            String item = (String) cmbSectores.getSelectedItem();
-                                            ps.setInt(3, Integer.parseInt(item.split("\\| ")[0].trim()));
-                                            ps.setInt(4, eventoID);
-                                            ps.executeUpdate();
-                                            jsonAsientos.getJSONArray(fila).put(asiento,1);
-                                            matAsientos[fila][asiento].setSelected(false);
+                                                PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
+                                                ps.setInt(1, fila-1);
+                                                ps.setInt(2, asiento-1);
+                                                String item = (String) cmbSectores.getSelectedItem();
+                                                ps.setInt(3, Integer.parseInt(item.split("\\| ")[0].trim()));
+                                                ps.setInt(4, eventoID);
+                                                ps.executeUpdate();
+                                                jsonAsientos.getJSONArray(fila-1).put(asiento-1,1);
+                                                matAsientos[fila-1][asiento-1].setSelected(false);
+                                                System.out.println("listo");
                                             }catch(Exception e2){
                                                 JOptionPane.showMessageDialog(null, "Error al liberar: "+e2.toString());
                                             }finally{
                                                 conexion.Desconectar();
+                                                txtTotal.setText(String.valueOf(Double.parseDouble(txtTotal.getText()) - (Double)modelo.getValueAt(r, 4)));
                                             }
                                         }
-                                        modelo.removeRow(r);}}
+                                        modelo.removeRow(r);
+                                        break;
+                                    }}
                                 }
+                                // Restablecer la bandera después de procesar
+                                inProgress = false;
                                 uptBotones();
                             }
                         });

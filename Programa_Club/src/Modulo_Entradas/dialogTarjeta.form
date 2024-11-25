@@ -202,6 +202,9 @@
       </Properties>
     </Component>
     <Component class="rsbuttom.SpinnerMonth" name="spnVencimiento">
+      <Properties>
+        <Property name="focusable" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

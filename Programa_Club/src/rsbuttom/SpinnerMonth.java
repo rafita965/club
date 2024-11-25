@@ -31,9 +31,11 @@ public class SpinnerMonth extends JSpinner{
         // Crear el modelo de spinner con fecha, incrementando por meses
         SpinnerDateModel spinnerModel = new SpinnerDateModel(calendar.getTime(), minCalendar.getTime(), null, Calendar.MONTH);
         this.setModel(spinnerModel);
-        ((JSpinner.DefaultEditor) this.getEditor()).getTextField().setEditable(false);
 
         // Configurar el formato de la fecha en el spinner (MM/yyyy)
         this.setEditor(new JSpinner.DateEditor(this, "MM/yyyy"));
+        JSpinner.DefaultEditor editor = (JSpinner.DefaultEditor) this.getEditor();
+        editor.getTextField().setEditable(false);
+
     }
 }

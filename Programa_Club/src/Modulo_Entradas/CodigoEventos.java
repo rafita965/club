@@ -48,7 +48,7 @@ public class CodigoEventos {
             }
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar eventos: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al consultar eventos: "+e.toString());
         }finally{
             conexion.Desconectar();
         }
@@ -77,7 +77,7 @@ public class CodigoEventos {
             }
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar eventos: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al consultar eventos: "+e.toString());
         }finally{
             conexion.Desconectar();
         }

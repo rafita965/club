@@ -74,7 +74,7 @@ public class CodigoGrupo {
             }
             
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar grupo: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al consultar grupo: "+e.toString());
         }finally{
             conexion.Desconectar();
         }

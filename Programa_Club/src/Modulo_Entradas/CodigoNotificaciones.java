@@ -66,7 +66,7 @@ public class CodigoNotificaciones {
             }
            
         }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Error al conusltar notificaciones: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error al consultar notificaciones: "+e.toString());
         }finally{
             conexion.Desconectar();
         }
@@ -92,7 +92,7 @@ public class CodigoNotificaciones {
                 }
 
             }catch(Exception e){
-                JOptionPane.showMessageDialog(null, "Error al conusltar notificaciones: "+e.toString());
+                JOptionPane.showMessageDialog(null, "Error al consultar notificaciones: "+e.toString());
             }finally{
                 conexion.Desconectar();
             }

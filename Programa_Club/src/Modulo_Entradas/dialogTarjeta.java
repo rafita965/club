@@ -123,6 +123,8 @@ public class dialogTarjeta extends javax.swing.JDialog {
 
         jLabel3.setText("Código Seguridad:");
 
+        spnVencimiento.setFocusable(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
