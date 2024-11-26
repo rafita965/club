@@ -35,6 +35,7 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         this.cantidadSeleccionada = cantidadSeleccionada;
         this.opcFormaEntrega = opcionFormaEntrega; 
         initComponents();
+       
         Combo_TipoTarjeta.addItem("Debito");
         Combo_TipoTarjeta.addItem("Credito");
         Btn_Guardar.setEnabled(true);
@@ -87,7 +88,10 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                         }
                     }
                 }
-        });        
+        });   
+        
+        Tarjeta_Usuario tarjetitaFunciones = new Tarjeta_Usuario();
+        tarjetitaFunciones.MostrarTarjetas(usuarioID, tabla_tarjetas);
     }
     
     @SuppressWarnings("unchecked")
@@ -117,11 +121,13 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         Volver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabla_tarjetas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(47, 94, 141));
-        jPanel1.setLayout(null);
 
         jLabel2.setText("NUMERO DE TARJETA");
 
@@ -148,9 +154,6 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2);
-        jPanel2.setBounds(20, 110, 406, 105);
-
         jLabel3.setText("APELLIDO Y NOMBRE DEL TITULAR");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -175,9 +178,6 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                 .addComponent(JTextField_NombreTitular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(39, Short.MAX_VALUE))
         );
-
-        jPanel1.add(jPanel3);
-        jPanel3.setBounds(20, 230, 406, 106);
 
         jLabel4.setText("FECHA DE VENCIMIENTO");
 
@@ -219,9 +219,6 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel4);
-        jPanel4.setBounds(20, 350, 194, 105);
-
         jLabel5.setText("CODIGO DE SEGURIDAD");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -229,13 +226,13 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addComponent(JTextField_CodigoSeguridad, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,17 +244,12 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                 .addGap(33, 33, 33))
         );
 
-        jPanel1.add(jPanel5);
-        jPanel5.setBounds(230, 350, 194, 105);
-
         Btn_Guardar.setText("CONTINUAR");
         Btn_Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 Btn_GuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(Btn_Guardar);
-        Btn_Guardar.setBounds(170, 470, 93, 23);
 
         jLabel8.setText("TIPO DE TARJETA");
 
@@ -286,9 +278,6 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel6);
-        jPanel6.setBounds(20, 50, 406, 42);
-
         jPanel7.setBackground(new java.awt.Color(31, 50, 69));
 
         Volver.setText("<-----");
@@ -302,45 +291,113 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("INGRESE DATOS DE TARJETA ");
 
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel9.setText("TARJETAS GUARDADAS");
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(18, 18, 18)
                 .addComponent(Volver)
-                .addGap(47, 47, 47)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel1)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(151, 151, 151))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+            .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Volver)
-                    .addComponent(jLabel1))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel9))
+                    .addComponent(Volver, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jPanel1.add(jPanel7);
-        jPanel7.setBounds(0, 0, 450, 40);
+        tabla_tarjetas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        tabla_tarjetas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabla_tarjetasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabla_tarjetas);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addComponent(Btn_Guardar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Btn_Guardar)
+                .addContainerGap(19, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    
     
     //Boton a volver forma de entrega
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
@@ -385,19 +442,37 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
     } else if (!validNumTarjeta) {
         JOptionPane.showMessageDialog(null, "El número de tarjeta debe tener exactamente 16 dígitos.");
     } else {
-        // Si todas las validaciones son correctas, habilitar el botón y continuar con la siguiente ventana
-        Ventana_FinalizarCompra ventanaFinCompra = new Ventana_FinalizarCompra(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega, tipoTarjeta, numerinTarjeta, nombreTitular, codigoSeguridad);
-        this.setVisible(false);
-        ventanaFinCompra.setSize(450, 650);
-        ventanaFinCompra.setLocationRelativeTo(null);
-        ventanaFinCompra.setVisible(true);
-                
+        // Verifica la existencia de la tarjeta ingresada, si ya existe, toma los datos y continua, si no existe, los guarda y continua
+        
         Tarjeta_Usuario tarjetita = new Tarjeta_Usuario();
-        tarjetita.GuardarDatosTarjeta(usuarioID, JTextField_NumTarjeta, JTextField_NombreTitular, JTextField_Mes, JTextField_Anio, JTextField_CodigoSeguridad, Combo_TipoTarjeta);
+
+        if(tarjetita.VerificarExistencia(usuarioID, JTextField_NumTarjeta)){
+            Ventana_FinalizarCompra ventanaFinCompra = new Ventana_FinalizarCompra(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega, tipoTarjeta, numerinTarjeta, nombreTitular, codigoSeguridad);
+            this.setVisible(false);
+            ventanaFinCompra.setSize(450, 650);
+            ventanaFinCompra.setLocationRelativeTo(null);
+            ventanaFinCompra.setVisible(true);
+        }else if(tarjetita.VerificarExistencia(usuarioID, JTextField_NumTarjeta) == false){
+            tarjetita.GuardarDatosTarjeta(usuarioID, JTextField_NumTarjeta, JTextField_NombreTitular, JTextField_Mes, JTextField_Anio, JTextField_CodigoSeguridad, Combo_TipoTarjeta);
+            Ventana_FinalizarCompra ventanaFinCompra = new Ventana_FinalizarCompra(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega, tipoTarjeta, numerinTarjeta, nombreTitular, codigoSeguridad);
+            this.setVisible(false);
+            ventanaFinCompra.setSize(450, 650);
+            ventanaFinCompra.setLocationRelativeTo(null);
+            ventanaFinCompra.setVisible(true);
+        }
+
+
+        
+        
     }
                   
 
     }//GEN-LAST:event_Btn_GuardarActionPerformed
+
+    private void tabla_tarjetasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_tarjetasMouseClicked
+        Tarjeta_Usuario funcion = new Tarjeta_Usuario();
+        funcion.SeleccionarTarjetas(tabla_tarjetas, Combo_TipoTarjeta, JTextField_NumTarjeta, JTextField_NombreTitular, JTextField_Mes, JTextField_Anio, JTextField_CodigoSeguridad);
+    }//GEN-LAST:event_tabla_tarjetasMouseClicked
     /**
      * @param args the command line arguments
      */
@@ -445,6 +520,7 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -452,5 +528,7 @@ public class Ventana_TarjetaUsuario extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tabla_tarjetas;
     // End of variables declaration//GEN-END:variables
 }

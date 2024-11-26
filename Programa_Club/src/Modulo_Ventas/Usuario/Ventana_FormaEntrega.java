@@ -243,7 +243,7 @@ public class Ventana_FormaEntrega extends javax.swing.JFrame {
         
         Ventana_TarjetaUsuario vTU = new Ventana_TarjetaUsuario(usuarioID, productoID, fecha, cantidadSeleccionada, opcionFormaEntrega);
         this.setVisible(false);
-        vTU.setSize(460, 650);
+        vTU.setSize(1000, 560);
         vTU.setLocationRelativeTo(null);
         vTU.setVisible(true); 
         

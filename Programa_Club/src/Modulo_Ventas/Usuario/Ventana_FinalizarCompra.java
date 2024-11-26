@@ -137,6 +137,12 @@ public class Ventana_FinalizarCompra extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(240, 240, 240));
         jLabel12.setText("TOTAL A PAGAR: ");
 
+        textField_TotalPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textField_TotalPagarActionPerformed(evt);
+            }
+        });
+
         jPanel2.setBackground(new java.awt.Color(31, 50, 69));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -418,22 +424,27 @@ public class Ventana_FinalizarCompra extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Ventana_TarjetaUsuario vTU = new Ventana_TarjetaUsuario(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega);
         this.setVisible(false);
-        vTU.setSize(450, 600);
+        vTU.setSize(1000, 560);
         vTU.setLocationRelativeTo(null);
-        vTU.setVisible(true); 
+        vTU.setVisible(true);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Funciones_Usuario funcion = new Funciones_Usuario();
-        funcion.GuardarPedido(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega,envioID);
-        
-        Menu_Usuario vMU = new Menu_Usuario(usuarioID);
-        this.setVisible(false);
-        vMU.setSize(380, 320);
-        vMU.setLocationRelativeTo(null);
-        vMU.setVisible(true); 
+        if(funcion.GuardarPedido(usuarioID, productoID, fecha, cantidadSeleccionada, opcFormaEntrega,envioID) && funcion.GuardarDinero(textField_TotalPagar)){
+            Menu_Usuario vMU = new Menu_Usuario(usuarioID);
+            this.setVisible(false);
+            vMU.setSize(380, 320);
+            vMU.setLocationRelativeTo(null);
+            vMU.setVisible(true); 
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void textField_TotalPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_TotalPagarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textField_TotalPagarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

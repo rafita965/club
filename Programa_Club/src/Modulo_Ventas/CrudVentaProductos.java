@@ -152,6 +152,7 @@ public class CrudVentaProductos {
             objetoConexion.cerrarConexion();
         }
     }
+    
     public void IngresarPrecio(JTextField textField_PrecioNuevo) {
         ConexionBDD objetoConexion = new ConexionBDD();
         String sqlSelect = "SELECT EnvioID FROM Envio LIMIT 1";

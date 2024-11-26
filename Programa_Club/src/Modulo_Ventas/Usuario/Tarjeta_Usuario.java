@@ -12,6 +12,7 @@ import javax.swing.table.TableRowSorter;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import javax.swing.JComboBox;
 /**
@@ -72,9 +73,9 @@ public class Tarjeta_Usuario {
         return suma % 10 == 0;
     }
 
-    public void GuardarDatosTarjeta(String usuarioID, JTextField JTextField_NumTarjeta, JTextField JTextField_NombreTitular,JTextField JTextField_Mes, JTextField JTextField_Anio, JTextField JTextField_CodigoSeguridad,JComboBox Combo_TipoTarjeta) {
+    public boolean GuardarDatosTarjeta(String usuarioID, JTextField JTextField_NumTarjeta, JTextField JTextField_NombreTitular,JTextField JTextField_Mes, JTextField JTextField_Anio, JTextField JTextField_CodigoSeguridad,JComboBox Combo_TipoTarjeta) {
          ConexionBDD objetoConexion = new ConexionBDD();
-         String sql = "INSERT INTO Tarjeta (IDUsuario, NumeroTarjeta, CodigoSeguridad, Vencimiento, Tipo) VALUES (?, ?, ?, ?, ?)";
+         String sql = "INSERT INTO Tarjeta (IDUsuario, NumeroTarjeta, CodigoSeguridad, Vencimiento, Tipo,Titular) VALUES (?, ?, ?, ?, ?,?)";
 
          try {
 
@@ -94,24 +95,126 @@ public class Tarjeta_Usuario {
              ps.setLong(2, numeroTarjeta);              
              ps.setInt(3, codigoSeguridad);              
              ps.setDate(4, java.sql.Date.valueOf(fechaVencimiento)); 
-             ps.setString(5, tipoTarjeta);             
+             ps.setString(5, tipoTarjeta);
+             ps.setString(6,nombreTitular);
 
              int resultado = ps.executeUpdate();
 
              if (resultado > 0) {
                  JOptionPane.showMessageDialog(null, "Datos de la tarjeta guardados correctamente.");
+                 return true;
              } else {
                  JOptionPane.showMessageDialog(null, "No se pudo guardar los datos de la tarjeta.");
+                 return false;
              }
 
          } catch (NumberFormatException e) {
              JOptionPane.showMessageDialog(null, "Error: Verifica que el número de tarjeta y el código de seguridad sean numéricos. " + e.getMessage());
+             return false;
          } catch (Exception e) {
              JOptionPane.showMessageDialog(null, "Error al guardar los datos de la tarjeta: " + e.getMessage());
+             return false;
          } finally {
              objetoConexion.cerrarConexion();
          }
      }
+    
+    public void MostrarTarjetas(String usuarioID, JTable tablaTarjetas){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        DefaultTableModel modelo = new DefaultTableModel();
+        String sql="";
+        modelo.addColumn("ID");
+        modelo.addColumn("Tipo");
+        modelo.addColumn("Numero");
+        modelo.addColumn("Titular");
+         
+        tablaTarjetas.setModel(modelo);
+        
+        sql="SELECT TarjetaID,Tipo,NumeroTarjeta,Titular FROM Tarjeta WHERE IDUsuario = ?";
+        
+        try{
+            PreparedStatement ps = objetoConexion.Conectar().prepareStatement(sql);
+            ps.setString(1, usuarioID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                String id = rs.getString("TarjetaID");
+                String tipo = rs.getString("Tipo");
+                String numero = rs.getString("NumeroTarjeta");
+                String titular = rs.getString("Titular");
+                
+                modelo.addRow(new Object[]{id,tipo,numero,titular});
+            }
+            tablaTarjetas.setModel(modelo);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Error al mostrar usuarios, error: " + e.toString());
+        }finally{
+            objetoConexion.cerrarConexion();
+        }
+        
+    
+    }
+    
+    public void SeleccionarTarjetas(JTable tablaTarjetas,JComboBox<String> combo_TipoTarjeta, JTextField numTarjeta, JTextField nombreTitular, JTextField mes, JTextField anio, JTextField codigoSeguridad){
+        int fila = tablaTarjetas.getSelectedRow();
+        if (fila >= 0) {
+            String id = tablaTarjetas.getValueAt(fila,0).toString();
+            ConexionBDD objetoConexion = new ConexionBDD();
+            try{
+                String consulta = "SELECT Tipo, NumeroTarjeta, Titular, Vencimiento, CodigoSeguridad FROM Tarjeta WHERE TarjetaID = ?";
+                PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta);
+                ps.setString(1,id);
+                
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    String tipo = rs.getString("Tipo");
+                    combo_TipoTarjeta.setSelectedItem(tipo);
+                   
+                    numTarjeta.setText("" + rs.getLong("NumeroTarjeta"));
+                  
+                    nombreTitular.setText(rs.getString("Titular"));
+                    codigoSeguridad.setText("" + rs.getInt("CodigoSeguridad"));
+                    
+                    java.sql.Date fechaSQL = rs.getDate("Vencimiento");
+                    if (fechaSQL != null) {
+                        
+                        SimpleDateFormat formatoMes = new SimpleDateFormat("MM");
+                        SimpleDateFormat formatoAnio = new SimpleDateFormat("yy");
+
+                        java.util.Date fechaUtil = new java.util.Date(fechaSQL.getTime()); 
+                        mes.setText(formatoMes.format(fechaUtil));  
+                        anio.setText(formatoAnio.format(fechaUtil)); 
+                    }
+                }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(null, "Error al seleccionar la tarjeta" + e.toString());
+            }finally {
+                objetoConexion.cerrarConexion();
+            }
+            
+        }
+    }
+
+    public Boolean VerificarExistencia(String usuarioID, JTextField numeroTarjeta){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta = "SELECT * FROM Tarjeta WHERE IDUsuario = ? and NumeroTarjeta = ?";
+        try{
+            CallableStatement cs = objetoConexion.Conectar().prepareCall(consulta);
+            cs.setInt(1, Integer.parseInt(usuarioID));
+            cs.setLong(2, Long.parseLong(numeroTarjeta.getText()));
+            ResultSet rs = cs.executeQuery();
+            if(rs.next()){
+                return true;
+            }else{
+                return false;
+            }            
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al verificar la existencia de la tarjeta: " + e.toString());
+            return null;
+        }finally{
+            objetoConexion.cerrarConexion();
+        }
+    }
 }
 
 

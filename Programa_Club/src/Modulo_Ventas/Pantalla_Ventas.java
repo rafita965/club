@@ -194,7 +194,6 @@ public class Pantalla_Ventas extends javax.swing.JFrame {
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
         Main vM = new Main();
         this.setVisible(false);
-        vM.setSize(420,320);
         vM.setLocationRelativeTo(null);
         vM.setVisible(true);
     }//GEN-LAST:event_VolverActionPerformed

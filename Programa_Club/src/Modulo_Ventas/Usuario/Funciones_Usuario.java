@@ -246,7 +246,7 @@ public class Funciones_Usuario {
     //Metodo PARA FINALIZAR COMPRA===============================================================
     
     //public void GuardarTarjeta(String usuarioID, String tipoTarjeta, String nombreTitular, String codigoSeguridad, String numerin){}
-    public void GuardarPedido(String usuarioID, String productoID, String fecha, int cantidad, String formaEntrega, String envioID){
+    public boolean GuardarPedido(String usuarioID, String productoID, String fecha, int cantidad, String formaEntrega, String envioID){
         String pedidoID = "";
         ConexionBDD objetoConexion = new ConexionBDD();
         String consulta = "INSERT INTO Pedido(IDUsuario, Fecha) VALUES (?, ?);";
@@ -280,14 +280,81 @@ public class Funciones_Usuario {
             
             JOptionPane.showMessageDialog(null, "Se guardó el pedido correctamente con ID: " + pedidoID);
             JOptionPane.showMessageDialog(null, "Tiene 30 dias para decidir reembolsar.");
+            
+            return true;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.toString());
+            return false;
         } finally {
             objetoConexion.cerrarConexion();
         }
         
     }
 
+    /*public boolean GuardarDinero(JTextField textField_TotalPagar){
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta1 = "INSERT INTO Cobros(Monto, fk_medio, motivo) VALUES (?, 4,'Venta de Producto');";
+        String consulta2 = "INSERT INTO Movimientos(fk_cuenta, descripcion) VALUES (2, 'Pago con Tarjeta');";
+        
+        try{
+            CallableStatement cs = objetoConexion.Conectar().prepareCall(consulta1);
+            cs.setFloat(1, Float.parseFloat(textField_TotalPagar.getText()));
+            cs.executeUpdate();
+            
+            CallableStatement cs2 = objetoConexion.Conectar().prepareCall(consulta2);
+            cs2.executeUpdate();
+            
+            return true;
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.toString());
+            return false;
+        }finally{
+            objetoConexion.cerrarConexion();
+        }
+    }*/
+    
+    public boolean GuardarDinero(JTextField textField_TotalPagar) {
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consultaIDCobros = "SELECT MAX(id_cobro) + 1 AS NextID FROM Cobros;";
+        String consultaIDMovimientos = "SELECT MAX(id_movimiento) + 1 AS NextID FROM Movimientos;";
+        String consulta1 = "INSERT INTO Cobros(id_cobro, Monto, fk_medio, motivo) VALUES (?, ?, 4, 'Venta de Producto');";
+        String consulta2 = "INSERT INTO Movimientos(id_movimiento, fk_cuenta, descripcion) VALUES (?, 2, 'Pago con Tarjeta');";
+
+        try {
+            // Obtener el próximo ID para Cobros
+            CallableStatement csIDCobros = objetoConexion.Conectar().prepareCall(consultaIDCobros);
+            ResultSet rsCobros = csIDCobros.executeQuery();
+            int nextIDCobros = rsCobros.next() ? rsCobros.getInt("NextID") : 1;
+
+            // Insertar en Cobros
+            CallableStatement csCobros = objetoConexion.Conectar().prepareCall(consulta1);
+            csCobros.setInt(1, nextIDCobros); // Usar el siguiente ID
+            csCobros.setFloat(2, Float.parseFloat(textField_TotalPagar.getText())); // Monto
+            csCobros.executeUpdate();
+
+            // Obtener el próximo ID para Movimientos
+            CallableStatement csIDMovimientos = objetoConexion.Conectar().prepareCall(consultaIDMovimientos);
+            ResultSet rsMovimientos = csIDMovimientos.executeQuery();
+            int nextIDMovimientos = rsMovimientos.next() ? rsMovimientos.getInt("NextID") : 1;
+
+            // Insertar en Movimientos
+            CallableStatement csMovimientos = objetoConexion.Conectar().prepareCall(consulta2);
+            csMovimientos.setInt(1, nextIDMovimientos); // Usar el siguiente ID
+            csMovimientos.executeUpdate();
+
+            return true;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error: " + e.toString());
+            return false;
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
+    }
+    
+    
+
+    
 }
 
 
