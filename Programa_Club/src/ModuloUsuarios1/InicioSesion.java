@@ -1,5 +1,6 @@
 package ModuloUsuarios1;
 
+import Modulo_Ventas.Pantalla_Ventas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,11 +15,6 @@ public class InicioSesion extends javax.swing.JFrame {
         this.IDUsuario=IDUsuario;
         this.IDAdministrador=IDAdministrador;
         initComponents();
-        btniniciosesion.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            btniniciosesionActionPerformed(evt);
-        }
-    });
         btnRegistro.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             btnRegistroActionPerformed(evt);
@@ -228,14 +224,17 @@ public class InicioSesion extends javax.swing.JFrame {
 
                 if (rsContrasena.next()) {
                     // Inicio de sesión exitoso
-                    JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso. Bienvenido!");
+                    
                     this.dispose(); // Cerrar la ventana actual
 
                     // Sacar IDUsuario a partir de Nombre_usuario
                     int IDUsuario = rsContrasena.getInt("IDUsuario"); // Asegúrate de que esto existe
 
                     // Abrir el menú principal, pasando el IDUsuario
-                    new Main().setVisible(true); // Pasa el IDUsuario al constructor
+                    Main vV= new Main(IDUsuario);
+                    this.setVisible(false);
+                    vV.setVisible(true);
+                    vV.setLocationRelativeTo(null); // Pasa el IDUsuario al constructor
                 } else {
                     JOptionPane.showMessageDialog(this, "Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
                 }

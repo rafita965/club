@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import programa_club.Main;
 
 public class InicioAdmin extends javax.swing.JFrame {
     private static int IDAdministrador;
@@ -177,7 +178,7 @@ public class InicioAdmin extends javax.swing.JFrame {
                     int IDAdministrador = rsContrasena.getInt("IDAdministrador"); // Asegúrate de que esto existe
 
                     // Abrir el menú principal, pasando el IDUsuario
-                    new MenuAdmin(IDAdministrador).setVisible(true); // Pasa el IDUsuario al constructor
+                    new Main(IDAdministrador).setVisible(true); // Pasa el IDUsuario al constructor
                 } else {
                     JOptionPane.showMessageDialog(this, "Contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
                 }

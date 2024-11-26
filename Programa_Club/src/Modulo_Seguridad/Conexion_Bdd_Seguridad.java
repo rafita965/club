@@ -511,7 +511,7 @@ public class Conexion_Bdd_Seguridad {
             Statement  sele = miConexion.createStatement();
             ResultSet result=sele.executeQuery(query);
             while(result.next()){
-                String Item=result.getInt("ID") + "-" + result.getInt("ID_Usuario")+ "-" + result.getInt("Tiempo_Suspendido") + "-" + result.getString("razon")+ "-" + result.getDate("Fecha");
+                String Item="ID de suspención="+result.getInt("ID") + "-" + "ID de socio="+result.getInt("ID_Usuario")+ "-" + "Tiempo suspendido (dias)="+result.getInt("Tiempo_Suspendido") + "-" + "Razón="+ result.getString("razon")+ "-" +"Fecha de suspención="+ result.getDate("Fecha");
                 array.add(Item);
             }
             
