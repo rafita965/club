@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ModuloUsuario;
+package ModuloUsuarios1;
+
+import programa_club.Main;
 
 /**
  *
@@ -111,9 +113,9 @@ public class MainUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
-        Menu menu = new Menu(IDUsuario);
-        menu.setVisible(true);
-        menu.setLocationRelativeTo(null);
+        Main Main = new Main(IDUsuario);
+        Main.setVisible(true);
+        Main.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_btnUsuarioActionPerformed
 

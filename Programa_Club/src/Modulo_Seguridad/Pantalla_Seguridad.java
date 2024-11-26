@@ -19,11 +19,10 @@ import Modulo_Seguridad.Equip_G.Pantalla_Guardias;
 public class Pantalla_Seguridad extends javax.swing.JFrame {
     //En serio tengo que comentarizar aca? aaaaaaaaaaaaaaaaa
     //Simple, crea botones y les dice a que clase se conectan
-
+    static int admin;
     public Pantalla_Seguridad() {
         initComponents();
-        this.setResizable(false);
-        
+        this.setResizable(false);        
 
         
     }
@@ -42,7 +41,6 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         btn_mostrarInforme = new javax.swing.JButton();
         btn_v_s_s = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        btn_Volver = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -108,14 +106,6 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(31, 50, 69));
         jPanel2.setForeground(new java.awt.Color(31, 50, 69));
 
-        btn_Volver.setBackground(new java.awt.Color(47, 94, 141));
-        btn_Volver.setText("<--");
-        btn_Volver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_VolverActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(229, 232, 236));
         jLabel1.setText("Pantalla de seguridad");
@@ -125,20 +115,16 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_Volver, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(185, 185, 185)
+                .addGap(259, 259, 259)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_Volver)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -198,15 +184,7 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Boton para volver para atras
-    private void btn_VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VolverActionPerformed
-        Main vM = new Main();
-        this.setVisible(false);
-        vM.setVisible(true);
-        
-        
-    }//GEN-LAST:event_btn_VolverActionPerformed
-    
+   
     private void btn_suspenderSociosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_suspenderSociosActionPerformed
         Suspender_socio_interface vS= new Suspender_socio_interface();
         this.setVisible(false);
@@ -309,7 +287,6 @@ public class Pantalla_Seguridad extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Volver;
     private javax.swing.JButton btn_comprarEquipamiento;
     private javax.swing.JButton btn_equiparGuardias;
     private javax.swing.JButton btn_mostrarInforme;
