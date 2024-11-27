@@ -3,7 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ModuloUsuario;
+package ModuloUsuarios1;
+
+import ModuloUsuarios1.Menu;
+import Modulo_Ventas.Usuario.Menu_Usuario;
 
 /**
  *
@@ -60,6 +63,11 @@ public class MainUsuario extends javax.swing.JFrame {
         );
 
         btnProductos.setText("Comprar Productos");
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosActionPerformed(evt);
+            }
+        });
 
         btnEntradas.setText("Comprar Entradas");
 
@@ -116,6 +124,16 @@ public class MainUsuario extends javax.swing.JFrame {
         menu.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_btnUsuarioActionPerformed
+
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+            String usuarioID = "" +IDUsuario;
+        
+            Menu_Usuario vMU = new Menu_Usuario(usuarioID);
+            this.setVisible(false);
+            vMU.setSize(380, 320);
+            vMU.setLocationRelativeTo(null);
+            vMU.setVisible(true); 
+    }//GEN-LAST:event_btnProductosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

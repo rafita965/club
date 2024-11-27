@@ -65,6 +65,17 @@ public class Main extends javax.swing.JFrame {
                 else if(IDadmin==9){
             jButton2.setEnabled(true);
         }
+                else if(IDadmin==10){
+                    btn_Seguridad.setEnabled(true);
+                    btn_Productos.setEnabled(true);
+                    btn_Entradas.setEnabled(true);
+                    jButton1.setEnabled(true);
+                    jButton4.setEnabled(true);
+                    jButton2.setEnabled(true);
+                    jButton3.setEnabled(true);
+                    jButton5.setEnabled(true);
+                    jButton6.setEnabled(true);
+                }
             
     }
     @SuppressWarnings("unchecked")

@@ -231,7 +231,7 @@ public class InicioSesion extends javax.swing.JFrame {
                     int IDUsuario = rsContrasena.getInt("IDUsuario"); // Asegúrate de que esto existe
 
                     // Abrir el menú principal, pasando el IDUsuario
-                    Main vV= new Main(IDUsuario);
+                    MainUsuario vV= new MainUsuario(IDUsuario);
                     this.setVisible(false);
                     vV.setVisible(true);
                     vV.setLocationRelativeTo(null); // Pasa el IDUsuario al constructor
