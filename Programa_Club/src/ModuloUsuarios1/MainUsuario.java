@@ -5,7 +5,8 @@
  */
 package ModuloUsuarios1;
 
-import programa_club.Main;
+import ModuloUsuarios1.Menu;
+import Modulo_Ventas.Usuario.Menu_Usuario;
 
 /**
  *
@@ -62,6 +63,11 @@ public class MainUsuario extends javax.swing.JFrame {
         );
 
         btnProductos.setText("Comprar Productos");
+        btnProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProductosActionPerformed(evt);
+            }
+        });
 
         btnEntradas.setText("Comprar Entradas");
 
@@ -113,11 +119,21 @@ public class MainUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
-        Main Main = new Main(IDUsuario);
-        Main.setVisible(true);
-        Main.setLocationRelativeTo(null);
+        Menu menu = new Menu(IDUsuario);
+        menu.setVisible(true);
+        menu.setLocationRelativeTo(null);
         dispose();
     }//GEN-LAST:event_btnUsuarioActionPerformed
+
+    private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+            String usuarioID = "" +IDUsuario;
+        
+            Menu_Usuario vMU = new Menu_Usuario(usuarioID);
+            this.setVisible(false);
+            vMU.setSize(380, 320);
+            vMU.setLocationRelativeTo(null);
+            vMU.setVisible(true); 
+    }//GEN-LAST:event_btnProductosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
