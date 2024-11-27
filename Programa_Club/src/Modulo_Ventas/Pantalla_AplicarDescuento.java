@@ -5,6 +5,8 @@
  */
 package Modulo_Ventas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gabrielv170
@@ -416,14 +418,14 @@ public class Pantalla_AplicarDescuento extends javax.swing.JFrame {
     
     //BOTON APLICAR DESCUENTO A PRODUCTO=======================================================================
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
-         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
-         objetoDescuento.AplicacionDelDescuento(JTextField_IDDescuento,JTextField_IDProducto);
-         objetoDescuento.MostrarProductos(Tabla_Productos);
-         objetoDescuento.MostrarDescuentos(Tabla_Descuentos);
-         objetoDescuento.MostrarDescuentosAplicados(Tabla_DescuentosAplicados);
-         Tabla_Productos.clearSelection();
-         Tabla_Descuentos.clearSelection();
-         Tabla_DescuentosAplicados.clearSelection();
+        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
+        objetoDescuento.AplicacionDelDescuento(JTextField_IDDescuento,JTextField_IDProducto);
+        objetoDescuento.MostrarProductos(Tabla_Productos);
+        objetoDescuento.MostrarDescuentos(Tabla_Descuentos);
+        objetoDescuento.MostrarDescuentosAplicados(Tabla_DescuentosAplicados);
+        Tabla_Productos.clearSelection();
+        Tabla_Descuentos.clearSelection();
+        Tabla_DescuentosAplicados.clearSelection();
     }//GEN-LAST:event_Btn_GuardarActionPerformed
     //no se por que se puso esto===============================================================================
     private void JTextField_DescuentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextField_DescuentoActionPerformed
@@ -441,32 +443,49 @@ public class Pantalla_AplicarDescuento extends javax.swing.JFrame {
     
     //Seleccionar descuento aplicado
     private void Tabla_DescuentosAplicadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabla_DescuentosAplicadosMouseClicked
-    Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento(); 
-    objetoDescuento.Seleccionar_AplicarDescuento(Tabla_DescuentosAplicados, JTextField_IDDescuentoAplicado, JTextField_IDProductoAplicado, JTextField_NombreProductoAplicado);        
+        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento(); 
+        objetoDescuento.Seleccionar_AplicarDescuento(Tabla_DescuentosAplicados, JTextField_IDDescuentoAplicado, JTextField_IDProductoAplicado, JTextField_NombreProductoAplicado);        
     }//GEN-LAST:event_Tabla_DescuentosAplicadosMouseClicked
     
     //Seleccionar descuento
     private void Tabla_DescuentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabla_DescuentosMouseClicked
-    Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento(); 
-    objetoDescuento.Seleccionar_Descuento(Tabla_Descuentos, JTextField_IDDescuento, JTextField_Descuento);
+        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento(); 
+        objetoDescuento.Seleccionar_Descuento(Tabla_Descuentos, JTextField_IDDescuento, JTextField_Descuento);
     }//GEN-LAST:event_Tabla_DescuentosMouseClicked
 
     //Seleccionar producto
     private void Tabla_ProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Tabla_ProductosMouseClicked
-    Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento(); 
-    objetoDescuento.Seleccionar_Producto(Tabla_Productos, JTextField_IDProducto, JTextField_Producto);
+        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento(); 
+        objetoDescuento.Seleccionar_Producto(Tabla_Productos, JTextField_IDProducto, JTextField_Producto);
     }//GEN-LAST:event_Tabla_ProductosMouseClicked
 
     //Boton eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
-    Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
-    objetoDescuento.EliminarDescuentoAplicado(JTextField_IDDescuentoAplicado,JTextField_IDProductoAplicado);
-    objetoDescuento.MostrarProductos(Tabla_Productos);
-    objetoDescuento.MostrarDescuentos(Tabla_Descuentos);
-    objetoDescuento.MostrarDescuentosAplicados(Tabla_DescuentosAplicados);
-    Tabla_Productos.clearSelection();
-    Tabla_Descuentos.clearSelection();
-    Tabla_DescuentosAplicados.clearSelection();
+        int confirmacion = JOptionPane.showConfirmDialog(
+        null,
+        "¿Estás seguro de que deseas eliminar este descuento aplicado?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
+                objetoDescuento.EliminarDescuentoAplicado(JTextField_IDDescuentoAplicado,JTextField_IDProductoAplicado);
+                objetoDescuento.MostrarProductos(Tabla_Productos);
+                objetoDescuento.MostrarDescuentos(Tabla_Descuentos);
+                objetoDescuento.MostrarDescuentosAplicados(Tabla_DescuentosAplicados);
+            } catch (Exception e) {
+                System.err.println("Error al eliminar el descuento aplicado: " + e.getMessage());
+            }
+        } else {
+            // Si el usuario selecciona "No", no se realiza ninguna acción.
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.", "Acción cancelada", JOptionPane.INFORMATION_MESSAGE);
+        }
+        Tabla_Productos.clearSelection();
+        Tabla_Descuentos.clearSelection();
+        Tabla_DescuentosAplicados.clearSelection();
     }//GEN-LAST:event_Btn_EliminarActionPerformed
 
     private void JTextField_IDProductoAplicadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextField_IDProductoAplicadoActionPerformed

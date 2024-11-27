@@ -74,39 +74,51 @@ public class Ver_Reembolso {
         TableRowSorter<TableModel> OrdenarTabla = new TableRowSorter<>(modelo);
         paramTablaTotalReembolso.setRowSorter(OrdenarTabla);
 
+        // Agregar todas las columnas al modelo
         modelo.addColumn("IDReembolso");
         modelo.addColumn("IDPedido");
+        modelo.addColumn("NombreProducto"); // Nueva columna para el nombre del producto
         modelo.addColumn("FechaReembolso");
         modelo.addColumn("Motivo");
         modelo.addColumn("Estado");
 
         paramTablaTotalReembolso.setModel(modelo);
-        
-        String sql = "SELECT * FROM Reembolso_Pedido;";
-        String[] datos = new String[5];
+
+        // Query para obtener los datos
+        String sql = "SELECT rp.IDReembolso, rp.IDPedido, p.Nombre AS NombreProducto, " +
+                     "rp.FechaReembolso, rp.Motivo, rp.Estado " +
+                     "FROM Reembolso_Pedido rp " +
+                     "INNER JOIN Pedido ped ON rp.IDPedido = ped.PedidoID " +
+                     "INNER JOIN DetallePedido dp ON ped.PedidoID = dp.PedidoID " +
+                     "INNER JOIN Productos p ON dp.ProductoID = p.ProductoID;";
+
+        String[] datos = new String[6]; // Ajustar el tamaño del array
 
         try {
             Statement st = objetoConexion.Conectar().createStatement();
             ResultSet rs = st.executeQuery(sql);
+
             while (rs.next()) {
-                datos[0] = rs.getString("IDReembolso");
-                datos[1] = rs.getString("IDPedido");
-                datos[2] = rs.getString("FechaReembolso");
-                datos[3] = rs.getString("Motivo");
-                
+                datos[0] = rs.getString("IDReembolso");         // ID del reembolso
+                datos[1] = rs.getString("IDPedido");           // ID del pedido
+                datos[2] = rs.getString("NombreProducto");     // Nombre del producto
+                datos[3] = rs.getString("FechaReembolso");     // Fecha del reembolso
+                datos[4] = rs.getString("Motivo");             // Motivo del reembolso
+
                 // Convertir el estado en texto legible
                 int estado = rs.getInt("Estado");
-                datos[4] = (estado == 0) ? "No reembolsado" : "Reembolsado";
+                datos[5] = (estado == 0) ? "No reembolsado" : "Reembolsado";
 
                 modelo.addRow(datos);
             }
             paramTablaTotalReembolso.setModel(modelo);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error:" + e.toString());
+            JOptionPane.showMessageDialog(null, "No se pudo mostrar correctamente los registros, error: " + e.toString());
         } finally {
             objetoConexion.cerrarConexion();
         }
     }
+
 
     // Método para seleccionar el reembolso y obtener su ID
     public void SeleccionarReembolso(JTable paramTablaReembolso, JTextField paramID) {

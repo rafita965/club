@@ -326,7 +326,7 @@ public class CrudProducto {
         }
     }
 
-    public void EliminarCategoria(JTextField paramCodigo) {
+    public void EliminarProducto(JTextField paramCodigo) {
         setCodigo(Integer.parseInt(paramCodigo.getText()));
         ConexionBDD objetoConexion = new ConexionBDD();
 

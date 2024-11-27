@@ -1,6 +1,7 @@
 package Modulo_Ventas.Usuario;
 import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Ventas.Usuario.VerificarBotonMenuUsuario;
+import ModuloUsuarios1.MainUsuario;
 import programa_club.Main;
 
 /**
@@ -156,7 +157,7 @@ public class Menu_Usuario extends javax.swing.JFrame {
     //Boton a volver Ingreso de usuario
     private void VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VolverActionPerformed
             
-            Main vV= new Main(Integer.parseInt(usuarioID));
+            MainUsuario vV= new MainUsuario(Integer.parseInt(usuarioID));
             this.setVisible(false);
             vV.setVisible(true);
             vV.setLocationRelativeTo(null);

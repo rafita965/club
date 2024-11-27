@@ -451,9 +451,26 @@ public class Gestion_Descuento extends javax.swing.JFrame {
     
     //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
-        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
-        objetoDescuento.EliminarDescuento(JTextField_ID);
-        objetoDescuento.MostrarDescuentos(TablaDescuentos);
+        int confirmacion = JOptionPane.showConfirmDialog(
+        null,
+        "¿Estás seguro de que deseas eliminar este descuento?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
+                objetoDescuento.EliminarDescuento(JTextField_ID);
+                objetoDescuento.MostrarDescuentos(TablaDescuentos);
+            } catch (Exception e) {
+                System.err.println("Error al eliminar el descuento: " + e.getMessage());
+            }
+        } else {
+            // Si el usuario selecciona "No", no se realiza ninguna acción.
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.", "Acción cancelada", JOptionPane.INFORMATION_MESSAGE);
+        }
         TablaDescuentos.clearSelection();
     }//GEN-LAST:event_Btn_EliminarActionPerformed
     

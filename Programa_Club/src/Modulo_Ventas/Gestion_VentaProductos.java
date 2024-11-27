@@ -5,6 +5,8 @@
  */
 package Modulo_Ventas;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author tm_galli
@@ -266,13 +268,30 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
     
     //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
-        Modulo_Ventas.CrudVentaProductos objetoVentaProductos = new Modulo_Ventas.CrudVentaProductos();
-        objetoVentaProductos.EliminarDescuentoProducto(JTextField_IDProducto);
-        Btn_Eliminar.setEnabled(false);
+        int confirmacion = JOptionPane.showConfirmDialog(
+        null,
+        "¿Estás seguro de que deseas eliminar este producto en venta?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                Modulo_Ventas.CrudVentaProductos objetoVentaProductos = new Modulo_Ventas.CrudVentaProductos();
+                objetoVentaProductos.EliminarDescuentoProducto(JTextField_IDProducto);
+                Btn_Eliminar.setEnabled(false);
+                objetoVentaProductos.MostrarProductos(Tabla_productosVenta);
+                objetoVentaProductos.MostrarProductosNoDisponibles(Tabla_Productos);
+            } catch (Exception e) {
+                System.err.println("Error al eliminar el producto de la venta: " + e.getMessage());
+            }
+        } else {
+            // Si el usuario selecciona "No", no se realiza ninguna acción.
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.", "Acción cancelada", JOptionPane.INFORMATION_MESSAGE);
+        }
         Tabla_Productos.clearSelection();
         Tabla_productosVenta.clearSelection();
-        objetoVentaProductos.MostrarProductos(Tabla_productosVenta);
-        objetoVentaProductos.MostrarProductosNoDisponibles(Tabla_Productos);
     }//GEN-LAST:event_Btn_EliminarActionPerformed
     
     //Seleccionar productos en venta

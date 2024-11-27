@@ -334,11 +334,13 @@ public class Gestion_Categorias extends javax.swing.JFrame {
             System.err.println("Error al modificar categoría: " + e.getMessage());
         }
         TablaCategorias.clearSelection();
+        JTextField_nombreCategoria.setText("");
+        TablaCategorias.clearSelection();
     }//GEN-LAST:event_Btn_ModActionPerformed
 
     //Boton Guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
-         CrudCategoria objetoCategoria = new CrudCategoria();
+        CrudCategoria objetoCategoria = new CrudCategoria();
         try {
             // Validar que el campo de nombre no esté vacío
             if (JTextField_nombreCategoria.getText().trim().isEmpty()) {
@@ -376,17 +378,33 @@ public class Gestion_Categorias extends javax.swing.JFrame {
     
     //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
-        CrudCategoria objetoCategoria = new CrudCategoria();
-        try {
-            objetoCategoria.EliminarCategoria(JTextField_IDCategoria);
-            objetoCategoria.LimpiarCampos(JTextField_IDCategoria, JTextField_nombreCategoria);
-            objetoCategoria.MostrarCategorias(TablaCategorias);
-            nombreOriginalCategoria = ""; // Restablecer el nombre original
-            toggleModificarButton(); // Actualizar el estado de los botones
-            toggleEliminarButton();
-        } catch (Exception e) {
-            System.err.println("Error al eliminar categoría: " + e.getMessage());
+        // Mostrar cuadro de diálogo de confirmación
+        int respuesta = JOptionPane.showConfirmDialog(
+                null, 
+                "¿Estás seguro de que deseas eliminar esta categoría?", 
+                "Confirmar eliminación", 
+                JOptionPane.YES_NO_OPTION, 
+                JOptionPane.WARNING_MESSAGE
+        );
+
+        // Si el usuario selecciona "Sí"
+        if (respuesta == JOptionPane.YES_OPTION) {
+            CrudCategoria objetoCategoria = new CrudCategoria();
+            try {
+                objetoCategoria.EliminarCategoria(JTextField_IDCategoria);
+                objetoCategoria.LimpiarCampos(JTextField_IDCategoria, JTextField_nombreCategoria);
+                objetoCategoria.MostrarCategorias(TablaCategorias);
+                nombreOriginalCategoria = ""; // Restablecer el nombre original
+                toggleModificarButton(); // Actualizar el estado de los botones
+                toggleEliminarButton();
+            } catch (Exception e) {
+                System.err.println("Error al eliminar categoría: " + e.getMessage());
+            }
+        } else {
+            // Si el usuario selecciona "No", no se realiza ninguna acción.
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.", "Acción cancelada", JOptionPane.INFORMATION_MESSAGE);
         }
+        JTextField_nombreCategoria.setText("");
         TablaCategorias.clearSelection();
     }//GEN-LAST:event_Btn_EliminarActionPerformed
 

@@ -5,6 +5,7 @@
  */
 package Modulo_Ventas.Usuario;
 import Modulo_Ventas.Usuario.Reembolso_Usuario;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -177,10 +178,26 @@ public class Cancelar_Reembolso_Usuario extends javax.swing.JFrame {
 
     //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
+        int confirmacion = JOptionPane.showConfirmDialog(
+        null,
+        "¿Estás seguro de que deseas eliminar este reembolso?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.WARNING_MESSAGE
+        );
 
-        objetoReembolso.EliminarReembolso(JTextField_ID);
-        objetoReembolso.MostrarReembolso(TablaReembolso, usuarioID);
-        Btn_Eliminar.setEnabled(false);
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                objetoReembolso.EliminarReembolso(JTextField_ID);
+                objetoReembolso.MostrarReembolso(TablaReembolso, usuarioID);
+                Btn_Eliminar.setEnabled(false);
+            } catch (Exception e) {
+                System.err.println("Error al eliminar el reembolso: " + e.getMessage());
+            }
+        } else {
+            // Si el usuario selecciona "No", no se realiza ninguna acción.
+            JOptionPane.showMessageDialog(null, "Eliminación cancelada.", "Acción cancelada", JOptionPane.INFORMATION_MESSAGE);
+        }
         TablaReembolso.clearSelection();
     }//GEN-LAST:event_Btn_EliminarActionPerformed
     
