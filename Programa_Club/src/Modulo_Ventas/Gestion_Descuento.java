@@ -417,10 +417,23 @@ public class Gestion_Descuento extends javax.swing.JFrame {
     
     //Boton Guardar
     private void Btn_GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_GuardarActionPerformed
-        Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
-        objetoDescuento.AgregarDescuento(JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
-        objetoDescuento.MostrarDescuentos(TablaDescuentos);
+         Modulo_Ventas.CrudDescuento objetoDescuento = new Modulo_Ventas.CrudDescuento();
+        // Verificar si ya existe el descuento con el mismo porcentaje y fechas
+        if (objetoDescuento.existeDescuento(JTextField_Descuento , datechooser_FechaInicio, datechooser_FechaFinal)) {
+            JOptionPane.showMessageDialog(null, "El descuento con este porcentaje, fecha inicial y final ya existe.");
+
+            // Limpiar el JTextField y los JDateChooser si ya existe el descuento
+            JTextField_Descuento.setText("");  // Limpiar el JTextField
+            datechooser_FechaInicio.setDate(null);  // Limpiar la fecha de inicio
+            datechooser_FechaFinal.setDate(null);  // Limpiar la fecha final
+
+        } else {
+            // Si el descuento no existe, agregar el nuevo descuento
+            objetoDescuento.AgregarDescuento(JTextField_Descuento, datechooser_FechaInicio, datechooser_FechaFinal);
+            objetoDescuento.MostrarDescuentos(TablaDescuentos);
+        }
         TablaDescuentos.clearSelection();
+
     }//GEN-LAST:event_Btn_GuardarActionPerformed
     
     //Boton Modificar

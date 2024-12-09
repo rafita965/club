@@ -25,74 +25,64 @@ public class Gestion_Categorias extends javax.swing.JFrame {
         objetoCategoria.MostrarCategorias(TablaCategorias);
         this.setLocationRelativeTo(null);
         JTextField_IDCategoria.setEnabled(false);
-        ((AbstractDocument) JTextField_nombreCategoria.getDocument()).setDocumentFilter(new LimitDocumentFilter(16));
-        ((AbstractDocument) JTextField_nombreCategoria.getDocument()).setDocumentFilter(new LetrasSoloFilter());
-        Btn_Guardar.setEnabled(false); // Deshabilitar inicialmente el botón Guardar
+
+        // Aplicar un filtro combinado al JTextField
+        ((AbstractDocument) JTextField_nombreCategoria.getDocument()).setDocumentFilter(new CombinedDocumentFilter(16));
+
+        Btn_Guardar.setEnabled(false);
         Btn_Mod.setEnabled(false);
         Btn_Eliminar.setEnabled(false);
+
+        // Escuchar cambios en el JTextField para habilitar botones
         JTextField_nombreCategoria.getDocument().addDocumentListener(new javax.swing.event.DocumentListener() {
             @Override
             public void insertUpdate(javax.swing.event.DocumentEvent e) {
-                toggleGuardarButton();
-                toggleModificarButton();
+                actualizarBotones();
             }
 
             @Override
             public void removeUpdate(javax.swing.event.DocumentEvent e) {
-                toggleGuardarButton();
-                toggleModificarButton();
+                actualizarBotones();
             }
 
             @Override
             public void changedUpdate(javax.swing.event.DocumentEvent e) {
-                toggleGuardarButton();
-                toggleModificarButton();
+                actualizarBotones();
             }
         });
-        
     }
-    // Clase interna para limitar la longitud de JTextField
-    private class LimitDocumentFilter extends DocumentFilter {
+
+    // Filtro combinado: longitud máxima y solo letras
+    private class CombinedDocumentFilter extends DocumentFilter {
         private final int maxCharacters;
 
-        public LimitDocumentFilter(int maxChars) {
+        public CombinedDocumentFilter(int maxChars) {
             this.maxCharacters = maxChars;
         }
 
         @Override
         public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if (fb.getDocument().getLength() + string.length() <= maxCharacters) {
+            if (isValid(string) && fb.getDocument().getLength() + string.length() <= maxCharacters) {
                 super.insertString(fb, offset, string, attr);
+            } else {
+                Toolkit.getDefaultToolkit().beep();
             }
         }
 
         @Override
         public void replace(FilterBypass fb, int offset, int length, String string, AttributeSet attr) throws BadLocationException {
-            if (fb.getDocument().getLength() - length + string.length() <= maxCharacters) {
+            if (isValid(string) && fb.getDocument().getLength() - length + string.length() <= maxCharacters) {
                 super.replace(fb, offset, length, string, attr);
-            }
-        }
-    }
-    // Clase interna para restringir solo letras de JTextField
-    public class LetrasSoloFilter extends DocumentFilter {
-        @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if (string.matches("[a-zA-Z]+")) {
-                super.insertString(fb, offset, string, attr);
             } else {
-                Toolkit.getDefaultToolkit().beep(); // Simplemente da una señal, no bloquea.
+                Toolkit.getDefaultToolkit().beep();
             }
         }
 
-        @Override
-        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-            if (text.matches("[a-zA-Z]+")) {
-                super.replace(fb, offset, length, text, attrs);
-            } else {
-                Toolkit.getDefaultToolkit().beep(); // Simplemente da una señal.
-            }
+        private boolean isValid(String text) {
+            return text.chars().allMatch(Character::isLetter);
         }
-}
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -288,7 +278,15 @@ public class Gestion_Categorias extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+    private void actualizarBotones() {
+        boolean categoriaSeleccionada = !JTextField_IDCategoria.getText().trim().isEmpty();
+        boolean nombreNoVacio = !JTextField_nombreCategoria.getText().trim().isEmpty();
+        boolean nombreModificado = !JTextField_nombreCategoria.getText().equals(nombreOriginalCategoria);
+
+        Btn_Guardar.setEnabled(nombreNoVacio);
+        Btn_Mod.setEnabled(categoriaSeleccionada && nombreNoVacio && nombreModificado);
+        Btn_Eliminar.setEnabled(categoriaSeleccionada);
+    }
     // Método que habilita o deshabilita el botón Guardar
     private void toggleGuardarButton() {
         Btn_Guardar.setEnabled(!JTextField_nombreCategoria.getText().trim().isEmpty());

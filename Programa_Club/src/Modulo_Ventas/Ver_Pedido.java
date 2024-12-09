@@ -120,8 +120,8 @@ public class Ver_Pedido {
                 datos[2] = rs.getString("Fecha");
                 datos[3] = rs.getString("ProductoID");
                 datos[4] = rs.getString("Cantidad");
-                datos[5] = rs.getString("FormaEntrega");
-                datos[6] = rs.getString("Nombre");
+                datos[5] = rs.getString("Nombre");
+                datos[6] = rs.getString("FormaEntrega");
                 
                 modelo.addRow(datos);
             }

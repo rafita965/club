@@ -107,22 +107,22 @@ public class CrudProducto {
     
     //Verifica si existe producto con nombres
     public boolean existeProductoConNombreYCategoria(String nombreProducto, int idCategoria) {
-    ConexionBDD objetoConexion = new ConexionBDD();
-    String consulta = "SELECT COUNT(*) AS total FROM Productos WHERE Nombre = ? AND CategoriaID = ?;";
-    try (PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta)) {
-        ps.setString(1, nombreProducto);
-        ps.setInt(2, idCategoria);  // Usar el ID de la categoría
-        ResultSet rs = ps.executeQuery();
-        if (rs.next() && rs.getInt("total") > 0) {
-            return true;
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta = "SELECT COUNT(*) AS total FROM Productos WHERE Nombre = ? AND CategoriaID = ?;";
+        try (PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta)) {
+            ps.setString(1, nombreProducto);
+            ps.setInt(2, idCategoria);  // Usar el ID de la categoría
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt("total") > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del producto: " + e.getMessage());
+        } finally {
+            objetoConexion.cerrarConexion();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al verificar la existencia del producto: " + e.getMessage());
-    } finally {
-        objetoConexion.cerrarConexion();
-    }
-    return false; 
-}    
+        return false; 
+    }    
     //Obtiene el valor de producto ID
     private String obtenerValorOriginal(String idProducto, String columna) {
         ConexionBDD objetoConexion = new ConexionBDD();

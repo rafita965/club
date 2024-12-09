@@ -60,7 +60,47 @@ public class CrudDescuento {
         this.fecha_finalidad = fecha_finalidad;
     }
     //METODOS PARA LA VENTANA GESTION DE DESCUENTO+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
+    //Verifica si existe producto con nombres
+    public boolean existeDescuento(JTextField paramCantidadDescuento, JDateChooser paramFechaInicio, JDateChooser paramFechaFinal) {
+        ConexionBDD objetoConexion = new ConexionBDD();
+        String consulta = "SELECT COUNT(*) AS total FROM Descuento WHERE CantidadDescuento = ? AND Fecha_Inicio = ? AND Fecha_Final = ?;";
+
+        try (PreparedStatement ps = objetoConexion.Conectar().prepareStatement(consulta)) {
+            // Obtener valores desde los parámetros
+            int cantidadDescuento = Integer.parseInt(paramCantidadDescuento.getText());
+            java.util.Date fechaInicio = paramFechaInicio.getDate();
+            java.util.Date fechaFinal = paramFechaFinal.getDate();
+
+            // Validar que las fechas no sean nulas
+            if (fechaInicio == null || fechaFinal == null) {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione fechas válidas.");
+                return false;
+            }
+
+            // Convertir fechas a formato SQL
+            java.sql.Date sqlFechaInicio = new java.sql.Date(fechaInicio.getTime());
+            java.sql.Date sqlFechaFinal = new java.sql.Date(fechaFinal.getTime());
+
+            // Configurar parámetros de la consulta
+            ps.setInt(1, cantidadDescuento);
+            ps.setDate(2, sqlFechaInicio);
+            ps.setDate(3, sqlFechaFinal);
+
+            // Ejecutar consulta
+            ResultSet rs = ps.executeQuery();
+            if (rs.next() && rs.getInt("total") > 0) {
+                return true; // Existe un descuento con los mismos valores
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del descuento: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Cantidad de descuento inválida: " + e.getMessage());
+        } finally {
+            objetoConexion.cerrarConexion();
+        }
+        return false; // No se encontró un descuento coincidente
+    }
+
     //METODO AGREGAR DECUENTO============================================================================
     public void AgregarDescuento(JTextField paramPorcentaje, JDateChooser paramFechaInicio, JDateChooser paramFechaFinal){
         ConexionBDD objetoConexion = new ConexionBDD();
@@ -183,20 +223,31 @@ public class CrudDescuento {
         }
     }
     //METODO PARA ELIMINAR DESCUENTO=====================================================================
-    public void EliminarDescuento(JTextField id){
+    public void EliminarDescuento(JTextField id) {
         ConexionBDD objetoConexion = new ConexionBDD();
-        String consulta="DELETE FROM Descuento WHERE DescuentoID=?;";
-        try{
-            CallableStatement cs = (CallableStatement) objetoConexion.Conectar().prepareCall(consulta);
-            cs.setInt(1,Integer.parseInt(id.getText()));
-            cs.execute();
-            JOptionPane.showMessageDialog(null, "Se Eliminó correctamente");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al eliminar, error: " + e.toString());
-        }finally{
+
+        String consulta1 = "DELETE FROM DescuentoProductos WHERE DescuentoID=?;";
+        String consulta2 = "DELETE FROM Descuento WHERE DescuentoID=?;";
+
+        try {
+            // Eliminar en DescuentosProductos
+            CallableStatement cs1 = (CallableStatement) objetoConexion.Conectar().prepareCall(consulta1);
+            cs1.setInt(1, Integer.parseInt(id.getText()));
+            cs1.execute();
+
+            // Eliminar en Descuento
+            CallableStatement cs2 = (CallableStatement) objetoConexion.Conectar().prepareCall(consulta2);
+            cs2.setInt(1, Integer.parseInt(id.getText()));
+            cs2.execute();
+
+            JOptionPane.showMessageDialog(null, "Se eliminó correctamente");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al eliminar, error: " + e.toString());
+        } finally {
             objetoConexion.cerrarConexion();
         }
     }
+
     //METODOS PARA LA VENTANA APLICAR DESCUENTO++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     //METODO SELECCIONAR DESCUENTOS PARA SER APLICADOS A PRODUCTOS=======================================
@@ -245,7 +296,6 @@ public class CrudDescuento {
                      "INNER JOIN Productos ON DescuentoProductos.ProductoID = Productos.ProductoID;";
         try {
             Statement st = objetoConexion.Conectar().createStatement();
-            System.out.println(sql);  // Imprimir la consulta para verificarla
             ResultSet rs = st.executeQuery(sql);
 
             // Agregar filas con todos los datos, incluyendo ProductoID

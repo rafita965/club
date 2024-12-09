@@ -26,113 +26,107 @@ public class Gestion_Productos extends javax.swing.JFrame {
         initComponents();
         crudProducto = new CrudProducto();
         crudProducto.cargarProductos(ComboBoxCategoria); // Cargar categorías
-        crudProducto.MostrarProductos(TablaProductos); // Mostrar productos       
+        crudProducto.MostrarProductos(TablaProductos); // Mostrar productos
+        configurarFiltros();
+        configurarValidadores();
+        configurarBotones();
+    }
+
+    private void configurarFiltros() {
         JTextField_IDProducto.setEnabled(false);
         ((AbstractDocument) JTextField_nombreProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(30));
-        ((AbstractDocument) JTextField_precioProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(15));
-        ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new LimitDocumentFilter(5));
-        ((AbstractDocument) JTextField_nombreProducto.getDocument()).setDocumentFilter(new LetrasSoloFilter());
-        ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new NumerosSoloFilter()); 
-        ((AbstractDocument) JTextField_precioProducto.getDocument()).setDocumentFilter(new NumerosYDecimalesFilter());
-        ((AbstractDocument) JTextField_nombreProducto.getDocument()).addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { validarCampos(); }
-            public void removeUpdate(DocumentEvent e) { validarCampos(); }
-            public void changedUpdate(DocumentEvent e) { validarCampos(); }
-        });
-        ((AbstractDocument) JTextField_precioProducto.getDocument()).addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { validarCampos(); }
-            public void removeUpdate(DocumentEvent e) { validarCampos(); }
-            public void changedUpdate(DocumentEvent e) { validarCampos(); }
-        });
-        ((AbstractDocument) JTextField_StockProducto.getDocument()).addDocumentListener(new DocumentListener() {
-            public void insertUpdate(DocumentEvent e) { validarCampos(); }
-            public void removeUpdate(DocumentEvent e) { validarCampos(); }
-            public void changedUpdate(DocumentEvent e) { validarCampos(); }
-        });
-            Btn_Guardar.setEnabled(false); // Deshabilitar inicialmente el botón Guardar
-            Btn_Mod.setEnabled(false);
-            Btn_Eliminar.setEnabled(false);
+        ((AbstractDocument) JTextField_precioProducto.getDocument()).setDocumentFilter(new NumerosYDecimalesFilter(10));
+        ((AbstractDocument) JTextField_StockProducto.getDocument()).setDocumentFilter(new NumerosSoloFilter(5));
     }
-    //Clases internas
+
+    private void configurarValidadores() {
+        DocumentListener validador = new DocumentListener() {
+            public void insertUpdate(DocumentEvent e) { validarCampos(); }
+            public void removeUpdate(DocumentEvent e) { validarCampos(); }
+            public void changedUpdate(DocumentEvent e) { validarCampos(); }
+        };
+        JTextField_nombreProducto.getDocument().addDocumentListener(validador);
+        JTextField_precioProducto.getDocument().addDocumentListener(validador);
+        JTextField_StockProducto.getDocument().addDocumentListener(validador);
+        validarCampos(); // Validación inicial
+    }
+
+    private void configurarBotones() {
+        Btn_Guardar.setEnabled(false);
+        Btn_Mod.setEnabled(false);
+        Btn_Eliminar.setEnabled(false);
+    }
+
+    private void validarCampos() {
+        String nombre = JTextField_nombreProducto.getText().trim();
+        String precio = JTextField_precioProducto.getText().trim();
+        String stock = JTextField_StockProducto.getText().trim();
+
+        boolean habilitar = !nombre.isEmpty() && esNumerico(precio) && esNumerico(stock);
+        Btn_Guardar.setEnabled(habilitar);
+    }
+
+    private boolean esNumerico(String cadena) {
+        try {
+            Double.parseDouble(cadena);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    // Filtros para validación de entrada
     public class LimitDocumentFilter extends DocumentFilter {
         private int limit;
-        public LimitDocumentFilter(int limit) {
-            this.limit = limit;
-        }
-        @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if ((fb.getDocument().getLength() + string.length()) <= limit) {
-                super.insertString(fb, offset, string, attr);
-            }
-        }
+        public LimitDocumentFilter(int limit) { this.limit = limit; }
+
         @Override
         public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-            if ((fb.getDocument().getLength() - length + text.length()) <= limit) {
-                super.replace(fb, offset, length, text, attrs);
-            }
+            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
+            if (newText.length() <= limit) super.replace(fb, offset, length, text, attrs);
         }
     }
-    public class LetrasSoloFilter extends DocumentFilter {
-        @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if (string.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
-                super.insertString(fb, offset, string, attr);
-            } else {
-                java.awt.Toolkit.getDefaultToolkit().beep();
-            }
-        }
-        @Override
-        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-            if (text.matches("[a-zA-Z\\s]+")) { // Permitir letras y espacios
-                super.replace(fb, offset, length, text, attrs);
-            } else {
-                java.awt.Toolkit.getDefaultToolkit().beep();
-            }
-        }
-    }
+
     public class NumerosYDecimalesFilter extends DocumentFilter {
-        @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
-            String newText = new StringBuilder(currentText).insert(offset, string).toString();
+        private int maxLength;
 
-            if (newText.matches("\\d*\\.?\\d{0,2}")) { // Permitir números con hasta 2 decimales y un solo punto
-                super.insertString(fb, offset, string, attr);
-            } else {
-                JOptionPane.showMessageDialog(null, "Formato incorrecto. Ejemplo válido: 123.45");
-            }
+        public NumerosYDecimalesFilter(int maxLength) {
+            this.maxLength = maxLength;
         }
 
         @Override
         public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
             String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
-            String newText = new StringBuilder(currentText).replace(offset, offset + length, text).toString();
+            String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
 
-            if (newText.matches("\\d*\\.?\\d{0,2}")) { // Permitir números con hasta 2 decimales y un solo punto
+            // Validar que el texto sea un número válido y no exceda la longitud máxima
+            if (newText.matches("\\d*\\.?\\d{0,2}") && newText.length() <= maxLength) {
                 super.replace(fb, offset, length, text, attrs);
-            } else {
-                JOptionPane.showMessageDialog(null, "Formato incorrecto. Ejemplo válido: 123.45");
             }
         }
     }
+
     public class NumerosSoloFilter extends DocumentFilter {
-        @Override
-        public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr) throws BadLocationException {
-            if (string.matches("\\d+")) { // Permitir solo dígitos
-                super.insertString(fb, offset, string, attr);
-            } else {
-                java.awt.Toolkit.getDefaultToolkit().beep();            }
+        private int maxLength;
+
+        public NumerosSoloFilter(int maxLength) {
+            this.maxLength = maxLength;
         }
 
         @Override
         public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
-            if (text.matches("\\d+")) { // Permitir solo dígitos
+            String currentText = fb.getDocument().getText(0, fb.getDocument().getLength());
+            String newText = currentText.substring(0, offset) + text + currentText.substring(offset + length);
+
+            // Validar que el texto sea un número y no exceda la longitud máxima
+            if (newText.matches("\\d*") && newText.length() <= maxLength) {
                 super.replace(fb, offset, length, text, attrs);
-            } else {
-                java.awt.Toolkit.getDefaultToolkit().beep();
             }
         }
     }
+
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -366,28 +360,7 @@ public class Gestion_Productos extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    //Validar campos de JTextField
-        private void validarCampos() {
-        String nombre = JTextField_nombreProducto.getText().trim();
-        String precio = JTextField_precioProducto.getText().trim();
-        String stock = JTextField_StockProducto.getText().trim();
-
-        boolean habilitar = !nombre.isEmpty() && esNumerico(precio) && esNumerico(stock);
-        Btn_Guardar.setEnabled(habilitar);
-    }
     
-    //Verificar si es numerico
-    private boolean esNumerico(String cadena) {
-        if (cadena == null || cadena.isEmpty()) {
-            return false;
-        }
-        try {
-            Double.parseDouble(cadena);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
     //Boton Eliminar
     private void Btn_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_EliminarActionPerformed
         int confirmacion = JOptionPane.showConfirmDialog(
