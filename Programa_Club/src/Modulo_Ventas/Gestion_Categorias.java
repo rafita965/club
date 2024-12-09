@@ -313,7 +313,7 @@ public class Gestion_Categorias extends javax.swing.JFrame {
         this.setVisible(false);
         vV.setVisible(true);
         vV.setLocationRelativeTo(null);
-        vV.setSize(400,440);
+        //vV.setSize(400,440);
     }//GEN-LAST:event_VolverActionPerformed
 
     private void JTextField_nombreCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTextField_nombreCategoriaActionPerformed

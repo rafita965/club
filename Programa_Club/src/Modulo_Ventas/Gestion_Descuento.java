@@ -223,7 +223,7 @@ public class Gestion_Descuento extends javax.swing.JFrame {
         );
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(250, 60, 603, 475);
+        jPanel1.setBounds(240, 60, 603, 475);
 
         jPanel2.setBackground(new java.awt.Color(47, 94, 141));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -480,7 +480,7 @@ public class Gestion_Descuento extends javax.swing.JFrame {
         this.setVisible(false);
         vV.setVisible(true);
         vV.setLocationRelativeTo(null);
-        vV.setSize(400,450);
+        //vV.setSize(400,440);
     }//GEN-LAST:event_Volver_BtnActionPerformed
     
     //Boton ir a pantalla Aplicar Descuento

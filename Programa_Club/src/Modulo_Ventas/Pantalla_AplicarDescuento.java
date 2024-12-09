@@ -436,9 +436,9 @@ public class Pantalla_AplicarDescuento extends javax.swing.JFrame {
     private void btn_VolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_VolverActionPerformed
         Gestion_Descuento  vD = new Gestion_Descuento();
         this.setVisible(false);
-        vD.setSize(870,570);
+        vD.setSize(855,570);
         vD.setLocationRelativeTo(null);
-        vD.setVisible(true); 
+        vD.setVisible(true);
     }//GEN-LAST:event_btn_VolverActionPerformed
     
     //Seleccionar descuento aplicado

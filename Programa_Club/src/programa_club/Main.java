@@ -232,7 +232,7 @@ public class Main extends javax.swing.JFrame {
         this.setVisible(false);
         vV.setVisible(true);
         vV.setLocationRelativeTo(null);
-        vV.setSize(400,440);
+        //vV.setSize(400,440);
     }//GEN-LAST:event_btn_ProductosActionPerformed
 
     private void btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EntradasActionPerformed

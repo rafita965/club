@@ -240,9 +240,9 @@ public class Gestion_VentaProductos extends javax.swing.JFrame {
     private void btn_volverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_volverActionPerformed
         Pantalla_Ventas vV= new Pantalla_Ventas();
         this.setVisible(false);
-        vV.setVisible(true);
         vV.setLocationRelativeTo(null);
-        vV.setSize(400,450);
+        vV.setVisible(true);
+        //vV.setSize(400,440);
     }//GEN-LAST:event_btn_volverActionPerformed
     
     //Seleccionar producto

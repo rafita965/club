@@ -142,9 +142,9 @@ public class Ventana_PrecioEnvio extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Gestion_VentaProductos vGVP = new Gestion_VentaProductos();
         this.setVisible(false);
-        vGVP.setSize(1250,620);
+        vGVP.setSize(1250,590);
         vGVP.setLocationRelativeTo(null);
-        vGVP.setVisible(true);        
+        vGVP.setVisible(true);     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
