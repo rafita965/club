@@ -297,7 +297,7 @@ public class panelEventos extends javax.swing.JPanel {
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         int seleccion = tbEventos.getSelectedRow();
-        if(seleccion!=-1){
+        if(seleccion>=0){
             int eventoID = Integer.parseInt(tbEventos.getValueAt(seleccion, 0).toString());
             ventanaCompra entradas= new ventanaCompra(usuarioID,eventoID);
             entradas.setVisible(true);

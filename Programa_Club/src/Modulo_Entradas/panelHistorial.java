@@ -17,6 +17,7 @@ public class panelHistorial extends javax.swing.JPanel {
     public panelHistorial(int usuarioID) {
         initComponents();
         this.cod= new CodigoHistorial(usuarioID);
+        cod.verHistorial(tablaHistorial, jLabel5);
     }
 
     /**

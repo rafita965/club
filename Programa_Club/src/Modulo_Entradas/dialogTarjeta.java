@@ -5,6 +5,7 @@
  */
 package Modulo_Entradas;
 
+import java.awt.Window;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -69,12 +70,17 @@ public class dialogTarjeta extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crédito", "Débito", "Virtual" }));
+        cmbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Credito", "Debito", "Virtual" }));
 
         btnPagar.setText("PAGAR");
         btnPagar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPagarMouseClicked(evt);
+            }
+        });
+        btnPagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPagarActionPerformed(evt);
             }
         });
 
@@ -92,6 +98,7 @@ public class dialogTarjeta extends javax.swing.JDialog {
 
         jLabel4.setText("Mes de vencimiento:");
 
+        jPanel2.setBackground(new java.awt.Color(99, 140, 181));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Mis tarjetas"));
 
         cmbTarjetas.addItemListener(new java.awt.event.ItemListener() {
@@ -194,13 +201,13 @@ public class dialogTarjeta extends javax.swing.JDialog {
     private void btnPagarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPagarMouseClicked
         // TODO add your handling code here:
         try{
-            if(txtNumero.getText().length()>19 || txtNumero.getText().length()<14){
+            if(!txtNumero.getText().matches("^\\d{14,19}$")){
                 throw new Exception("Número de tarjeta inválido");
             }
-            String consulta = "SELECT validarTarjeta(?,?,?,?,?,?) AS retorno;";
+            String consulta = "SELECT verificarTarjeta(?,?,?,?,?,?) AS retorno;";
             
             PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                ps.setInt(1, Integer.parseInt(txtNumero.getText()));
+                ps.setLong(1, Long.parseLong(txtNumero.getText().trim()));
                 ps.setInt(2, usuarioID);
                 ps.setString(3, (String)cmbTipo.getSelectedItem());
                 Date fechaSeleccionada = (Date) spnVencimiento.getValue();
@@ -222,8 +229,8 @@ public class dialogTarjeta extends javax.swing.JDialog {
                                         "?,?,?,?,?,CURDATE());";
 
                             ps = conexion.getConexion().prepareStatement(consulta2);
-                            ps.setInt(1, usuarioID);
-                            ps.setInt(2, Integer.parseInt(txtNumero.getText()));
+                            ps.setString(1, (String)table.getValueAt(f, 0));
+                            ps.setLong(2, Long.parseLong(txtNumero.getText().trim()));
                             String item = (String) combo.getSelectedItem();
                             ps.setInt(3, Integer.valueOf(item.split("\\| ")[0].trim()));
                             ps.setInt(4, eventoID);
@@ -252,6 +259,14 @@ public class dialogTarjeta extends javax.swing.JDialog {
                         ps.setDouble(1, Double.parseDouble(total.getText()));
                         ps.setInt(2, 7);
                         ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Se ha realizado la compra con éxito!");
+                        ((Window) this.getParent()).dispose();
+                        this.dispose();
+                        Principal wdw= new Principal(usuarioID);
+                        wdw.setVisible(true);
+                        wdw.setLocationRelativeTo(null);
+                        wdw.setResizable(false);
+                        wdw.setSize(900,520);
                         
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Error al comprar: " + e.toString());
@@ -281,10 +296,10 @@ public class dialogTarjeta extends javax.swing.JDialog {
             try{String consulta = "SELECT NumeroTarjeta, Tipo, Vencimiento FROM Tarjeta WHERE NumeroTarjeta=?;";
 
                 PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                ps.setInt(1, Integer.parseInt(select.split("\\| ")[0].trim()));
+                ps.setLong(1, Long.parseLong(select.split("\\|")[0].trim()));
                 ResultSet rs = ps.executeQuery();
                 if(rs.next()){
-                    int numero = rs.getInt("NumeroTarjeta");
+                    Long numero = rs.getLong("NumeroTarjeta");
                     String tipo = rs.getString("Tipo");
                     txtNumero.setText(String.valueOf(numero));
                     cmbTipo.setSelectedItem(tipo);
@@ -302,16 +317,20 @@ public class dialogTarjeta extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_cmbTarjetasItemStateChanged
+
+    private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPagarActionPerformed
     
     private void cargarTarjetas(){
         try{
             String consulta = "SELECT NumeroTarjeta, Tipo, Saldo FROM Tarjeta WHERE IDUsuario=?;";
             
             PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-            ps.setInt(1, 1);
+            ps.setInt(1, usuarioID);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
-                int numero= rs.getInt("NumeroTarjeta");
+                Long numero= rs.getLong("NumeroTarjeta");
                 String tipo= rs.getString("Tipo");
                 double saldo= rs.getDouble("Saldo");
                 

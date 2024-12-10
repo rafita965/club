@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package programa_club;
-import Modulo_Entradas.Principal;
+import Modulo_Entradas.Boleteria;
 import Modulo_Ventas.Pantalla_Ventas;
 import Modulo_Seguridad.Pantalla_Seguridad;
 import Modulo_Seguridad.Abrir_Seguridad;
@@ -236,7 +236,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_ProductosActionPerformed
 
     private void btn_EntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_EntradasActionPerformed
-        Principal wdw= new Principal();
+        Boleteria wdw= new Boleteria();
         wdw.setVisible(true);
         this.setVisible(false);
         wdw.setLocationRelativeTo(null);

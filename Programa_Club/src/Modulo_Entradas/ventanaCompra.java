@@ -5,6 +5,7 @@
  */
 package Modulo_Entradas;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,6 +80,7 @@ public class ventanaCompra extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        pnlGrupo.setBackground(new java.awt.Color(99, 140, 181));
         pnlGrupo.setBorder(javax.swing.BorderFactory.createTitledBorder("Grupo de cancha"));
 
         javax.swing.GroupLayout pnlGrupoLayout = new javax.swing.GroupLayout(pnlGrupo);
@@ -152,6 +155,7 @@ public class ventanaCompra extends javax.swing.JFrame {
         jLabel1.setText("TOTAL:");
 
         txtTotal.setText("0");
+        txtTotal.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         txtTotal.setEnabled(false);
 
         btnCancelar.setText("CANCELAR");
@@ -169,8 +173,9 @@ public class ventanaCompra extends javax.swing.JFrame {
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setToolTipText("");
 
-        pnlAsientos.setBorder(javax.swing.BorderFactory.createTitledBorder("Asientos disponibles"));
-        pnlAsientos.setLayout(new java.awt.GridLayout());
+        pnlAsientos.setBackground(new java.awt.Color(31, 50, 69));
+        pnlAsientos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Asientos disponibles", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
+        pnlAsientos.setLayout(new java.awt.GridLayout(1, 0));
         jScrollPane2.setViewportView(pnlAsientos);
 
         javax.swing.GroupLayout pnlEntradasLayout = new javax.swing.GroupLayout(pnlEntradas);
@@ -392,34 +397,47 @@ public class ventanaCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprarMouseClicked
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-        DefaultTableModel modelo = (DefaultTableModel) tblEntradas.getModel();
-        for (int f = 0; f < modelo.getRowCount(); f++) {
-            Object celda = modelo.getValueAt(f, 3);
-            if (celda != null) {
-                try{
-                    String consulta = "UPDATE Sector_Evento " +
-                                        "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
-                                        "WHERE IdSector = ? AND IdEvento = ?;";
+        int result = JOptionPane.showConfirmDialog(
+            this, // Ventana padre
+            "¿Estás seguro de que quieres cancelar?", // Mensaje
+            null, // Título
+            JOptionPane.YES_NO_OPTION, // Opciones disponibles
+            JOptionPane.QUESTION_MESSAGE // Tipo de icono
+        );
 
-                    PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
-                    ps.setInt(1, (Integer)modelo.getValueAt(f, 2)-1);
-                    ps.setInt(2, (Integer)modelo.getValueAt(f, 3)-1);
-                    String item = (String) cmbSectores.getSelectedItem();
-                    ps.setInt(3, Integer.valueOf(item.split("\\| ")[0].trim()));
-                    ps.setInt(4, eventoID);
-                    ps.executeUpdate();
-                }catch(Exception e2){
-                    JOptionPane.showMessageDialog(null, "Error al liberar asiento: "+e2.toString());
-                }finally{
-                    conexion.Desconectar();}
+        // Comprobar la respuesta del usuario
+        if (result == JOptionPane.YES_OPTION) {
+            DefaultTableModel modelo = (DefaultTableModel) tblEntradas.getModel();
+            for (int f = 0; f < modelo.getRowCount(); f++) {
+                Object celda = modelo.getValueAt(f, 3);
+                if (celda != null) {
+                    try{
+                        String consulta = "UPDATE Sector_Evento " +
+                                            "SET Asientos = JSON_SET(Asientos, CONCAT('$[', ?, '][', ?, ']'), 1) " +
+                                            "WHERE IdSector = ? AND IdEvento = ?;";
+
+                        PreparedStatement ps = conexion.Conectar().prepareStatement(consulta);
+                        ps.setInt(1, (Integer)modelo.getValueAt(f, 2)-1);
+                        ps.setInt(2, (Integer)modelo.getValueAt(f, 3)-1);
+                        String item = (String) cmbSectores.getSelectedItem();
+                        ps.setInt(3, Integer.valueOf(item.split("\\| ")[0].trim()));
+                        ps.setInt(4, eventoID);
+                        ps.executeUpdate();
+                    }catch(Exception e2){
+                        JOptionPane.showMessageDialog(null, "Error al liberar asiento: "+e2.toString());
+                    }finally{
+                        conexion.Desconectar();}
+                }
             }
+            Principal principal = new Principal(usuarioID);
+            principal.setVisible(true);
+            principal.setLocationRelativeTo(null);
+            principal.setSize(900,520);
+            principal.setResizable(false);
+            this.dispose();
+        } else {
+            System.out.println("Cancelación abortada");
         }
-        Principal principal = new Principal();
-        principal.setVisible(true);
-        principal.setLocationRelativeTo(null);
-        principal.setSize(900,520);
-        principal.setResizable(false);
-        this.dispose();
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -444,6 +462,8 @@ public class ventanaCompra extends javax.swing.JFrame {
             ps.setInt(1, eventoID);
             ps.setInt(2, usuarioID);
             ResultSet rs = ps.executeQuery();
+            UIManager.put("CheckBox.disabledText", Color.BLACK); // Establece el color de texto deshabilitado
+            UIManager.put("CheckBox.background", new Color(99,140,181));
             while(rs.next()){
                 
                 String nombreUsuario= rs.getString("Nombre_usuario");

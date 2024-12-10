@@ -6,6 +6,7 @@
 package ModuloUsuarios1;
 
 import ModuloUsuarios1.Menu;
+import Modulo_Entradas.Principal;
 import Modulo_Ventas.Usuario.Menu_Usuario;
 
 /**
@@ -70,6 +71,11 @@ public class MainUsuario extends javax.swing.JFrame {
         });
 
         btnEntradas.setText("Comprar Entradas");
+        btnEntradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntradasActionPerformed(evt);
+            }
+        });
 
         btnUsuario.setText("Usuario");
         btnUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -134,6 +140,15 @@ public class MainUsuario extends javax.swing.JFrame {
             vMU.setLocationRelativeTo(null);
             vMU.setVisible(true); 
     }//GEN-LAST:event_btnProductosActionPerformed
+
+    private void btnEntradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradasActionPerformed
+        Principal wdw= new Principal(IDUsuario);
+        wdw.setVisible(true);
+        this.setVisible(false);
+        wdw.setLocationRelativeTo(null);
+        wdw.setResizable(false);
+        wdw.setSize(900,520);
+    }//GEN-LAST:event_btnEntradasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

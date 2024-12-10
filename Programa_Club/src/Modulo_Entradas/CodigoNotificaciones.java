@@ -36,6 +36,7 @@ public class CodigoNotificaciones {
             System.out.println(enunciado.substring(4));
             ps.setInt(3, (Integer)tblNotificaciones.getValueAt(index, 0));
             ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Te uniste a un Nuevo grupo");
            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Error al aceptar solicitud: "+e.toString());

@@ -49,7 +49,7 @@ public class CodigoHistorial {
                 double Coste= rs.getDouble("Coste");
                 compras+=1;
                 
-                modelo.addRow(new Object[] {CompraID,Fecha,Tipo,nombreEvento,NombreSector,filaAsiento,Asiento,Coste});
+                modelo.addRow(new Object[] {CompraID,Fecha,Tipo,nombreEvento,NombreSector,filaAsiento+1,Asiento+1,Coste});
             }
             totalCompras.setText(String.valueOf(compras));
             
@@ -93,7 +93,7 @@ public class CodigoHistorial {
                 double Coste= rs.getDouble("Coste");
                 compras+=1;
                 
-                modelo.addRow(new Object[] {CompraID,Fecha,Tipo,nombreEvento,NombreSector,filaAsiento,Asiento,Coste});
+                modelo.addRow(new Object[] {CompraID,Fecha,Tipo,nombreEvento,NombreSector,filaAsiento+1,Asiento+1,Coste});
             }
             totalCompras.setText(String.valueOf(compras));
             

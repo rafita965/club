@@ -5,6 +5,9 @@
  */
 package Modulo_Entradas;
 
+import java.awt.Dimension;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Agustín Salinas
@@ -70,6 +73,8 @@ public class panelGrupo extends javax.swing.JPanel {
 
         pnlMiembros.setBackground(new java.awt.Color(99, 140, 181));
         pnlMiembros.setBorder(javax.swing.BorderFactory.createTitledBorder("Miembros"));
+        pnlMiembros.setMaximumSize(new java.awt.Dimension(220, 241));
+        pnlMiembros.setMinimumSize(new java.awt.Dimension(220, 241));
 
         btnSalir.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         btnSalir.setText("Salir del grupo");
@@ -187,8 +192,7 @@ public class panelGrupo extends javax.swing.JPanel {
         // TODO add your handling code here:
         if (btnSalir.isEnabled()) {
         cod.salirGrupo();
-        pnlMiembros.removeAll();
-        cod.cargarMiembros(pnlMiembros, btnSalir, btnSolicitud);}
+        new CambiaPanel((JPanel)this.getParent(), new panelGrupo(usuarioID));}
     }//GEN-LAST:event_btnSalirMouseClicked
 
 

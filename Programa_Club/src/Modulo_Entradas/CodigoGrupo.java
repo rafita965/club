@@ -5,6 +5,7 @@
  */
 package Modulo_Entradas;
 
+import java.awt.Color;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JButton;
@@ -57,6 +58,7 @@ public class CodigoGrupo {
                 
                 JRadioButton box = new JRadioButton(nombreUsuario);
                 box.setBounds(15,ejeY,170,23);
+                box.setBackground(new Color(99,140,181));
                 if(Id==usuarioID){
                     box.setText(nombreUsuario+"(Tú)");
                 }else{
@@ -88,7 +90,7 @@ public class CodigoGrupo {
             ps.setInt(1, usuarioID);
             ps.setString(2, receptor.getText().trim());
             ps.executeUpdate();
-            
+            JOptionPane.showMessageDialog(null, "Se ha enviado la solicitud");
         }catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al enviar solicitud: " + e.toString());
         } finally {

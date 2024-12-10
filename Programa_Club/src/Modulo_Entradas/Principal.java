@@ -5,7 +5,7 @@
  */
 package Modulo_Entradas;
 
-import programa_club.Main;
+import ModuloUsuarios1.MainUsuario;
 
 /**
  *
@@ -16,7 +16,8 @@ public class Principal extends javax.swing.JFrame {
     /**
      * Creates new form Principal
      */
-    public Principal() {
+    public Principal(int id) {
+        this.IDUsuario=id;
         initComponents();
         
         grupoBtn.add(eventos);
@@ -285,9 +286,8 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_historialMousePressed
 
     private void cerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarActionPerformed
-        Main vM = new Main();
+        MainUsuario vM = new MainUsuario(IDUsuario);
         vM.setVisible(true);
-        vM.setSize(1530,900);
         vM.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_cerrarActionPerformed
@@ -326,7 +326,7 @@ public class Principal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Principal().setVisible(true);
+                new Principal(9).setVisible(true);
             }
         });
     }
